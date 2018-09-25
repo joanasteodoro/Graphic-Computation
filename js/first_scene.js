@@ -7,7 +7,8 @@ function createScene() {
 
     scene.add(new THREE.AxisHelper(10));
 
-    createTable(scene, 0, 0, 0);
+    //createTable(scene, 0, 0, 0);
+    createChair(scene, -10, -10, 0);
 }
 
 function createCamera() {
@@ -16,7 +17,7 @@ function createCamera() {
                                          window.innerWidth / window.innerHeight,
                                          1,
                                          1000);
-    camera.position.x = 100;
+    camera.position.x = 20;
     camera.position.y = 20;
     camera.position.z = 20;
     camera.lookAt(scene.position);
