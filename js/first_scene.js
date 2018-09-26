@@ -7,8 +7,8 @@ function createScene() {
 
     scene.add(new THREE.AxisHelper(10));
 
-    //createTable(scene, 0, 0, 0);
-    createChair(scene, -10, -10, 0);
+    createTable(scene, 0, 30, 0); 
+    //createChair(scene, -10, -10, 0);
 }
 
 function createCamera() {
