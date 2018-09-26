@@ -3,7 +3,7 @@ var geometry, material, mesh;
 function addChairBack(obj, x, y, z) {
     'use strict';
 
-    geometry = new THREE.CubeGeometry(4.5, 5, 0.1);
+    geometry = new THREE.CubeGeometry(20, 18, 2);
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y - 3, z);
     obj.add(mesh);
@@ -11,7 +11,7 @@ function addChairBack(obj, x, y, z) {
 
 function addChairSeat(obj, x, y, z) {
     'use strict';
-    geometry = new THREE.CubeGeometry(0.2, 5, 4.5);
+    geometry = new THREE.CubeGeometry(20, 2, 20); /* width, height, depth */
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y, z);
     obj.add(mesh);
@@ -48,14 +48,14 @@ function createChair(scene, x, y, z) {
 
     material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
 
-    addChairBack(chair, 0, 0, 0);
-    addChairSeat(chair, -25, -1, -8);
-    addChairPole(chair, -25, -1, 8);
-    addChairBase(chair, 25, -1, 8);
-    addChairWheel(chair, 25, -1, -8);
-    addChairWheel(chair, 25, -1, -8);
-    addChairWheel(chair, 25, -1, -8);
-    addChairWheel(chair, 25, -1, -8);
+    addChairBack(chair, 0, 10, 19);
+    addChairSeat(chair, 0, -1, 10); /* 'mass' center of the chair */
+    //addChairPole(chair, -25, -1, 8);
+    //addChairBase(chair, 25, -1, 8);
+    //addChairWheel(chair, 25, -1, -8);
+    //addChairWheel(chair, 25, -1, -8);
+    //addChairWheel(chair, 25, -1, -8);
+    //addChairWheel(chair, 25, -1, -8);
 
     scene.add(chair);
 
