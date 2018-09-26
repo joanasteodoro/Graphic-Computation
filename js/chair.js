@@ -3,9 +3,9 @@ var geometry, material, mesh;
 function addChairBack(obj, x, y, z) {
     'use strict';
 
-    geometry = new THREE.CubeGeometry(20, 18, 2);
+    geometry = new THREE.CubeGeometry(20, 16, 2);
     mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x, y - 3, z);
+    mesh.position.set(x, y, z);
     obj.add(mesh);
 }
 
@@ -19,23 +19,24 @@ function addChairSeat(obj, x, y, z) {
 
 function addChairPole(obj, x, y, z) {
     'use strict';
-    geometry = new THREE.CubeGeometry(5, 0.5, 0.5);
+    geometry = new THREE.CubeGeometry(2, 10, 2);
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y, z);
     obj.add(mesh);
 }
 
-function addChairBase(obj, x, y, z) {
+function addChairBase(obj, x, y, z, angle) {
     'use strict';
-    geometry = new THREE.CubeGeometry(0.05, 2, 1.8);
+    geometry = new THREE.CubeGeometry(28, 2, 2);
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y, z);
+    geometry.rotateY(angle);
     obj.add(mesh);
 }
 
 function addChairWheel(obj, x, y, z) {
     'use strict';
-    geometry = new THREE.TorusGeometry(2, 2, 2);
+    geometry = new THREE.TorusGeometry(1, 1);
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y, z);
     obj.add(mesh);
@@ -48,11 +49,15 @@ function createChair(scene, x, y, z) {
 
     material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
 
-    addChairBack(chair, 0, 10, 19);
-    addChairSeat(chair, 0, -1, 10); /* 'mass' center of the chair */
-    //addChairPole(chair, -25, -1, 8);
-    //addChairBase(chair, 25, -1, 8);
-    //addChairWheel(chair, 25, -1, -8);
+    addChairBack(chair, 0, 9, 19);
+    addChairSeat(chair, 0, 0, 10); /* 'mass' center of the chair */
+    addChairPole(chair, 0, -6, 10);
+    addChairBase(chair, 0, -12, 10, Math.PI/4);
+    addChairBase(chair, 0, -12, 10, Math.PI/(-4));
+    addChairWheel(chair, -10, -14, 0);
+    addChairWheel(chair, 10, -14, 0);
+    addChairWheel(chair, 10, -14, 20);
+    addChairWheel(chair, -10, -14, 20);
     //addChairWheel(chair, 25, -1, -8);
     //addChairWheel(chair, 25, -1, -8);
     //addChairWheel(chair, 25, -1, -8);

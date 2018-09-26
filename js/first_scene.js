@@ -7,8 +7,8 @@ function createScene() {
 
     scene.add(new THREE.AxisHelper(10));
 
-    createTable(scene, 0, 29, 0); 
-    createChair(scene, 0, 16, 20); /*reference point is the chair seat*/
+    createTable(scene, 0, 29, 0);  /*reference point is the table top center*/
+    createChair(scene, 0, 16, 20); /*reference point is the chair seat center*/
 }
 
 function createCamera() {
@@ -18,8 +18,8 @@ function createCamera() {
                                          1,
                                          1000);
     camera.position.x = 100;
-    camera.position.y = 0;
-    camera.position.z = 0;
+    camera.position.y = 100;
+    camera.position.z = 100;
     camera.lookAt(scene.position);
 }
 
