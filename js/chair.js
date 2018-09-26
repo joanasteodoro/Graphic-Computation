@@ -54,10 +54,10 @@ function createChair(scene, x, y, z) {
     addChairPole(chair, 0, -6, 10);
     addChairBase(chair, 0, -12, 10, Math.PI/4);
     addChairBase(chair, 0, -12, 10, Math.PI/(-4));
-    addChairWheel(chair, -10, -14, 0);
-    addChairWheel(chair, 10, -14, 0);
-    addChairWheel(chair, 10, -14, 20);
-    addChairWheel(chair, -10, -14, 20);
+    addChairWheel(chair, -10, -14, 1);
+    addChairWheel(chair, 10, -14, 1);
+    addChairWheel(chair, 10, -14, 19);
+    addChairWheel(chair, -10, -14, 19);
     //addChairWheel(chair, 25, -1, -8);
     //addChairWheel(chair, 25, -1, -8);
     //addChairWheel(chair, 25, -1, -8);
