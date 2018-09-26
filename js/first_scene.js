@@ -17,9 +17,9 @@ function createCamera() {
                                          window.innerWidth / window.innerHeight,
                                          1,
                                          1000);
-    camera.position.x = 20;
-    camera.position.y = 20;
-    camera.position.z = 20;
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 100;
     camera.lookAt(scene.position);
 }
 
