@@ -3,7 +3,7 @@ var geometry, material, mesh;
 function addTableLeg(obj, x, y, z) {
     'use strict';
 
-    geometry = new THREE.CylinderGeometry(0.5, 0.5, 28);
+    geometry = new THREE.CylinderGeometry(1, 1, 28);
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y, z);
     obj.add(mesh);
@@ -11,7 +11,7 @@ function addTableLeg(obj, x, y, z) {
 
 function addTableTop(obj, x, y, z) {
     'use strict';
-    geometry = new THREE.BoxGeometry(48, 2, 14);
+    geometry = new THREE.BoxGeometry(48, 2, 24);
     mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y, z);
     obj.add(mesh);
@@ -24,11 +24,11 @@ function createTable(scene, x, y, z) {
 
     material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
 
-    addTableTop(table, 0, 16, 0);
-    addTableLeg(table, -20, 0, -6);
-    addTableLeg(table, -20, 0, 6);
-    addTableLeg(table, 20, 0, 6);
-    addTableLeg(table, 20, 0, -6);
+    addTableTop(table, 0, 0, 0);
+    addTableLeg(table, -21, -14, -9); /* y = -28 (table leg height)  */
+    addTableLeg(table, -21, -14, 9);
+    addTableLeg(table, 21, -14, 9);
+    addTableLeg(table, 21, -14, -9);
 
     scene.add(table);
 
