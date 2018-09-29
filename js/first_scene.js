@@ -9,6 +9,7 @@ function createScene() {
 
     createTable(scene, 0, 29, 0);  /*reference point is the table top center*/
     createChair(scene, 0, 16, 20); /*reference point is the chair seat center*/
+    createLamp(scene, -34, 0, 0); /*reference point is the lamp base center*/
 }
 
 function createCamera() {
@@ -17,7 +18,7 @@ function createCamera() {
                                          window.innerWidth / window.innerHeight,
                                          1,
                                          1000);
-    camera.position.x = 100;
+    camera.position.x = -100;
     camera.position.y = 100;
     camera.position.z = 100;
     camera.lookAt(scene.position);

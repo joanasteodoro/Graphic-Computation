@@ -58,9 +58,6 @@ function createChair(scene, x, y, z) {
     addChairWheel(chair, 10, -14, 1);
     addChairWheel(chair, 10, -14, 19);
     addChairWheel(chair, -10, -14, 19);
-    //addChairWheel(chair, 25, -1, -8);
-    //addChairWheel(chair, 25, -1, -8);
-    //addChairWheel(chair, 25, -1, -8);
 
     scene.add(chair);
 
