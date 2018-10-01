@@ -1,51 +1,61 @@
-var geometry, mesh;
+class Lamp extends THREE.Object3D {
+    constructor(scene, x, y, z) {
+        super();
 
-function addLampPole(obj, x, y, z) {
-    'use strict';
+        this.scene = scene;
 
-    geometry = new THREE.CylinderGeometry(1, 1, 55);
-    mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
-    mesh.position.set(x, y, z);
-    obj.add(mesh);
-}
+        this.position.x = x;
+        this.position.y = y;
+        this.position.z = z;
 
-function addLampHead(obj, x, y, z) {
-    'use strict';
-    geometry = new THREE.CylinderGeometry(7, 7, 10, 8, 1, true);
-    mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
-    mesh.position.set(x, y, z);
-    obj.add(mesh);
-}
+        this.createLamp();
+    }
 
-function addLampLight(obj, x, y, z) {
-    'use strict';
-    geometry = new THREE.SphereGeometry(2);
-    mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
-    mesh.position.set(x, y, z);
-    obj.add(mesh);
-}
 
-function addLampBase(obj, x, y, z) {
-    'use strict';
-    geometry = new THREE.ConeGeometry(7, 2, 8, 1, true);
-    mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
-    mesh.position.set(x, y, z);
-    obj.add(mesh);
-}
+    addLampPole(x, y, z) {
+        'use strict';
 
-function createLamp(scene, x, y, z) {
-    'use strict';
+        let geometry = new THREE.CylinderGeometry(1, 1, 55);
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        mesh.position.set(x, y, z);
+        this.add(mesh);
+    }
 
-    var lamp = new THREE.Object3D();
+    addLampHead(x, y, z) {
+        'use strict';
 
-    addLampPole(lamp, 0, 29, 0);
-    addLampHead(lamp, 0, 57, 0);
-    addLampLight(lamp, 0, 57, 0);
-    addLampBase(lamp, 0, 1, 0);
+        let geometry = new THREE.CylinderGeometry(7, 7, 10, 8, 1, true);
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        mesh.position.set(x, y, z);
+        this.add(mesh);
+    }
 
-    scene.add(lamp);
+    addLampLight(x, y, z) {
+        'use strict';
 
-    lamp.position.x = x;
-    lamp.position.y = y;
-    lamp.position.z = z;
+        let geometry = new THREE.SphereGeometry(2);
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        mesh.position.set(x, y, z);
+        this.add(mesh);
+    }
+
+    addLampBase(x, y, z) {
+        'use strict';
+
+        let geometry = new THREE.ConeGeometry(7, 2, 8, 1, true);
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        mesh.position.set(x, y, z);
+        this.add(mesh);
+    }
+
+    createLamp() {
+        'use strict';
+
+        this.addLampPole(0, 29, 0);
+        this.addLampHead(0, 57, 0);
+        this.addLampLight(0, 57, 0);
+        this.addLampBase(0, 1, 0);
+
+        this.scene.add(this);
+    }
 }

@@ -1,36 +1,43 @@
-var geometry, mesh;
+class Table extends THREE.Object3D {
+    constructor(scene, x, y, z) {
+        super();
 
-function addTableLeg(obj, x, y, z) {
-    'use strict';
+        this.scene = scene;
 
-    geometry = new THREE.CylinderGeometry(1, 1, 28);
-    mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
-    mesh.position.set(x, y, z);
-    obj.add(mesh);
-}
+        this.position.x = x;
+        this.position.y = y;
+        this.position.z = z;
 
-function addTableTop(obj, x, y, z) {
-    'use strict';
-    geometry = new THREE.BoxGeometry(48, 2, 24);
-    mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
-    mesh.position.set(x, y, z);
-    obj.add(mesh);
-}
+        this.createTable();
+    }
 
-function createTable(scene, x, y, z) {
-    'use strict';
+    addTableLeg(x, y, z) {
+        'use strict';
 
-    var table = new THREE.Object3D();
+        let geometry = new THREE.CylinderGeometry(1, 1, 28);
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        mesh.position.set(x, y, z);
+        this.add(mesh);
+    }
 
-    addTableTop(table, 0, 0, 0);
-    addTableLeg(table, -21, -14, -9); /* y = -28 (table leg height)  */
-    addTableLeg(table, -21, -14, 9);
-    addTableLeg(table, 21, -14, 9);
-    addTableLeg(table, 21, -14, -9);
+    addTableTop(x, y, z) {
+        'use strict';
 
-    scene.add(table);
+        let geometry = new THREE.BoxGeometry(48, 2, 24);
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        mesh.position.set(x, y, z);
+        this.add(mesh);
+    }
 
-    table.position.x = x;
-    table.position.y = y;
-    table.position.z = z;
+    createTable() {
+        'use strict';
+
+        this.addTableTop(0, 0, 0);
+        this.addTableLeg(-21, -14, -9); /* y = -28 (table leg height)  */
+        this.addTableLeg(-21, -14, 9);
+        this.addTableLeg(21, -14, 9);
+        this.addTableLeg(21, -14, -9);
+
+        this.scene.add(this);
+    }
 }

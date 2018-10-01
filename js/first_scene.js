@@ -1,6 +1,6 @@
 var scene, camera, renderer;
 
-var chair;
+var table, chair, lamp;
 
 function createScene() {
     'use strict';
@@ -9,9 +9,9 @@ function createScene() {
 
     scene.add(new THREE.AxisHelper(10));
 
-    createTable(scene, 0, 29, 0);  /*reference point is the table top center*/
-    chair = createChair(scene, 0, 16, 20); /*reference point is the chair seat center*/
-    createLamp(scene, -34, 0, 0); /*reference point is the lamp base center*/
+    table = new Table(scene, 0, 29, 0);  /*reference point is the table top center*/
+    chair = new Chair(scene, 0, 16, 20); /*reference point is the chair seat center*/
+    lamp = new Lamp(scene, -34, 0, 0); /*reference point is the lamp base center*/
 }
 
 function createCamera() {
@@ -63,7 +63,6 @@ function onResize() {
 
 var keyMap = [];
 var movementKeyPressed = false;
-var amountOfMovementKeysPressed = 0;
 
 function onKeyDown(e) {
     'use strict';
@@ -95,25 +94,21 @@ function onKeyDown(e) {
     if(keyMap[37]){
         chair.userData.left = true;
         movementKeyPressed = true;
-        amountOfMovementKeysPressed++;
     }
     //up arrow
     if(keyMap[38]){
         chair.userData.up = true;
         movementKeyPressed = true;
-        amountOfMovementKeysPressed++;
     }
     //right arrow
     if(keyMap[39]){
         chair.userData.right = true;
         movementKeyPressed = true;
-        amountOfMovementKeysPressed++;
     }
     //down arrow
     if(keyMap[40]){
         chair.userData.down = true;
         movementKeyPressed = true;
-        amountOfMovementKeysPressed++;
     }
 }
 
@@ -126,22 +121,18 @@ function onKeyReleased() {
     if (keyCode == 37) {
         chair.userData.left = false;
         movementKeyPressed = false;
-        amountOfMovementKeysPressed--;
     }
     if (keyCode == 38) {
         chair.userData.up = false;
         movementKeyPressed = false;
-        amountOfMovementKeysPressed--;
     }
     if (keyCode == 39) {
         chair.userData.right = false;
         movementKeyPressed = false;
-        amountOfMovementKeysPressed--;
     }
     if (keyCode == 40) {
         chair.userData.down = false;
         movementKeyPressed = false;
-        amountOfMovementKeysPressed--;
     }
 }
 
@@ -169,13 +160,26 @@ function init() {
     window.addEventListener("resize", onResize);
 }
 
+function rotateObject() {
+    var pivot = new THREE.Vector3(0, 1, 0);
+    var vectorToPivot = chair.position.sub(pivot);
+    var moveToPivot = new THREE.Matrix4().makeTranslation(vectorToPivot.x,
+                                                      vectorToPivot.y,vectorToPivot.z);
+    var rotation = new THREE.Matrix4().makeRotationY(Math.PI/2);
+    var matrix = rotation.multiply(moveToPivot);
+    chair.applyMatrix(matrix);
+}
+
 function animate() {
     'use strict';
     if (movementKeyPressed == true) {
         if (chair.userData.acceleration < chair.userData.maximumVel)
             chair.userData.acceleration += 0.04;
         if (chair.userData.left) {
-            chair.position.x -= 1 * chair.userData.acceleration;
+            //rotateObject();
+            //rad -= Math.PI/2;
+          //  chair.rotateOnAxis(axis, rad);
+            chair.rotation.y -= Math.PI/2;
             chair.lastMoves.counterLeft++;
         }
         if (chair.userData.up) {
@@ -183,7 +187,7 @@ function animate() {
             chair.lastMoves.counterUp++;
         }
         if (chair.userData.right) {
-            chair.position.x += 1 * chair.userData.acceleration;
+            chair.rotation.y += Math.PI/2;
             chair.lastMoves.counterRight++;
         }
         if (chair.userData.down) {
@@ -195,36 +199,32 @@ function animate() {
     else if ((chair.userData.acceleration > 0) && (chair.lastMoves.counterLeft +
               chair.lastMoves.counterUp + chair.lastMoves.counterRight +
               chair.lastMoves.counterDown > 0)) {
-      console.log('acelaracao: ' + chair.userData.acceleration);
-      console.log('left: ' + chair.lastMoves.counterLeft);
-      console.log('up: ' + chair.lastMoves.counterUp);
-      console.log('right: ' + chair.lastMoves.counterRight);
-      console.log('down: ' + chair.lastMoves.counterDown);
+
         chair.userData.acceleration -= 0.04;
-        if (chair.lastMoves.counterLeft > 0) {
+        /*if (chair.lastMoves.counterLeft > 0) {
             chair.lastMoves.counterLeft--;
             chair.position.x -= 1 * chair.userData.acceleration;
-        }
+        }*/
         if (chair.lastMoves.counterUp > 0) {
             chair.lastMoves.counterUp--;
             chair.position.z -= 1 * chair.userData.acceleration;
         }
-        if (chair.lastMoves.counterRight > 0) {
+        /*if (chair.lastMoves.counterRight > 0) {
             chair.lastMoves.counterRight--;
             chair.position.x += 1 * chair.userData.acceleration;
-        }
+        }*/
         if (chair.lastMoves.counterDown > 0) {
             chair.lastMoves.counterDown--;
             chair.position.z += 1 * chair.userData.acceleration;
         }
     }
-    else {
+    /*else {
         chair.lastMoves.counterLeft = 0;
         chair.lastMoves.counterUp = 0;
         chair.lastMoves.counterRight = 0;
         chair.lastMoves.counterDown = 0;
         chair.userData.acceleration = 0;
-    }
+    }*/
 
     render();
 
