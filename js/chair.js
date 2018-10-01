@@ -21,6 +21,8 @@ class Chair extends THREE.Object3D {
         let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
+
+        return mesh;
     }
 
     addChairSeat(x, y, z) {
@@ -30,6 +32,8 @@ class Chair extends THREE.Object3D {
         let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
+
+        return mesh;
     }
 
     addChairPole(x, y, z) {
@@ -39,6 +43,8 @@ class Chair extends THREE.Object3D {
         let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
+
+        return mesh;
     }
 
     addChairBase(x, y, z, angle) {
@@ -49,6 +55,8 @@ class Chair extends THREE.Object3D {
         mesh.position.set(x, y, z);
         geometry.rotateY(angle);
         this.add(mesh);
+
+        return mesh;
     }
 
     addChairWheel(x, y, z) {
@@ -58,21 +66,35 @@ class Chair extends THREE.Object3D {
         let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
+
+        return mesh;
     }
 
     createChair() {
         'use strict';
 
-        this.addChairBack(0, 9, 19);
-        this.addChairSeat(0, 0, 10); /* 'mass' center of the chair */
+        this.back = this.addChairBack(0, 9, 19);
+        this.seat = this.addChairSeat(0, 0, 10); /* 'mass' center of the chair */
         this.addChairPole(0, -6, 10);
         this.addChairBase(0, -12, 10, Math.PI/4);
         this.addChairBase(0, -12, 10, Math.PI/(-4));
-        this.addChairWheel(-10, -14, 1);
-        this.addChairWheel(10, -14, 1);
-        this.addChairWheel(10, -14, 19);
-        this.addChairWheel(-10, -14, 19);
+        this.wheel1 = this.addChairWheel(10, -14, 1);
+        this.wheel2 = this.addChairWheel(10, -14, 19);
+        this.wheel3 = this.addChairWheel(-10, -14, 19);
+        this.wheel4 = this.addChairWheel(-10, -14, 1);
 
         this.scene.add(this);
+    }
+
+    rotateChairWheels(direction) {
+        this.wheel1.rotation.y += (Math.PI / 8) * direction;
+        this.wheel2.rotation.y += (Math.PI / 8) * direction;
+        this.wheel3.rotation.y += (Math.PI / 8) * direction;
+        this.wheel4.rotation.y += (Math.PI / 8) * direction;
+    }
+
+    rotateChair(direction) {
+        //this.back.rotation.y += (Math.PI / 8) * direction;
+        this.seat.rotation.y += (Math.PI / 8) * direction;
     }
 }

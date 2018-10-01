@@ -172,14 +172,18 @@ function rotateObject() {
 
 function animate() {
     'use strict';
+
     if (movementKeyPressed == true) {
         if (chair.userData.acceleration < chair.userData.maximumVel)
             chair.userData.acceleration += 0.04;
         if (chair.userData.left) {
             //rotateObject();
-            //rad -= Math.PI/2;
-          //  chair.rotateOnAxis(axis, rad);
-            chair.rotation.y -= Math.PI/2;
+            let axis = new THREE.Vector3(0,2,0);
+            chair.rotateOnAxis(axis, Math.PI/8);
+            //chair.rotation.y -= Math.PI/2;
+            //chair.rotateY(Math.PI/8)
+            //chair.rotateChairWheels(1);
+            //chair.rotateChair(1);
             chair.lastMoves.counterLeft++;
         }
         if (chair.userData.up) {
@@ -187,7 +191,8 @@ function animate() {
             chair.lastMoves.counterUp++;
         }
         if (chair.userData.right) {
-            chair.rotation.y += Math.PI/2;
+            //chair.rotation.y += Math.PI/2;
+            chair.rotateChairWheels(-1);
             chair.lastMoves.counterRight++;
         }
         if (chair.userData.down) {
