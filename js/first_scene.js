@@ -7,31 +7,33 @@ function createScene() {
 
     scene = new THREE.Scene();
 
-    scene.add(new THREE.AxisHelper(10));
+    scene.add(new THREE.AxisHelper(50));
 
     table = new Table(scene, 0, 29, 0);  /*reference point is the table top center*/
-    chair = new Chair(scene, 0, 16, 20); /*reference point is the chair seat center*/
+    chair = new Chair(scene, 0, 16, 25); /*reference point is the chair seat center*/
     lamp = new Lamp(scene, -34, 0, 0); /*reference point is the lamp base center*/
 }
 
 function createCamera() {
     'use strict';
-    camera = new THREE.PerspectiveCamera(70,
-                                         window.innerWidth / window.innerHeight,
-                                         1,
-                                         1000);
+    camera = new THREE.OrthographicCamera(window.innerWidth / -50,
+                                         window.innerWidth / 50,
+                                         window.innerHeight / 50,
+                                         window.innerHeight / -50);
     camera.position.x = 0;
     camera.position.y = 100;
     camera.position.z = 0;
     camera.lookAt(scene.position);
+
+    //camera.rotation.y = 90 * Math.PI / 180;
 }
 
 function createCamera2() {
     'use strict';
-    camera = new THREE.PerspectiveCamera(70,
-                                         window.innerWidth / window.innerHeight,
-                                         1,
-                                         1000);
+    camera = new THREE.OrthographicCamera(window.innerWidth / -50,
+                                         window.innerWidth / 50,
+                                         window.innerHeight / 50,
+                                         window.innerHeight / -50);
     camera.position.x = 100;
     camera.position.y = 0;
     camera.position.z = 0;
@@ -40,10 +42,10 @@ function createCamera2() {
 
 function createCamera3() {
     'use strict';
-    camera = new THREE.PerspectiveCamera(70,
-                                         window.innerWidth / window.innerHeight,
-                                         1,
-                                         1000);
+    camera = new THREE.OrthographicCamera(window.innerWidth / -50,
+                                         window.innerWidth / 50,
+                                         window.innerHeight / 50,
+                                         window.innerHeight / -50);
     camera.position.x = 0;
     camera.position.y = 0;
     camera.position.z = 100;
@@ -178,12 +180,12 @@ function animate() {
             chair.userData.acceleration += 0.04;
         if (chair.userData.left) {
             //rotateObject();
-            let axis = new THREE.Vector3(0,2,0);
-            chair.rotateOnAxis(axis, Math.PI/8);
+            //let axis = new THREE.Vector3(0,2,0);
+            //chair.rotateOnAxis(axis, Math.PI/8);
             //chair.rotation.y -= Math.PI/2;
             //chair.rotateY(Math.PI/8)
             //chair.rotateChairWheels(1);
-            //chair.rotateChair(1);
+            chair.rotateChair(1);
             chair.lastMoves.counterLeft++;
         }
         if (chair.userData.up) {

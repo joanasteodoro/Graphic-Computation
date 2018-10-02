@@ -11,6 +11,8 @@ class Chair extends THREE.Object3D {
         this.userData = { maximumVel: 4, left: false, up: false, right: false, down: false, acceleration: 0 };
         this.lastMoves = { counterLeft: 0, counterUp: 0, counterRight: 0, counterDown: 0 };
 
+        this.rotationAngle = 0;
+
         this.createChair();
     }
 
@@ -73,15 +75,15 @@ class Chair extends THREE.Object3D {
     createChair() {
         'use strict';
 
-        this.back = this.addChairBack(0, 9, 19);
-        this.seat = this.addChairSeat(0, 0, 10); /* 'mass' center of the chair */
-        this.addChairPole(0, -6, 10);
-        this.addChairBase(0, -12, 10, Math.PI/4);
-        this.addChairBase(0, -12, 10, Math.PI/(-4));
-        this.wheel1 = this.addChairWheel(10, -14, 1);
-        this.wheel2 = this.addChairWheel(10, -14, 19);
-        this.wheel3 = this.addChairWheel(-10, -14, 19);
-        this.wheel4 = this.addChairWheel(-10, -14, 1);
+        this.seat = this.addChairSeat(0, 0, 0); /* 'mass' center of the chair */
+        this.back = this.addChairBack(0, 9, 9);
+        this.addChairPole(0, -6, 0);
+        this.addChairBase(0, -12, 0, Math.PI/4);
+        this.addChairBase(0, -12, 0, Math.PI/(-4));
+        this.wheel1 = this.addChairWheel(10, -14, -9);
+        this.wheel2 = this.addChairWheel(10, -14, 9);
+        this.wheel3 = this.addChairWheel(-10, -14, 9);
+        this.wheel4 = this.addChairWheel(-10, -14, -9);
 
         this.scene.add(this);
     }
@@ -94,7 +96,8 @@ class Chair extends THREE.Object3D {
     }
 
     rotateChair(direction) {
-        //this.back.rotation.y += (Math.PI / 8) * direction;
-        this.seat.rotation.y += (Math.PI / 8) * direction;
+        this.rotation.y += (Math.PI / 8) * direction;
+        //this.seat.rotation.y += (Math.PI / 8) * direction;
+        //this.rotationAngle = (Math.PI / 8) * direction;
     }
 }
