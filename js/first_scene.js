@@ -28,17 +28,19 @@ function createCamera(x, y, z) {
     nCamera.position.x = x;
     nCamera.position.y = y;
     nCamera.position.z = z;
-    var vector;
-    if(x == 50) {
-        vector = new THREE.Vector3(0, 0, 0);
-    }
-    else if(y == 50) {
-        vector = new THREE.Vector3(0, 50, 0);
-    }
 
-    else if(z == 50) {
+    var vector;
+    
+    if(x == 100) {
+        vector = new THREE.Vector3(0, 30, 0);
+    }
+    else if(y == 100) {
         vector = new THREE.Vector3(0, 0, 0);
     }
+    else if(z == 100) {
+        vector = new THREE.Vector3(0, 30, 0);
+    }
+    
     nCamera.lookAt(vector);
 
     return nCamera;
@@ -173,10 +175,10 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     createScene();
-    camera1 = createCamera(0, 50, 0);
-    camera2 = createCamera(0, 0, 50);
-    camera3 = createCamera(50, 0, 0);
-    switchCamera(camera2);
+    camera1 = createCamera(0, 100, 0); // vista de topo
+    camera2 = createCamera(0, 30, 100);
+    camera3 = createCamera(100, 30, 0);
+    switchCamera(camera1);
 
     render();
 
