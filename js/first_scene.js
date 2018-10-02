@@ -4,6 +4,9 @@ var camera1, camera2, camera3;
 
 var table, chair, lamp;
 
+var keyMap = [];
+var movementKeyPressed = false;
+
 function createScene() {
     'use strict';
 
@@ -61,8 +64,6 @@ function onResize() {
     }
 }
 
-var keyMap = [];
-var movementKeyPressed = false;
 
 function onKeyDown(e) {
     'use strict';
@@ -70,45 +71,54 @@ function onKeyDown(e) {
     var keyCode = e.keyCode;
     keyMap[keyCode] = true;
 
-    //a or A
-    if (keyMap[65] || keyMap[97]) {
-        scene.traverse(function (node) {
-            if (node instanceof THREE.Mesh) {
-              node.material.wireframe = !node.material.wireframe;
-            }
-        });
-    }
-    //1
-    if (keyMap[49]) {
-        switchCamera(camera1);
-    }
-    //2
-    if (keyMap[50]) {
-        switchCamera(camera2);
-    }
-    //3
-    if (keyMap[51]) {
-        switchCamera(camera3);
-    }
-    //left arrow
-    if(keyMap[37]){
-        chair.userData.left = true;
-        movementKeyPressed = true;
-    }
-    //up arrow
-    if(keyMap[38]){
-        chair.userData.up = true;
-        movementKeyPressed = true;
-    }
-    //right arrow
-    if(keyMap[39]){
-        chair.userData.right = true;
-        movementKeyPressed = true;
-    }
-    //down arrow
-    if(keyMap[40]){
-        chair.userData.down = true;
-        movementKeyPressed = true;
+    switch(keyCode) {
+        case 65: // a
+            scene.traverse(function (node) {
+                if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;  
+             });
+            break;
+        
+        case 97: // A
+            scene.traverse(function (node) {
+                if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;  
+             });
+            break;
+        
+        case 49: // 1    
+            switchCamera(camera1);
+            break;
+        
+        case 50: // 2
+            switchCamera(camera2);
+            break;
+        
+        case 51: // 3
+            switchCamera(camera3);
+            break;
+        
+        case 37: // left arrow
+            chair.userData.left = true;
+            movementKeyPressed = true;
+            break;
+        
+        case 38: // up arrow
+            chair.userData.up = true;
+            movementKeyPressed = true;
+            break;
+
+        case 39: // right arrow
+            chair.userData.right = true;
+            movementKeyPressed = true;
+            break;
+
+        case 40: // down arrow
+            chair.userData.down = true;
+            movementKeyPressed = true;
+            break;
+             
+        default:
+             break;
+        
     }
 }
 
@@ -118,22 +128,35 @@ function onKeyReleased() {
     var keyCode = event.keyCode;
     keyMap[keyCode] = false;
 
-    if (keyCode == 37) {
-        chair.userData.left = false;
-        movementKeyPressed = false;
+    switch(keyCode) {
+        case 37: // left arrow
+            chair.userData.left = false;
+            movementKeyPressed = false;
+            console.log('worked')
+            break;
+        
+        case 38: // up arrow
+            chair.userData.up = false;
+            movementKeyPressed = false;
+            console.log('worked1')
+            break;
+        
+        case 39: // right arrow
+            chair.userData.right = false;
+            movementKeyPressed = false;
+            console.log('worked2')
+            break;
+        
+        case 40: // down arrow
+            chair.userData.down = false;
+            movementKeyPressed = false;
+            console.log('worked3')
+            break;
+        
+        default:
+            break;
     }
-    if (keyCode == 38) {
-        chair.userData.up = false;
-        movementKeyPressed = false;
-    }
-    if (keyCode == 39) {
-        chair.userData.right = false;
-        movementKeyPressed = false;
-    }
-    if (keyCode == 40) {
-        chair.userData.down = false;
-        movementKeyPressed = false;
-    }
+
 }
 
 function render() {
@@ -153,7 +176,7 @@ function init() {
     camera1 = createCamera(0, 50, 0);
     camera2 = createCamera(0, 0, 50);
     camera3 = createCamera(50, 0, 0);
-    switchCamera(camera1);
+    switchCamera(camera2);
 
     render();
 
@@ -166,7 +189,7 @@ function init() {
 function animate() {
     'use strict';
 
-    if (movementKeyPressed == true) {
+    if (movementKeyPressed) {
         if (chair.userData.acceleration < chair.userData.maximumVel)
             chair.userData.acceleration += 0.04;
         if (chair.userData.left) {
