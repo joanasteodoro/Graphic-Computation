@@ -13,7 +13,8 @@ class Chair extends THREE.Object3D {
 
         this.rotationAngle = 0;
 
-        this.createChair();
+        this.createUpperChair();
+        this.createBottomChair();
     }
 
     addChairBack(x, y, z) {
@@ -72,11 +73,22 @@ class Chair extends THREE.Object3D {
         return mesh;
     }
 
-    createChair() {
+    createUpperChair() {
         'use strict';
 
+        this.upperchair = new THREE.Object3D();
         this.seat = this.addChairSeat(0, 0, 0); /* 'mass' center of the chair */
         this.back = this.addChairBack(0, 9, 9);
+
+        this.upperchair.add(this.seat);
+        this.upperchair.add(this.back);
+
+        this.add(this.upperchair);
+    }
+
+    createBottomChair() {
+        'use strict';
+
         this.addChairPole(0, -6, 0);
         this.addChairBase(0, -12, 0, Math.PI/4);
         this.addChairBase(0, -12, 0, Math.PI/(-4));
@@ -95,8 +107,8 @@ class Chair extends THREE.Object3D {
         this.wheel4.rotation.y += (Math.PI / 8) * direction;
     }
 
-    rotateChair(direction) {
-        this.rotation.y += (Math.PI / 8) * direction;
+    rotateUpperChair(direction) {
+        this.upperchair.rotation.y += (Math.PI / 8) * direction;
         //this.seat.rotation.y += (Math.PI / 8) * direction;
         //this.rotationAngle = (Math.PI / 8) * direction;
     }

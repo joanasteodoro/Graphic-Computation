@@ -1,5 +1,7 @@
 var scene, camera, renderer;
 
+var camera1, camera2, camera3;
+
 var table, chair, lamp;
 
 function createScene() {
@@ -14,52 +16,48 @@ function createScene() {
     lamp = new Lamp(scene, -34, 0, 0); /*reference point is the lamp base center*/
 }
 
-function createCamera() {
+function createCamera(x, y, z) {
     'use strict';
-    camera = new THREE.OrthographicCamera(window.innerWidth / -50,
+    var nCamera = new THREE.OrthographicCamera(window.innerWidth / -50,
                                          window.innerWidth / 50,
                                          window.innerHeight / 50,
                                          window.innerHeight / -50);
-    camera.position.x = 0;
-    camera.position.y = 100;
-    camera.position.z = 0;
-    camera.lookAt(scene.position);
+    nCamera.position.x = x;
+    nCamera.position.y = y;
+    nCamera.position.z = z;
+    var vector;
+    if(x == 50) {
+        vector = new THREE.Vector3(0, 0, 0);
+    }
+    else if(y == 50) {
+        vector = new THREE.Vector3(0, 50, 0);
+    }
 
-    //camera.rotation.y = 90 * Math.PI / 180;
+    else if(z == 50) {
+        vector = new THREE.Vector3(0, 0, 0);
+    }
+    nCamera.lookAt(vector);
+
+    return nCamera;
 }
 
-function createCamera2() {
+function switchCamera(nCamera) {
     'use strict';
-    camera = new THREE.OrthographicCamera(window.innerWidth / -50,
-                                         window.innerWidth / 50,
-                                         window.innerHeight / 50,
-                                         window.innerHeight / -50);
-    camera.position.x = 100;
-    camera.position.y = 0;
-    camera.position.z = 0;
-    camera.lookAt(scene.position);
-}
 
-function createCamera3() {
-    'use strict';
-    camera = new THREE.OrthographicCamera(window.innerWidth / -50,
-                                         window.innerWidth / 50,
-                                         window.innerHeight / 50,
-                                         window.innerHeight / -50);
-    camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 100;
-    camera.lookAt(scene.position);
+    camera = nCamera;
 }
 
 function onResize() {
     'use strict';
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
     if (window.innerHeight > 0 && window.innerWidth > 0) {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.left = window.innerWidth / -50;
+        camera.right = window.innerWidth / 50;
+        camera.top = window.innerHeight / 50;
+        camera.bottom = window.innerHeight / -50;
         camera.updateProjectionMatrix();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
     }
 }
 
@@ -82,15 +80,15 @@ function onKeyDown(e) {
     }
     //1
     if (keyMap[49]) {
-        createCamera();
+        switchCamera(camera1);
     }
     //2
     if (keyMap[50]) {
-        createCamera2();
+        switchCamera(camera2);
     }
     //3
     if (keyMap[51]) {
-        createCamera3();
+        switchCamera(camera3);
     }
     //left arrow
     if(keyMap[37]){
@@ -152,7 +150,10 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     createScene();
-    createCamera();
+    camera1 = createCamera(0, 50, 0);
+    camera2 = createCamera(0, 0, 50);
+    camera3 = createCamera(50, 0, 0);
+    switchCamera(camera1);
 
     render();
 
@@ -162,16 +163,6 @@ function init() {
     window.addEventListener("resize", onResize);
 }
 
-function rotateObject() {
-    var pivot = new THREE.Vector3(0, 1, 0);
-    var vectorToPivot = chair.position.sub(pivot);
-    var moveToPivot = new THREE.Matrix4().makeTranslation(vectorToPivot.x,
-                                                      vectorToPivot.y,vectorToPivot.z);
-    var rotation = new THREE.Matrix4().makeRotationY(Math.PI/2);
-    var matrix = rotation.multiply(moveToPivot);
-    chair.applyMatrix(matrix);
-}
-
 function animate() {
     'use strict';
 
@@ -179,13 +170,7 @@ function animate() {
         if (chair.userData.acceleration < chair.userData.maximumVel)
             chair.userData.acceleration += 0.04;
         if (chair.userData.left) {
-            //rotateObject();
-            //let axis = new THREE.Vector3(0,2,0);
-            //chair.rotateOnAxis(axis, Math.PI/8);
-            //chair.rotation.y -= Math.PI/2;
-            //chair.rotateY(Math.PI/8)
-            //chair.rotateChairWheels(1);
-            chair.rotateChair(1);
+            chair.rotateUpperChair(1);
             chair.lastMoves.counterLeft++;
         }
         if (chair.userData.up) {
@@ -193,8 +178,8 @@ function animate() {
             chair.lastMoves.counterUp++;
         }
         if (chair.userData.right) {
-            //chair.rotation.y += Math.PI/2;
-            chair.rotateChairWheels(-1);
+            console.log(chair.rotation.y);
+            chair.rotateUpperChair(-1);
             chair.lastMoves.counterRight++;
         }
         if (chair.userData.down) {
