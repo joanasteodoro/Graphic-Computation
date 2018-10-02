@@ -11,7 +11,6 @@ class Lamp extends THREE.Object3D {
         this.createLamp();
     }
 
-
     addLampPole(x, y, z) {
         'use strict';
 

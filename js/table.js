@@ -15,7 +15,7 @@ class Table extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.CylinderGeometry(1, 1, 28);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x333333, wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
     }
@@ -23,8 +23,8 @@ class Table extends THREE.Object3D {
     addTableTop(x, y, z) {
         'use strict';
 
-        let geometry = new THREE.BoxGeometry(48, 2, 24);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        var geometry = new THREE.BoxGeometry(48, 2, 24);
+        var mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x333333, wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
     }

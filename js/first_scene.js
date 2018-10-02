@@ -11,10 +11,10 @@ function createScene() {
     'use strict';
 
     scene = new THREE.Scene();
-
+    scene.background = new THREE.Color(0x000000);
     scene.add(new THREE.AxisHelper(50));
 
-    table = new Table(scene, 0, 29, 0);  /*reference point is the table top center*/
+    table = new Table(scene, 0, 28, 0);  /*reference point is the table top center*/
     chair = new Chair(scene, 0, 16, 25); /*reference point is the chair seat center*/
     lamp = new Lamp(scene, -34, 0, 0); /*reference point is the lamp base center*/
 }
@@ -65,7 +65,6 @@ function onResize() {
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
 }
-
 
 function onKeyDown(e) {
     'use strict';
@@ -175,9 +174,9 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     createScene();
-    camera1 = createCamera(0, 100, 0); // vista de topo
-    camera2 = createCamera(0, 30, 100);
-    camera3 = createCamera(100, 30, 0);
+    camera1 = createCamera(0, 100, 0); // eagle view
+    camera2 = createCamera(0, 30, 100); // front view
+    camera3 = createCamera(100, 30, 0); // side view
     switchCamera(camera1);
 
     render();
