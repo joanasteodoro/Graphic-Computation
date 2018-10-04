@@ -33,7 +33,7 @@ class Lamp extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.SphereGeometry(2);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(255, 255, 255)", wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(204, 143, 0)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
     }
