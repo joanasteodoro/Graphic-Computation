@@ -104,7 +104,7 @@ class Chair extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.TorusGeometry(1, 1);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(240, 227, 209)", wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(0, 0, 0)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
 

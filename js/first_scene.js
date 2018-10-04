@@ -19,7 +19,7 @@ function createScene() {
     'use strict';
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    scene.background = new THREE.Color("rgb(247, 231, 207)");
     scene.add(new THREE.AxisHelper(50));
 
     table = new Table(scene, 0, 28, 0);  /*reference point is the table top center*/
