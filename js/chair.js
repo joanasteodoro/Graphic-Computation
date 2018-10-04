@@ -22,7 +22,7 @@ class Chair extends THREE.Object3D {
         this.createUpperChair();
         this.createBottomChair();
     }
-    
+
     setAcceleration(acceleration) {
         this.acceleration = acceleration;
     }
@@ -59,7 +59,7 @@ class Chair extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.CubeGeometry(20, 16, 2);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(92, 61, 15)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
 
@@ -70,7 +70,7 @@ class Chair extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.CubeGeometry(20, 2, 20); /* width, height, depth */
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(92, 61, 15)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
 
@@ -81,7 +81,7 @@ class Chair extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.CubeGeometry(2, 10, 2);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color:"rgb(92, 61, 15)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
 
@@ -92,7 +92,7 @@ class Chair extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.CubeGeometry(28, 2, 2);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(92, 61, 15)", wireframe: true }));
         mesh.position.set(x, y, z);
         geometry.rotateY(angle);
         this.add(mesh);
@@ -104,7 +104,7 @@ class Chair extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.TorusGeometry(1, 1);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(240, 227, 209)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
 
@@ -147,7 +147,7 @@ class Chair extends THREE.Object3D {
 
     rotateUpperChair(direction) {
         this.upperchair.rotation.y += (Math.PI / 8) * direction;
-        //this.seat.rotation.y += (Math.PI / 8) * direction;
-        //this.rotationAngle = (Math.PI / 8) * direction;
+        this.seat.rotation.y += (Math.PI / 8) * direction;
+        this.rotationAngle = (Math.PI / 8) * direction;
     }
 }

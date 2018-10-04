@@ -15,7 +15,7 @@ class Lamp extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.CylinderGeometry(1, 1, 55);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(255, 179, 102)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
     }
@@ -24,7 +24,7 @@ class Lamp extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.CylinderGeometry(7, 7, 10, 8, 1, true);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(255, 179, 102)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
     }
@@ -33,7 +33,7 @@ class Lamp extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.SphereGeometry(2);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(255, 255, 255)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
     }
@@ -42,7 +42,7 @@ class Lamp extends THREE.Object3D {
         'use strict';
 
         let geometry = new THREE.ConeGeometry(7, 2, 8, 1, true);
-        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true }));
+        let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(255, 179, 102)", wireframe: true }));
         mesh.position.set(x, y, z);
         this.add(mesh);
     }
