@@ -216,16 +216,21 @@ function animate() {
         chair.setAcceleration(0);
         chair.setCurrentVelocity(0);
         chair.setPreviousVelocity(0);
+        time.start();
     }
 
     /* when a key is pressed */
     if (movementKeyPressed) {
         /* up key*/
         if(chair.userData.up) {
+
+            if(chair.userData.down) {xw
+            } // waits until the previous movement ends
+
             if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
                 chair.getCurrentVelocity() > chair.getMinimumVelocity()) {
 
-                    chair.setAcceleration(-100000); // negative because the positive part of z axis is in the opposite direction
+                    chair.setAcceleration(-1000000); // negative because the positive part of z axis is in the opposite direction
                     chair.setPreviousVelocity(chair.getCurrentVelocity()); 
                     delta = time.getDelta();
                     chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
@@ -242,12 +247,12 @@ function animate() {
         }
         if(chair.userData.down) {
 
-            if(chair.userData.up || chair.lastMoves.counterUp != 0) {} // waits until the previous movement ends
+            if(chair.userData.up) {} // waits until the previous movement ends
 
             else if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
                 chair.getCurrentVelocity() > chair.getMinimumVelocity()) {
                 
-                chair.setAcceleration(1); // positive because the negative part of z axis is in the opposite direction
+                chair.setAcceleration(1000000); // positive because the negative part of z axis is in the opposite direction
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
                 delta = time.getDelta();
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
@@ -266,7 +271,7 @@ function animate() {
         /* up key */
         if(chair.userData.upRel) {
             if(chair.getCurrentVelocity() != 0 & chair.getPreviousVelocity() != 0) {
-                chair.setAcceleration(100000); 
+                chair.setAcceleration(1000000); 
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
                 delta = time.getDelta();
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
@@ -280,7 +285,7 @@ function animate() {
             }
         }
         if(chair.lastMoves.counterDown > 0) {
-            chair.setAcceleration(-1); 
+            chair.setAcceleration(-1000000); 
             chair.setPreviousVelocity(chair.getCurrentVelocity()); 
             delta = time.getDelta();
             chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
