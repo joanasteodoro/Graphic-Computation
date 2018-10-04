@@ -8,13 +8,51 @@ class Chair extends THREE.Object3D {
         this.position.y = y;
         this.position.z = z;
 
-        this.userData = { maximumVel: 4, left: false, up: false, right: false, down: false, acceleration: 0 };
-        this.lastMoves = { counterLeft: 0, counterUp: 0, counterRight: 0, counterDown: 0 };
+        this.userData = {left: false, up: false, right: false, down: false, leftRel: false, upRel: false, rightRel: false, downRel: false};
+        this.lastMoves = {counterLeft: 0, counterUp: 0, counterRight: 0, counterDown: 0};
+
+        this.acceleration = 0;
+        this.previousVelocity = 0;
+        this.currentVelocity = 0;
+        this.maximumVelocity = 100000;
+        this.minimumVelocity = -100000;
 
         this.rotationAngle = 0;
 
         this.createUpperChair();
         this.createBottomChair();
+    }
+    
+    setAcceleration(acceleration) {
+        this.acceleration = acceleration;
+    }
+
+    setPreviousVelocity(vel) {
+        this.previousVelocity = vel;
+    }
+
+    setCurrentVelocity(vel) {
+        this.currentVelocity = vel;
+    }
+
+    getAcceleration() {
+        return this.acceleration;
+    }
+
+    getPreviousVelocity() {
+        return this.previousVelocity;
+    }
+
+    getCurrentVelocity() {
+        return this.currentVelocity;
+    }
+
+    getMaximumVelocity() {
+        return this.maximumVelocity;
+    }
+
+    getMinimumVelocity() {
+        return this.minimumVelocity;
     }
 
     addChairBack(x, y, z) {

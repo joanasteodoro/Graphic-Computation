@@ -6,6 +6,14 @@ var table, chair, lamp;
 
 var keyMap = [];
 var movementKeyPressed = false;
+var movementKeyReleased = false;
+
+var time = new THREE.Clock({autostart: false}); // timer used to determine the delta
+var delta; // delta used to calc the velocity and position
+var deslVector = new THREE.Vector3(0, 0, 0); // vector representing the delta pos
+
+var cv, pv; // auxiliar var
+
 
 function createScene() {
     'use strict';
@@ -48,7 +56,6 @@ function createCamera(x, y, z) {
 
 function switchCamera(nCamera) {
     'use strict';
-
     camera = nCamera;
 }
 
@@ -105,6 +112,8 @@ function onKeyDown(e) {
         case 38: // up arrow
             chair.userData.up = true;
             movementKeyPressed = true;
+            movementKeyReleased = false;
+            chair.userData.upRel = false;
             break;
 
         case 39: // right arrow
@@ -133,31 +142,34 @@ function onKeyReleased() {
         case 37: // left arrow
             chair.userData.left = false;
             movementKeyPressed = false;
-            console.log('worked')
+            console.log('worked');
             break;
         
         case 38: // up arrow
             chair.userData.up = false;
             movementKeyPressed = false;
-            console.log('worked1')
+            movementKeyReleased = true;
+            chair.userData.upRel = true;
+            console.log('worked1');
             break;
         
         case 39: // right arrow
             chair.userData.right = false;
             movementKeyPressed = false;
-            console.log('worked2')
+            console.log('worked2');
             break;
         
         case 40: // down arrow
             chair.userData.down = false;
             movementKeyPressed = false;
-            console.log('worked3')
+            movementKeyReleased = true;
+            console.log('worked3');
             break;
         
         default:
             break;
     }
-
+    
 }
 
 function render() {
@@ -187,60 +199,101 @@ function init() {
     window.addEventListener("resize", onResize);
 }
 
+function updateChairPosition() {
+    chair.position.x += deslVector.x;
+    chair.position.y += deslVector.y;
+    chair.position.z += deslVector.z;
+}
+
 function animate() {
     'use strict';
+    time.start();
+    /* when no keys were pressed previously */ 
+    if(chair.lastMoves.counterUp ==  0 && chair.lastMoves.counterDown == 0) {
+        deslVector.x = 0;
+        deslVector.y = 0;
+        deslVector.z = 0;
+        chair.setAcceleration(0);
+        chair.setCurrentVelocity(0);
+        chair.setPreviousVelocity(0);
+    }
 
+    /* when a key is pressed */
     if (movementKeyPressed) {
-        if (chair.userData.acceleration < chair.userData.maximumVel)
-            chair.userData.acceleration += 0.04;
-        if (chair.userData.left) {
-            chair.rotateUpperChair(1);
-            chair.lastMoves.counterLeft++;
+        /* up key*/
+        if(chair.userData.up) {
+            if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
+                chair.getCurrentVelocity() > chair.getMinimumVelocity()) {
+
+                    chair.setAcceleration(-100000); // negative because the positive part of z axis is in the opposite direction
+                    chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+                    delta = time.getDelta();
+                    chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
+
+                    cv = chair.getCurrentVelocity();
+                    pv = chair.getPreviousVelocity();
+
+                    deslVector.z += (cv-pv)/2 * delta;
+                    updateChairPosition();
+                    chair.lastMoves.counterUp++; 
+                    console.log('prev: ',chair.getPreviousVelocity());
+                    console.log('curr: ', chair.getCurrentVelocity());
+            }
         }
-        if (chair.userData.up) {
-            chair.position.z -= 1 * chair.userData.acceleration;
-            chair.lastMoves.counterUp++;
-        }
-        if (chair.userData.right) {
-            console.log(chair.rotation.y);
-            chair.rotateUpperChair(-1);
-            chair.lastMoves.counterRight++;
-        }
-        if (chair.userData.down) {
-            chair.position.z += 1 * chair.userData.acceleration;
-            chair.lastMoves.counterDown++;
+        if(chair.userData.down) {
+
+            if(chair.userData.up || chair.lastMoves.counterUp != 0) {} // waits until the previous movement ends
+
+            else if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
+                chair.getCurrentVelocity() > chair.getMinimumVelocity()) {
+                
+                chair.setAcceleration(1); // positive because the negative part of z axis is in the opposite direction
+                chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+                delta = time.getDelta();
+                chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
+
+                cv = chair.getCurrentVelocity();
+                pv = chair.getPreviousVelocity();
+
+                deslVector.z += (cv-pv)/2 * delta;
+                updateChairPosition();
+                chair.lastMoves.counterUp++;
+            }
         }
     }
+    /* when a key is released */
+    if( movementKeyReleased) {
+        /* up key */
+        if(chair.userData.upRel) {
+            if(chair.getCurrentVelocity() != 0 & chair.getPreviousVelocity() != 0) {
+                chair.setAcceleration(100000); 
+                chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+                delta = time.getDelta();
+                chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
-    else if ((chair.userData.acceleration > 0) && (chair.lastMoves.counterLeft +
-              chair.lastMoves.counterUp + chair.lastMoves.counterRight +
-              chair.lastMoves.counterDown > 0)) {
+                cv = chair.getCurrentVelocity();
+                pv = chair.getPreviousVelocity();
 
-        chair.userData.acceleration -= 0.04;
-        /*if (chair.lastMoves.counterLeft > 0) {
-            chair.lastMoves.counterLeft--;
-            chair.position.x -= 1 * chair.userData.acceleration;
-        }*/
-        if (chair.lastMoves.counterUp > 0) {
-            chair.lastMoves.counterUp--;
-            chair.position.z -= 1 * chair.userData.acceleration;
+                deslVector.z += (cv-pv)/2 * delta;
+                updateChairPosition();
+                chair.lastMoves.counterUp--;
+            }
         }
-        /*if (chair.lastMoves.counterRight > 0) {
-            chair.lastMoves.counterRight--;
-            chair.position.x += 1 * chair.userData.acceleration;
-        }*/
-        if (chair.lastMoves.counterDown > 0) {
+        if(chair.lastMoves.counterDown > 0) {
+            chair.setAcceleration(-1); 
+            chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+            delta = time.getDelta();
+            chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
+
+            cv = chair.getCurrentVelocity();
+            pv = chair.getPreviousVelocity();
+
+            deslVector.z += (cv-pv)/2 * delta;
+            updateChairPosition();
             chair.lastMoves.counterDown--;
-            chair.position.z += 1 * chair.userData.acceleration;
         }
     }
-    /*else {
-        chair.lastMoves.counterLeft = 0;
-        chair.lastMoves.counterUp = 0;
-        chair.lastMoves.counterRight = 0;
-        chair.lastMoves.counterDown = 0;
-        chair.userData.acceleration = 0;
-    }*/
+    
 
     render();
 
