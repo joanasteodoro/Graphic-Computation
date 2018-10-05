@@ -38,7 +38,7 @@ function createCamera(x, y, z) {
     nCamera.position.z = z;
 
     var vector;
-    
+
     if(x == 100) {
         vector = new THREE.Vector3(0, 30, 0);
     }
@@ -48,7 +48,7 @@ function createCamera(x, y, z) {
     else if(z == 100) {
         vector = new THREE.Vector3(0, 30, 0);
     }
-    
+
     nCamera.lookAt(vector);
 
     return nCamera;
@@ -82,35 +82,35 @@ function onKeyDown(e) {
     switch(keyCode) {
         case 65: // a
             scene.traverse(function (node) {
-                if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;  
+                if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;
              });
             break;
-        
+
         case 97: // A
             scene.traverse(function (node) {
-                if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;  
+                if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;
              });
             break;
-        
-        case 49: // 1    
+
+        case 49: // 1
             switchCamera(camera1);
             break;
-        
+
         case 50: // 2
             switchCamera(camera2);
             break;
-        
+
         case 51: // 3
             switchCamera(camera3);
             break;
-        
+
         case 37: // left arrow
             chair.userData.left = true;
             movementKeyPressed = true;
             movementKeyReleased = false;
             chair.userData.leftRel = false;
             break;
-        
+
         case 38: // up arrow
             chair.userData.up = true;
             movementKeyPressed = true;
@@ -131,10 +131,10 @@ function onKeyDown(e) {
             movementKeyReleased = false;
             chair.userData.downRel = false;
             break;
-             
+
         default:
              break;
-        
+
     }
 }
 
@@ -152,7 +152,7 @@ function onKeyReleased() {
             chair.userData.leftRel = true;
             console.log('worked');
             break;
-        
+
         case 38: // up arrow
             chair.userData.up = false;
             movementKeyPressed = false;
@@ -160,7 +160,7 @@ function onKeyReleased() {
             chair.userData.upRel = true;
             console.log('worked1');
             break;
-        
+
         case 39: // right arrow
             chair.userData.right = false;
             movementKeyPressed = false;
@@ -168,7 +168,7 @@ function onKeyReleased() {
             chair.userData.rightRel = true;
             console.log('worked2');
             break;
-        
+
         case 40: // down arrow
             chair.userData.down = false;
             movementKeyPressed = false;
@@ -176,11 +176,11 @@ function onKeyReleased() {
             chair.userData.downRel = true;
             console.log('worked3');
             break;
-        
+
         default:
             break;
     }
-    
+
 }
 
 function render() {
@@ -326,7 +326,7 @@ function animate() {
             chair.lastMoves.counterDown--;
         }
     }
-    
+
 
     render();
 

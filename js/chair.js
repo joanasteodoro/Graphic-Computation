@@ -23,7 +23,6 @@ class Chair extends THREE.Object3D {
         this.createUpperChair();
         this.createBottomChair();
     }
-    
     setAcceleration(acceleration) {
         this.acceleration = acceleration;
     }
