@@ -23,6 +23,7 @@ class Chair extends THREE.Object3D {
         this.createUpperChair();
         this.createBottomChair();
     }
+
     setAcceleration(acceleration) {
         this.acceleration = acceleration;
     }
@@ -36,7 +37,8 @@ class Chair extends THREE.Object3D {
     }
 
     setAngleToMove(angle) {
-        this.angleToMove = angle;
+        if(angle < (Math.PI * 2)) this.angleToMove = angle;
+        else  this.angleToMove = angle - (Math.PI * 2);
     }
 
     getAcceleration() {
@@ -114,6 +116,7 @@ class Chair extends THREE.Object3D {
         let geometry = new THREE.TorusGeometry(1, 1);
         let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(0, 0, 0)", wireframe: true }));
         mesh.position.set(x, y, z);
+        geometry.rotateY(Math.PI / 2);
         this.add(mesh);
 
         return mesh;
