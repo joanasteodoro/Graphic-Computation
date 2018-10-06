@@ -149,16 +149,14 @@ class Chair extends THREE.Object3D {
         this.scene.add(this);
     }
 
-    rotateChairWheels(direction) {
-        this.wheel1.rotation.y += (Math.PI / 8) * direction;
-        this.wheel2.rotation.y += (Math.PI / 8) * direction;
-        this.wheel3.rotation.y += (Math.PI / 8) * direction;
-        this.wheel4.rotation.y += (Math.PI / 8) * direction;
+    rotateChairWheels(angle) {
+        this.wheel1.rotation.y = angle;
+        this.wheel2.rotation.y = angle;
+        this.wheel3.rotation.y = angle;
+        this.wheel4.rotation.y = angle;
     }
 
     rotateUpperChair(direction) {
         this.upperchair.rotation.y += (Math.PI / 32) * direction;
-        //this.seat.rotation.y += (Math.PI / 8) * direction;
-        //this.rotationAngle = (Math.PI / 8) * direction;
     }
 }

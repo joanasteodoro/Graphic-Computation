@@ -151,7 +151,6 @@ function onKeyReleased() {
             movementKeyPressed = false;
             movementKeyReleased = true;
             chair.userData.leftRel = true;
-            console.log('worked');
             break;
 
         case 38: // up arrow
@@ -159,7 +158,6 @@ function onKeyReleased() {
             movementKeyPressed = false;
             movementKeyReleased = true;
             chair.userData.upRel = true;
-            console.log('worked1');
             break;
 
         case 39: // right arrow
@@ -167,7 +165,6 @@ function onKeyReleased() {
             movementKeyPressed = false;
             movementKeyReleased = true;
             chair.userData.rightRel = true;
-            console.log('worked2');
             break;
 
         case 40: // down arrow
@@ -175,7 +172,6 @@ function onKeyReleased() {
             movementKeyPressed = false;
             movementKeyReleased = true;
             chair.userData.downRel = true;
-            console.log('worked3');
             break;
 
         default:
@@ -240,7 +236,7 @@ function rotateObject() {
 function animate() {
     'use strict';
     delta = time.getDelta();
-    /* when no keys were pressed previously */ 
+    /* when no keys were pressed previously */
     if(chair.lastMoves.counterUp ==  0 && chair.lastMoves.counterDown == 0) {
         deslVector.x = 0;
         deslVector.y = 0;
@@ -258,6 +254,7 @@ function animate() {
 
             if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
                 chair.getCurrentVelocity() > chair.getMinimumVelocity() &&
+<<<<<<< HEAD
                 (!chair.userData.down || chair.lastMoves.counterDown == 0)) {
 
                     if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) == 0 && chair.getAngleToMove() != 0) {
@@ -273,6 +270,12 @@ function animate() {
                     }
                     
                     chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+=======
+                (! chair.userData.down || chair.lastMoves.counterDown == 0)) {
+
+                    chair.setAcceleration(-5); // negative because the positive part of z axis is in the opposite direction
+                    chair.setPreviousVelocity(chair.getCurrentVelocity());
+>>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
                     chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
                     cv = chair.getCurrentVelocity();
@@ -287,13 +290,18 @@ function animate() {
                         deslVector.x += (cv-pv)/2 * delta;
                     }
                     updateChairPosition();
+<<<<<<< HEAD
                     updateWheelsDirection();
                     chair.lastMoves.counterUp++; 
+=======
+                    chair.lastMoves.counterUp++;
+>>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
             }
         }
         if(chair.userData.down) {
 
             if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
+<<<<<<< HEAD
                 chair.getCurrentVelocity() > chair.getMinimumVelocity() && 
                 (!chair.userData.up || chair.lastMoves.counterUp == 0)) {
                 
@@ -308,6 +316,13 @@ function animate() {
                     chair.setAcceleration(-5); // negative because it goes in the inverse direction
                 }
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+=======
+                chair.getCurrentVelocity() > chair.getMinimumVelocity() &&
+                (! chair.userData.up || chair.lastMoves.counterUp == 0 ) ) {
+
+                chair.setAcceleration(5); // positive because the negative part of z axis is in the opposite direction
+                chair.setPreviousVelocity(chair.getCurrentVelocity());
+>>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
                 cv = chair.getCurrentVelocity();
@@ -335,13 +350,17 @@ function animate() {
         if(chair.userData.right) {
             chair.rotateUpperChair(-1); // rotates the chair
             chair.setAngleToMove(chair.getAngleToMove() - (Math.PI / 32));
+<<<<<<< HEAD
             mayRotate = true;
+=======
+>>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
         }
     }
     /* when a key is released */
     if( movementKeyReleased) {
         /* up key */
         if(chair.userData.upRel) {
+<<<<<<< HEAD
             if(Math.round(chair.getCurrentVelocity()) != 0) {
                 if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) == 0 && chair.getAngleToMove() != 0) {
                     if(chair.getAngleToMove() > 0) chair.setAcceleration(10);
@@ -354,6 +373,12 @@ function animate() {
                     chair.setAcceleration(-10); 
                 }
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+=======
+            if(chair.getCurrentVelocity() < 0 & chair.getPreviousVelocity() < 0) {
+                chair.setAcceleration(5);
+                chair.setPreviousVelocity(chair.getCurrentVelocity());
+                //delta = time.getDelta();
+>>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
                 cv = chair.getCurrentVelocity();
@@ -372,6 +397,7 @@ function animate() {
             else chair.lastMoves.counterUp = 0;
         }
         if(chair.userData.downRel) {
+<<<<<<< HEAD
             if(Math.round(chair.getCurrentVelocity()) != 0) {
                 if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) == 0 && chair.getAngleToMove() != 0) {
                     if(chair.getAngleToMove() > 0) chair.setAcceleration(-10);
@@ -384,6 +410,12 @@ function animate() {
                     chair.setAcceleration(10);
                 }
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+=======
+            if(chair.getCurrentVelocity() > 0 & chair.getPreviousVelocity() > 0) {
+                chair.setAcceleration(-5);
+                chair.setPreviousVelocity(chair.getCurrentVelocity());
+                //delta = time.getDelta();
+>>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
                 cv = chair.getCurrentVelocity();
