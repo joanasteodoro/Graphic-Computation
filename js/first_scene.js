@@ -215,10 +215,11 @@ function updateChairPosition() {
 
 function updateWheelsDirection() {
     if(mayRotate) { /* may rotate is a flag */
-        chair.wheel1.rotateY(chair.getAngleToMove());
-    chair.wheel2.rotateY(chair.getAngleToMove());
-    chair.wheel3.rotateY(chair.getAngleToMove());
-    chair.wheel4.rotateY(chair.getAngleToMove());
+        chair.wheel1.rotation.y += (chair.getWheelsAngle());
+        chair.wheel2.rotation.y += (chair.getWheelsAngle());
+        chair.wheel3.rotation.y += (chair.getWheelsAngle());
+        chair.wheel4.rotation.y += (chair.getWheelsAngle());
+        chair.setWheelsAngle(0);
     }
     mayRotate = false;
 }
@@ -254,58 +255,48 @@ function animate() {
 
             if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
                 chair.getCurrentVelocity() > chair.getMinimumVelocity() &&
-<<<<<<< HEAD
                 (!chair.userData.down || chair.lastMoves.counterDown == 0)) {
 
-                    if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) == 0 && chair.getAngleToMove() != 0) {
+                    if(chair.getAngleToMove() != 0 && (chair.getAngleToMove() == (Math.PI / 2) || chair.getAngleToMove() == -(Math.PI / 2))) {
                         if(chair.getAngleToMove() > 0) chair.setAcceleration(-5);
                         else chair.setAcceleration(5);
                     }
-                    else if(chair.getAngleToMove() <= (Math.PI / 2) && chair.getAngleToMove() >= -(Math.PI / 2)) {   
+                    else if(chair.getAngleToMove() < (Math.PI / 2) && chair.getAngleToMove() > -(Math.PI / 2)) {   
                         chair.setAcceleration(-5); // negative because the positive part of z axis is in the opposite direction
                     }  
                     else if(chair.getAngleToMove() > (Math.PI / 2) || chair.getAngleToMove() < -(Math.PI / 2))  {
                         chair.setAcceleration(5); // positive because it goes in the inverse direction
-                        
                     }
                     
                     chair.setPreviousVelocity(chair.getCurrentVelocity()); 
-=======
-                (! chair.userData.down || chair.lastMoves.counterDown == 0)) {
-
-                    chair.setAcceleration(-5); // negative because the positive part of z axis is in the opposite direction
-                    chair.setPreviousVelocity(chair.getCurrentVelocity());
->>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
                     chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
                     cv = chair.getCurrentVelocity();
                     pv = chair.getPreviousVelocity();
-
-                    if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) != 0 || chair.getAngleToMove() == 0) {
+                    console.log(chair.getAngleToMove());
+                    if(chair.getAngleToMove() == (Math.PI / 2) || chair.getAngleToMove() == -(Math.PI / 2) || chair.getAngleToMove() == 4.712388980384692 || chair.getAngleToMove() == -4.712388980384692) {
+                        deslVector.z = 0;
+                        deslVector.x += (cv-pv)/2 * delta;
+                        console.log('entrou aqui');
+                    }
+                    else {
                         deslVector.z += (cv-pv)/2 * delta;
                         deslVector.x = (deslVector.z * Math.tan(chair.getAngleToMove()));
                     }
-                    else {
-                        deslVector.z = 0;
-                        deslVector.x += (cv-pv)/2 * delta;
-                    }
+                   
                     updateChairPosition();
-<<<<<<< HEAD
                     updateWheelsDirection();
                     chair.lastMoves.counterUp++; 
-=======
-                    chair.lastMoves.counterUp++;
->>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
+                    console.log('userData.up');
             }
         }
         if(chair.userData.down) {
 
             if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
-<<<<<<< HEAD
                 chair.getCurrentVelocity() > chair.getMinimumVelocity() && 
                 (!chair.userData.up || chair.lastMoves.counterUp == 0)) {
                 
-                if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) == 0 && chair.getAngleToMove() != 0) {
+                if(chair.getAngleToMove() != 0 && (chair.getAngleToMove() == (Math.PI / 2) || chair.getAngleToMove() == -(Math.PI / 2))) {
                     if(chair.getAngleToMove() > 0) chair.setAcceleration(5);
                     else chair.setAcceleration(-5);
                 }
@@ -316,25 +307,18 @@ function animate() {
                     chair.setAcceleration(-5); // negative because it goes in the inverse direction
                 }
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
-=======
-                chair.getCurrentVelocity() > chair.getMinimumVelocity() &&
-                (! chair.userData.up || chair.lastMoves.counterUp == 0 ) ) {
-
-                chair.setAcceleration(5); // positive because the negative part of z axis is in the opposite direction
-                chair.setPreviousVelocity(chair.getCurrentVelocity());
->>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
                 cv = chair.getCurrentVelocity();
                 pv = chair.getPreviousVelocity();
 
-                if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) != 0 || chair.getAngleToMove() == 0) {
-                    deslVector.z += (cv-pv)/2 * delta;
-                    deslVector.x = (deslVector.z * Math.tan(chair.getAngleToMove()));
-                }
-                else {
+                if(chair.getAngleToMove() == (Math.PI / 2) || chair.getAngleToMove() == -(Math.PI / 2) || chair.getAngleToMove() == 4.712388980384692 || chair.getAngleToMove() == -4.712388980384692) {
                     deslVector.z = 0;
                     deslVector.x += (cv-pv)/2 * delta;
+                }
+                else {
+                    deslVector.z += (cv-pv)/2 * delta;
+                    deslVector.x = (deslVector.z * Math.tan(chair.getAngleToMove()));
                 }
                 updateChairPosition();
                 updateWheelsDirection();
@@ -343,24 +327,23 @@ function animate() {
         }
         if(chair.userData.left) {
             chair.rotateUpperChair(1); // rotates the chair
-            chair.setAngleToMove(chair.getAngleToMove() + (Math.PI / 32));
+            chair.setAngleToMove(chair.getAngleToMove() + (Math.PI / 16));
+            chair.setWheelsAngle(chair.getWheelsAngle() + (Math.PI / 16));
             mayRotate = true;
 
         }
         if(chair.userData.right) {
             chair.rotateUpperChair(-1); // rotates the chair
-            chair.setAngleToMove(chair.getAngleToMove() - (Math.PI / 32));
-<<<<<<< HEAD
+            chair.setAngleToMove(chair.getAngleToMove() - (Math.PI / 16));
+            chair.setWheelsAngle(chair.getWheelsAngle() - (Math.PI / 16));
             mayRotate = true;
-=======
->>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
+            console.log('userData.right');
         }
     }
     /* when a key is released */
-    if( movementKeyReleased) {
+    else if( movementKeyReleased) {
         /* up key */
         if(chair.userData.upRel) {
-<<<<<<< HEAD
             if(Math.round(chair.getCurrentVelocity()) != 0) {
                 if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) == 0 && chair.getAngleToMove() != 0) {
                     if(chair.getAngleToMove() > 0) chair.setAcceleration(10);
@@ -373,31 +356,26 @@ function animate() {
                     chair.setAcceleration(-10); 
                 }
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
-=======
-            if(chair.getCurrentVelocity() < 0 & chair.getPreviousVelocity() < 0) {
-                chair.setAcceleration(5);
-                chair.setPreviousVelocity(chair.getCurrentVelocity());
-                //delta = time.getDelta();
->>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
                 cv = chair.getCurrentVelocity();
                 pv = chair.getPreviousVelocity();
 
-                if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) != 0 || chair.getAngleToMove() == 0) {
-                    deslVector.z += (cv-pv)/2 * delta;
-                    deslVector.x = (deslVector.z * Math.tan(chair.getAngleToMove()));
-                } else {
+                if(chair.getAngleToMove() == (Math.PI / 2) || chair.getAngleToMove() == -(Math.PI / 2) || chair.getAngleToMove() == 4.712388980384692 || chair.getAngleToMove() == -4.712388980384692) {
                     deslVector.z = 0;
                     deslVector.x += (cv-pv)/2 * delta;
                 }
+                else {
+                    deslVector.z += (cv-pv)/2 * delta;
+                    deslVector.x = (deslVector.z * Math.tan(chair.getAngleToMove()));
+                }
                 updateChairPosition();
+                updateWheelsDirection();
                 chair.lastMoves.counterUp -= 2;
             }
             else chair.lastMoves.counterUp = 0;
         }
         if(chair.userData.downRel) {
-<<<<<<< HEAD
             if(Math.round(chair.getCurrentVelocity()) != 0) {
                 if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) == 0 && chair.getAngleToMove() != 0) {
                     if(chair.getAngleToMove() > 0) chair.setAcceleration(-10);
@@ -407,36 +385,31 @@ function animate() {
                     chair.setAcceleration(-10); 
                 }
                 else if(chair.getAngleToMove() > (Math.PI / 2) || chair.getAngleToMove() < -(Math.PI / 2)) {
-                    chair.setAcceleration(10);
+                    chair.setAcceleration(10); 
                 }
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
-=======
-            if(chair.getCurrentVelocity() > 0 & chair.getPreviousVelocity() > 0) {
-                chair.setAcceleration(-5);
-                chair.setPreviousVelocity(chair.getCurrentVelocity());
-                //delta = time.getDelta();
->>>>>>> 7894c73d72aa5543b549254f890b46af533d687b
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
 
                 cv = chair.getCurrentVelocity();
                 pv = chair.getPreviousVelocity();
 
-                if(Math.round(chair.getAngleToMove() % (Math.PI / 2)) != 0 || chair.getAngleToMove() == 0) {
-                    deslVector.z += (cv-pv)/2 * delta;
-                    deslVector.x = (deslVector.z * Math.tan(chair.getAngleToMove()));
-                } else {
+                if(chair.getAngleToMove() == (Math.PI / 2) || chair.getAngleToMove() == -(Math.PI / 2) || chair.getAngleToMove() == 4.712388980384692 || chair.getAngleToMove() == -4.712388980384692) {
                     deslVector.z = 0;
                     deslVector.x += (cv-pv)/2 * delta;
                 }
+                else {
+                    deslVector.z += (cv-pv)/2 * delta;
+                    deslVector.x = (deslVector.z * Math.tan(chair.getAngleToMove()));
+                }
                 updateChairPosition();
+                updateWheelsDirection();
                 chair.lastMoves.counterDown -= 2;
             }
             else chair.lastMoves.counterDown = 0;
         }
+        updateChairPosition();
     }
 
-
     render();
-
     requestAnimationFrame(animate);
 }
