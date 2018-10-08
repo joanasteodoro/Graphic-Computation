@@ -224,14 +224,11 @@ function updateWheelsDirection() {
     mayRotate = false;
 }
 
-function rotateObject() {
-    var pivot = new THREE.Vector3(0, 1, 0);
-    var vectorToPivot = chair.position.sub(pivot);
-    var moveToPivot = new THREE.Matrix4().makeTranslation(vectorToPivot.x,
-                                                      vectorToPivot.y,vectorToPivot.z);
-    var rotation = new THREE.Matrix4().makeRotationY(Math.PI/2);
-    var matrix = rotation.multiply(moveToPivot);
-    chair.applyMatrix(matrix);
+function rotateWheels(direction) {
+    chair.wheel1.rotation.x += (Math.PI / 128) * direction;
+    chair.wheel2.rotation.x += (Math.PI / 128) * direction;
+    chair.wheel3.rotation.x += (Math.PI / 128) * direction;
+    chair.wheel4.rotation.x += (Math.PI / 128) * direction;
 }
 
 function animate() {
@@ -268,6 +265,7 @@ function animate() {
                     
                     updateChairPosition();
                     updateWheelsDirection();
+                    rotateWheels(1);
                     chair.lastMoves.counterUp++; 
             }
         }
@@ -287,9 +285,9 @@ function animate() {
                     
                     updateChairPosition();
                     updateWheelsDirection();
+                    rotateWheels(-1);
                     chair.lastMoves.counterDown++;
             }
-            console.log(chair.getCurrentVelocity());
         }
         if(chair.userData.left) {
             chair.rotateUpperChair(1); // rotates the chair
@@ -322,6 +320,7 @@ function animate() {
                     
                 updateChairPosition();
                 updateWheelsDirection();
+                rotateWheels(1);
                 chair.lastMoves.counterUp -= 2;
             }
             else chair.lastMoves.counterUp = 0;
@@ -341,10 +340,10 @@ function animate() {
                     
                 updateChairPosition();
                 updateWheelsDirection();
+                rotateWheels(-1);
                 chair.lastMoves.counterDown -= 2;
             }
             else {
-                console.log('entrou aqui');
                 chair.lastMoves.counterDown = 0;
             }
         }
