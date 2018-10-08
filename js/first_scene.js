@@ -245,6 +245,7 @@ function animate() {
         chair.setAcceleration(0);
         chair.setCurrentVelocity(0);
         chair.setPreviousVelocity(0);
+        updateChairPosition();
         time.start();
     }
 
@@ -307,8 +308,8 @@ function animate() {
     /* when a key is released */
     else if(movementKeyReleased) {
         /* up key */
-        if(chair.userData.upRel) {         
-            if(chair.getCurrentVelocity() < 0) {
+        if(chair.userData.upRel) {
+            if(chair.getCurrentVelocity() < 0 && chair.lastMoves.counterUp > 0) {
                 chair.setAcceleration(2);
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
                 chair.setCurrentVelocity(chair.getPreviousVelocity() + chair.getAcceleration() * delta); // v = v0 + at
@@ -326,7 +327,8 @@ function animate() {
             else chair.lastMoves.counterUp = 0;
         }
         if(chair.userData.downRel) {
-            if(chair.getCurrentVelocity() > 0) {
+            if(chair.getCurrentVelocity() > 0 && chair.lastMoves.counterDown > 0) {
+
                 chair.setAcceleration(-2);
                 chair.setPreviousVelocity(chair.getCurrentVelocity()); 
                 chair.setCurrentVelocity(chair.getPreviousVelocity() + chair.getAcceleration() * delta); // v = v0 + at
@@ -342,6 +344,7 @@ function animate() {
                 chair.lastMoves.counterDown -= 2;
             }
             else {
+                console.log('entrou aqui');
                 chair.lastMoves.counterDown = 0;
             }
         }
