@@ -14,8 +14,8 @@ class Chair extends THREE.Object3D {
         this.acceleration = 0;
         this.previousVelocity = 0;
         this.currentVelocity = 0;
-        this.maximumVelocity = 100000;
-        this.minimumVelocity = -100000;
+        this.maximumVelocity = 0.5;
+        this.minimumVelocity = -0.5;
 
         this.angleToMove = 0;
         this.wheelsAngle = 0;
@@ -163,6 +163,13 @@ class Chair extends THREE.Object3D {
         this.wheel3.rotation.y = angle;
         this.wheel4.rotation.y = angle;
     }
+
+    /*rollingChairWheels(direction) {
+        this.wheel1.rotation.x += Math.sin(chair.getWheelsAngle() * direction);
+        this.wheel2.rotation.x += Math.cos(chair.getWheelsAngle() * direction);
+        this.wheel3.rotation.x += (Math.PI / 16) * direction;
+        this.wheel4.rotation.x += (Math.PI / 16) * direction;
+    }*/
 
     rotateUpperChair(direction) {
         this.upperchair.rotation.y += (Math.PI / 32) * direction;
