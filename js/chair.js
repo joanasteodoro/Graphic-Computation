@@ -165,6 +165,6 @@ class Chair extends THREE.Object3D {
     }
 
     rotateUpperChair(direction) {
-        this.upperchair.rotation.y += (Math.PI / 16) * direction;
+        this.upperchair.rotation.y += (Math.PI / 32) * direction;
     }
 }
