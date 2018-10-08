@@ -271,7 +271,6 @@ function animate() {
             }
         }
         if(chair.userData.down) {
-
             if(chair.getCurrentVelocity() < chair.getMaximumVelocity() &&
                 chair.getCurrentVelocity() > chair.getMinimumVelocity()) {
                 
@@ -308,25 +307,23 @@ function animate() {
     /* when a key is released */
     else if(movementKeyReleased) {
         /* up key */
-        if(chair.userData.upRel) {
-            if(!chair.userData.down) {         
-                if(chair.getCurrentVelocity() < 0) {
-                    chair.setAcceleration(2);
-                    chair.setPreviousVelocity(chair.getCurrentVelocity()); 
-                    chair.setCurrentVelocity(chair.getPreviousVelocity() + chair.getAcceleration() * delta); // v = v0 + at
+        if(chair.userData.upRel) {         
+            if(chair.getCurrentVelocity() < 0) {
+                chair.setAcceleration(2);
+                chair.setPreviousVelocity(chair.getCurrentVelocity()); 
+                chair.setCurrentVelocity(chair.getPreviousVelocity() + chair.getAcceleration() * delta); // v = v0 + at
 
-                    cv = chair.getCurrentVelocity();
-                    pv = chair.getPreviousVelocity();
+                cv = chair.getCurrentVelocity();
+                pv = chair.getPreviousVelocity();
+                  
+                deslVector.z += ((cv+pv)*delta/2)*Math.cos(chair.getAngleToMove());
+                deslVector.x += ((cv+pv)*delta/2)*Math.sin(chair.getAngleToMove());
                     
-                    deslVector.z += ((cv+pv)*delta/2)*Math.cos(chair.getAngleToMove());
-                    deslVector.x += ((cv+pv)*delta/2)*Math.sin(chair.getAngleToMove());
-                        
-                    updateChairPosition();
-                    updateWheelsDirection();
-                    chair.lastMoves.counterUp -= 2;
-                }
-                else chair.lastMoves.counterUp = 0;
+                updateChairPosition();
+                updateWheelsDirection();
+                chair.lastMoves.counterUp -= 2;
             }
+            else chair.lastMoves.counterUp = 0;
         }
         if(chair.userData.downRel) {
             if(chair.getCurrentVelocity() > 0) {
@@ -348,6 +345,7 @@ function animate() {
                 chair.lastMoves.counterDown = 0;
             }
         }
+        updateChairPosition();
     }
 
     render();
