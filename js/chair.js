@@ -124,10 +124,10 @@ class Chair extends THREE.Object3D {
         let geometry = new THREE.TorusGeometry(1, 1);
         let mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: "rgb(0, 0, 0)", wireframe: true }));
         mesh.position.set(x, y, z);
+        mesh.name = 'wheel';
         geometry.rotateY(Math.PI / 2);
-        this.add(mesh);
 
-        return mesh;
+        this.add(mesh);
     }
 
     createUpperChair() {
@@ -149,27 +149,13 @@ class Chair extends THREE.Object3D {
         this.addChairPole(0, -6, 0);
         this.addChairBase(0, -12, 0, Math.PI/4);
         this.addChairBase(0, -12, 0, Math.PI/(-4));
-        this.wheel1 = this.addChairWheel(10, -14, -9);
-        this.wheel2 = this.addChairWheel(10, -14, 9);
-        this.wheel3 = this.addChairWheel(-10, -14, 9);
-        this.wheel4 = this.addChairWheel(-10, -14, -9);
+        this.addChairWheel(10, -14, -9);
+        this.addChairWheel(10, -14, 9);
+        this.addChairWheel(-10, -14, 9);
+        this.addChairWheel(-10, -14, -9);
 
         this.scene.add(this);
     }
-
-    rotateChairWheels(angle) {
-        this.wheel1.rotation.y = angle;
-        this.wheel2.rotation.y = angle;
-        this.wheel3.rotation.y = angle;
-        this.wheel4.rotation.y = angle;
-    }
-
-    /*rollingChairWheels(direction) {
-        this.wheel1.rotation.x += Math.sin(chair.getWheelsAngle() * direction);
-        this.wheel2.rotation.x += Math.cos(chair.getWheelsAngle() * direction);
-        this.wheel3.rotation.x += (Math.PI / 16) * direction;
-        this.wheel4.rotation.x += (Math.PI / 16) * direction;
-    }*/
 
     rotateUpperChair(direction) {
         this.upperchair.rotation.y += (Math.PI / 32) * direction;

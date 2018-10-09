@@ -7,6 +7,7 @@ var table, chair, lamp;
 var keyMap = [];
 var movementKeyPressed = false;
 var movementKeyReleased = false;
+var nKeysPressed = 0;
 
 var time = new THREE.Clock(); // timer used to determine the delta
 var delta = 0; // delta used to calc the velocity and position
@@ -215,20 +216,24 @@ function updateChairPosition() {
 
 function updateWheelsDirection() {
     if(mayRotate) { /* may rotate is a flag */
-        chair.wheel1.rotation.y += (chair.getWheelsAngle());
-        chair.wheel2.rotation.y += (chair.getWheelsAngle());
-        chair.wheel3.rotation.y += (chair.getWheelsAngle());
-        chair.wheel4.rotation.y += (chair.getWheelsAngle());
-        chair.setWheelsAngle(0);
+      chair.traverse(function (node) {
+          if (node.name == 'wheel') {
+            var angle = chair.getWheelsAngle();
+            var axis = new THREE.Vector3(0, 1, 0);
+            node.rotateOnAxis( axis, angle );}
+       });
+      chair.setWheelsAngle(0);
     }
     mayRotate = false;
 }
 
 function rotateWheels(direction) {
-    chair.wheel1.rotation.x += (Math.PI / 128) * direction;
-    chair.wheel2.rotation.x += (Math.PI / 128) * direction;
-    chair.wheel3.rotation.x += (Math.PI / 128) * direction;
-    chair.wheel4.rotation.x += (Math.PI / 128) * direction;
+    var angle = Math.PI / 32 * direction;
+    var axis = new THREE.Vector3(1, 0, 0);
+
+    chair.traverse(function (node) {
+        if (node.name == 'wheel') node.rotateOnAxis( axis, angle );
+     });
 }
 
 function animate() {
@@ -250,12 +255,16 @@ function animate() {
     if (movementKeyPressed) {
         /* up key*/
         if(chair.userData.up) {
-
             chair.setAcceleration(-0.5);
             chair.setPreviousVelocity(chair.getCurrentVelocity());
+            if(chair.userData.down) {
+              chair.setAcceleration(0);
+            }
+
             if(chair.getCurrentVelocity() < chair.getMaximumVelocity() && chair.getCurrentVelocity() > chair.getMinimumVelocity()) {
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
             }
+
             cv = chair.getCurrentVelocity();
             pv = chair.getPreviousVelocity();
 
@@ -270,6 +279,11 @@ function animate() {
 
             chair.setAcceleration(0.5);
             chair.setPreviousVelocity(chair.getCurrentVelocity());
+
+            if(chair.userData.up) {
+              chair.setAcceleration(0);
+            }
+
             if(chair.getCurrentVelocity() < chair.getMaximumVelocity() && chair.getCurrentVelocity() > chair.getMinimumVelocity()) {
                 chair.setCurrentVelocity(chair.getCurrentVelocity() + chair.getAcceleration() * delta) // v = v0 + at
             }
@@ -288,6 +302,7 @@ function animate() {
             chair.setAngleToMove(chair.getAngleToMove() + (Math.PI / 32));
             chair.setWheelsAngle(chair.getWheelsAngle() + (Math.PI / 32));
             mayRotate = true;
+            updateChairPosition();
 
         }
         if(chair.userData.right) {
@@ -295,16 +310,16 @@ function animate() {
             chair.setAngleToMove(chair.getAngleToMove() - (Math.PI / 32));
             chair.setWheelsAngle(chair.getWheelsAngle() - (Math.PI / 32));
             mayRotate = true;
+            updateChairPosition();
         }
     }
     /* when a key is released */
-    else if(movementKeyReleased) {
+    if(movementKeyReleased) {
         /* up key */
         if(chair.userData.upRel) {
             if(chair.getCurrentVelocity() < 0 && chair.lastMoves.counterUp > 0) {
 
-                delta -= time.getDelta();
-                chair.setAcceleration(0.5);
+                chair.setAcceleration(1.5);
                 chair.setPreviousVelocity(chair.getCurrentVelocity());
                 chair.setCurrentVelocity(chair.getPreviousVelocity() + chair.getAcceleration() * delta); // v = v0 + at
 
@@ -316,7 +331,7 @@ function animate() {
 
                 updateChairPosition();
                 updateWheelsDirection();
-                chair.lastMoves.counterUp -= 2;
+                chair.lastMoves.counterUp -= 1.5;
             }
             else {
               chair.lastMoves.counterUp = 0;
@@ -325,7 +340,7 @@ function animate() {
         if(chair.userData.downRel) {
             if(chair.getCurrentVelocity() > 0 && chair.lastMoves.counterDown > 0) {
 
-                chair.setAcceleration(-0.5);
+                chair.setAcceleration(-1.5);
                 chair.setPreviousVelocity(chair.getCurrentVelocity());
                 chair.setCurrentVelocity(chair.getPreviousVelocity() + chair.getAcceleration() * delta); // v = v0 + at
 
@@ -337,12 +352,13 @@ function animate() {
 
                 updateChairPosition();
                 updateWheelsDirection();
-                chair.lastMoves.counterDown -= 2;
+                chair.lastMoves.counterDown -= 1.5;
             }
             else {
                 chair.lastMoves.counterDown = 0;
             }
         }
+
         updateChairPosition();
     }
     render();
