@@ -1,2 +1,0 @@
-# Graphic-Computation
-GC labs
