@@ -14,11 +14,10 @@ class Room extends THREE.Object3D {
 
         this.createFloor(this.width, this.depth);
 
-        this.createWall(-15, this.height/2, 0, 'l');
-        this.createWall(15, this.height/2, 0, 'l');
-        this.createWall(0, this.height/2, -7.5, 'f');
-        this.createWall(0, this.height/2, 7.5, 'f');
-
+        this.leftWall = this.createWall(-15, this.height/2, 0, 'l');
+        this.rightWall = this.createWall(15, this.height/2, 0, 'l');
+        this.upWall = this.createWall(0, this.height/2, -7.5, 'f');
+        this.downWall = this.createWall(0, this.height/2, 7.5, 'f');
     }
 
     getRoomWidth() {
@@ -31,6 +30,26 @@ class Room extends THREE.Object3D {
 
     getRoomHeight() {
         return this.height;
+    }
+
+    getWallThickness() {
+        return this.wallThickness;
+    }
+
+    getLeftWallPosition() {
+        return this.leftWall.position;
+    }
+
+    getRightWallPosition() {
+        return this.rightWall.position;
+    }
+
+    getUpWallPosition() {
+        return this.upWall.position;
+    }
+
+    getLeftWallPosition() {
+        return this.downWall.position;
     }
 
     createWall(x, y, z, side) {

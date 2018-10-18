@@ -1,8 +1,10 @@
 var scene, camera, renderer;
 var camera1, camera2, camera3;
-
-var firstWidth = window.innerWidth;
-var firstHeight = window.innerHeight;
+var balls;
+var time = new THREE.Clock();
+var delta, sinceBeginning;
+var incrementFlag = false;
+var level, levelAux;
 
 function switchCamera(nCamera) {
     'use strict';
@@ -45,7 +47,6 @@ function onKeyDown(e) {
             break;
 
         case 69: // e or E
-            let balls = scene.getBalls();
             for (let i = 0; i < 10; i++) {
                 balls[i].switchAxisVisibility();
             }
@@ -71,10 +72,14 @@ function init() {
 
     scene = new Scene();
 
+    balls = scene.getBalls();
+
     camera1 = new OrthographicCamera(0, 100, 0); // Upper camera #1
     camera2 = new PerspectiveCamera(15, 20, 10); // Allows to see the whole terrain #2
     camera3 = new PerspectiveCamera(100, 30, 0); // Same as #2 but mobile #3
     switchCamera(camera1);
+
+    time.start();
 
     render();
 
@@ -86,6 +91,21 @@ function init() {
 function animate() {
     'use strict';
 
+    delta = time.getDelta();
+    sinceBeginning = time.getElapsedTime();
+    levelAux = level;
+    level = (sinceBeginning / 3)|0; // forces the result to be an integer
+    if (levelAux != level && level != 0 && sinceBeginning != 0) {
+        incrementFlag = true;
+    }
+
+    for (let i = 0; i < 10; i++) {
+        if (incrementFlag == true) {
+            balls[i].setVelocity(balls[i].getVelocity() + 1);
+        }
+        balls[i].translateX(balls[i].getVelocity() * delta);
+    }
+    incrementFlag = false;
     render();
     requestAnimationFrame(animate);
 }

@@ -14,22 +14,50 @@ class Ball extends THREE.Object3D {
 
         this.axis = new THREE.AxisHelper(3);
 
-        this.axis.rotateY(dir);
         ball.add(this.axis);
 
         ball.position.set(x, y, z);
 
-        this.add(ball);
+        this.ball = ball;
         this.scene.add(ball);
 
+        this.ball.rotateY(dir);
     }
 
-    getPosition() {
-        return this.pos;
+    getPositionX() {
+        return this.ball.position.x;
     }
 
-    setPosition(posVector) {
-        this.pos = posVector;
+    getPositionY() {
+        return this.ball.position.y;
+    }
+
+    getPositionZ() {
+        return this.ball.position.z;
+    }
+
+    setPositionX(x) {
+        this.ball.position.x = x;
+    }
+
+    setPositionY(y) {
+        this.ball.position.y = y;
+    }
+
+    setPositionZ(z) {
+        this.ball.position.z = z;
+    }
+
+    translateX(x) {
+        this.ball.translateX(x);
+    }
+
+    translateY(y) {
+        this.ball.translateY(y);
+    }
+
+    translateZ(z) {
+        this.ball.translateZ(z);
     }
 
     getDirection() {
