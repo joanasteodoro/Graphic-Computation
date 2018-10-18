@@ -1,6 +1,9 @@
 var scene, camera, renderer;
 var camera1, camera2, camera3;
 
+var firstWidth = window.innerWidth;
+var firstHeight = window.innerHeight;
+
 function switchCamera(nCamera) {
     'use strict';
     camera = nCamera;
@@ -15,6 +18,8 @@ function onResize() {
         camera.right = window.innerWidth / 50;
         camera.top = window.innerHeight / 50;
         camera.bottom = window.innerHeight / -50;
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.aspect = firstWidth / firstHeight;
         camera.updateProjectionMatrix();
 
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -40,7 +45,10 @@ function onKeyDown(e) {
             break;
 
         case 69: // e or E
-            //show or hide balls axis
+            let balls = scene.getBalls();
+            for (let i = 0; i < 10; i++) {
+                balls[i].switchAxisVisibility();
+            }
 
         default:
              break;
@@ -64,7 +72,7 @@ function init() {
     scene = new Scene();
 
     camera1 = new OrthographicCamera(0, 100, 0); // Upper camera #1
-    camera2 = new PerspectiveCamera(0, 30, 100); // Allows to see the whole terrain #2
+    camera2 = new PerspectiveCamera(15, 20, 10); // Allows to see the whole terrain #2
     camera3 = new PerspectiveCamera(100, 30, 0); // Same as #2 but mobile #3
     switchCamera(camera1);
 

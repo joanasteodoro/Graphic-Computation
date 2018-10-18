@@ -6,12 +6,13 @@ class Room extends THREE.Object3D {
 
         this.position.set(x, y, z);
 
-        this.width = 30;
-        this.depth = this.width / 2;
+        this.wallThickness = 0.4;
+        this.depth = 15 - this.wallThickness; // l
+        this.width = 2 * this.depth;
+
+        this.height = Math.sqrt(5) / 10 * this.depth;
 
         this.createFloor(this.width, this.depth);
-
-        this.height = Math.sqrt(15*15 + 30.4*30.4) / 10;;
 
         this.createWall(-15, this.height/2, 0, 'l');
         this.createWall(15, this.height/2, 0, 'l');
@@ -35,10 +36,10 @@ class Room extends THREE.Object3D {
     createWall(x, y, z, side) {
         var geometry;
         if (side == 'l') { // side wall
-            geometry = new THREE.BoxGeometry(0.4, this.height, 15);
+            geometry = new THREE.BoxGeometry(this.wallThickness, this.height, 15);
         }
         else if (side == 'f') { // front wall
-            geometry = new THREE.BoxGeometry(0.4, this.height, 30.4);
+            geometry = new THREE.BoxGeometry(this.wallThickness, this.height, 30.4);
         }
         var material = new THREE.MeshBasicMaterial({color: "rgb(255, 219, 77)", side: THREE.DoubleSide}); // renders on both sides
         var wall = new THREE.Mesh(geometry, material);
@@ -55,7 +56,7 @@ class Room extends THREE.Object3D {
 
 
     createFloor(width, depth) {
-        var geometry = new THREE.PlaneBufferGeometry(width, depth, 8, 8);
+        var geometry = new THREE.PlaneBufferGeometry(width + this.wallThickness, depth + this.wallThickness, 8, 8);
         var material = new THREE.MeshBasicMaterial({ color:"rgb(51, 17, 0)", side: THREE.DoubleSide }); // renders on both sides
         var plane = new THREE.Mesh(geometry, material);
 
