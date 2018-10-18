@@ -1,20 +1,23 @@
 class Ball extends THREE.Object3D {
-    constructor(scene, x, y, z, dir, vel) {
+    constructor(scene, x, y, z, dir, vel, radius) {
         super();
 
         this.scene = scene;
 
-        this.createBall(x, y, z);
+        console.log("posX " + x);
+        console.log("posY " + y);
+        console.log("posZ " + z);
 
-        scene.add(ball);
+        this.createBall(x, y, z, radius);
+
     }
 
-    createBall(x, y, z) {
-        material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
-        geometry = new THREE.SphereGeometry(4, 10, 10);
-        ball = new THREE.Mesh(geometry, material);
+    createBall(x, y, z, radius) {
+        let material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
+        let geometry = new THREE.SphereGeometry(radius, 10, 10);
+        let ball = new THREE.Mesh(geometry, material);
 
-        this.position.set(x, y, z);
+        ball.position.set(x, y, z);
 
         this.add(ball);
         this.scene.add(ball);
