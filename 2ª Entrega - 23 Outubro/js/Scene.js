@@ -24,4 +24,57 @@ class Scene extends THREE.Scene {
     getBalls() {
         return this.balls;
     }
+
+    getRoom() {
+        return this.room;
+    }
+
+    //colisoes
+    ballsToWallSum(i) {
+        return this.balls[i].getRadius() + (this.room.getWallThickness() / 2);
+    }
+
+    ballsToWallLeftDistance(i) {
+        let ballX = this.balls[i].getPositionX();
+        let ballZ = this.balls[i].getPositionZ();
+
+        let wallPosition = this.room.getLeftWallPosition();
+        let wallX = wallPosition.x;
+        let wallZ = wallPosition.z;
+
+        return Math.sqrt((ballX - wallX) * (ballX - wallX) + (ballZ - wallZ) * (ballZ - wallZ));
+    }
+
+    ballsToWallRightDistance(i) {
+        let ballX = this.balls[i].getPositionX();
+        let ballZ = this.balls[i].getPositionZ();
+
+        let wallPosition = this.room.getRightWallPosition();
+        let wallX = wallPosition.x;
+        let wallZ = wallPosition.z;
+
+        return Math.sqrt((ballX - wallX) * (ballX - wallX) + (ballZ - wallZ) * (ballZ - wallZ));
+    }
+
+    ballsToWallUpDistance(i) {
+        let ballX = this.balls[i].getPositionX();
+        let ballZ = this.balls[i].getPositionZ();
+
+        let wallPosition = this.room.getUpWallPosition();
+        let wallX = wallPosition.x;
+        let wallZ = wallPosition.z;
+
+        return Math.sqrt((ballX - wallX) * (ballX - wallX) + (ballZ - wallZ) * (ballZ - wallZ));
+    }
+
+    ballsToWallDownDistance(i) {
+        let ballX = this.balls[i].getPositionX();
+        let ballZ = this.balls[i].getPositionZ();
+
+        let wallPosition = this.room.getDownWallPosition();
+        let wallX = wallPosition.x;
+        let wallZ = wallPosition.z;
+
+        return Math.sqrt((ballX - wallX) * (ballX - wallX) + (ballZ - wallZ) * (ballZ - wallZ));
+    }
 }

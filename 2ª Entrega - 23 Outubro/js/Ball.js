@@ -7,9 +7,10 @@ class Ball extends THREE.Object3D {
         this.pos = new THREE.Vector3(x, y, z);
         this.dir = dir;
         this.vel = vel;
+        this.radius = radius;
 
         let material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
-        let geometry = new THREE.SphereGeometry(radius, 10, 10);
+        let geometry = new THREE.SphereGeometry(this.radius, 10, 10);
         let ball = new THREE.Mesh(geometry, material);
 
         this.axis = new THREE.AxisHelper(3);
@@ -58,6 +59,26 @@ class Ball extends THREE.Object3D {
 
     translateZ(z) {
         this.ball.translateZ(z);
+    }
+
+    getRotationY() {
+        return this.ball.rotation.y;
+    }
+
+    rotateX(angle) {
+        this.ball.rotateX(angle);
+    }
+
+    rotateY(angle) {
+        this.ball.rotateY(angle);
+    }
+
+    rotateZ(angle) {
+        this.ball.rotateZ(angle);
+    }
+
+    getRadius() {
+        return this.radius;
     }
 
     getDirection() {

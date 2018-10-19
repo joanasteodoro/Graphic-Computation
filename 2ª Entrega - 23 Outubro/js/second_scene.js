@@ -21,7 +21,6 @@ function onResize() {
         camera.top = window.innerHeight / 50;
         camera.bottom = window.innerHeight / -50;
         camera.aspect = window.innerWidth / window.innerHeight;
-        camera.aspect = firstWidth / firstHeight;
         camera.updateProjectionMatrix();
 
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -99,12 +98,26 @@ function animate() {
         incrementFlag = true;
     }
 
-    for (let i = 0; i < 10; i++) {
+    //for (let i = 0; i < 10; i++) {
         if (incrementFlag == true) {
-            balls[i].setVelocity(balls[i].getVelocity() + 1);
+            balls[0].setVelocity(balls[0].getVelocity() + 1);
         }
-        balls[i].translateX(balls[i].getVelocity() * delta);
-    }
+
+        //colisoes
+        let distance = scene.ballsToWallSum(0);
+        let ballToWallLeft = scene.ballsToWallLeftDistance(0);
+        let ballToWallRight = scene.ballsToWallRightDistance(0);
+        let ballToWallUp = scene.ballsToWallUpDistance(0);
+        let ballToWallDown = scene.ballsToWallDownDistance(0);
+        if (distance > ballToWallLeft || distance > ballToWallRight ||
+                distance > ballToWallUp || distance > ballToWallDown) {
+            balls[0].rotateY(balls[0].getRotationY() - Math.PI/2);
+        //fim colisoes
+        }
+        else {
+            balls[0].translateX(balls[0].getVelocity() * delta);
+        }
+    //}
     incrementFlag = false;
     render();
     requestAnimationFrame(animate);

@@ -48,7 +48,7 @@ class Room extends THREE.Object3D {
         return this.upWall.position;
     }
 
-    getLeftWallPosition() {
+    getDownWallPosition() {
         return this.downWall.position;
     }
 
@@ -71,6 +71,8 @@ class Room extends THREE.Object3D {
 
         this.add(wall);
         this.scene.add(wall);
+
+        return wall;
     }
 
 
