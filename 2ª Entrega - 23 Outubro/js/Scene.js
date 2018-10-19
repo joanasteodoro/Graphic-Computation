@@ -31,7 +31,7 @@ class Scene extends THREE.Scene {
 
     //colisoes
     ballsToWallSum(i) {
-        return this.balls[i].getRadius() + (this.room.getWallThickness() / 2);
+        return (this.balls[i].getRadius() + this.room.getWallThickness())*(this.balls[i].getRadius() + this.room.getWallThickness()); //(this.room.getWallThickness() / 2);
     }
 
     ballsToWallLeftDistance(i) {
@@ -42,7 +42,7 @@ class Scene extends THREE.Scene {
         let wallX = wallPosition.x;
         let wallZ = wallPosition.z;
 
-        return Math.sqrt((ballX - wallX) * (ballX - wallX) + (ballZ - wallZ) * (ballZ - wallZ));
+        return (ballX - wallX) * (ballX - wallX);
     }
 
     ballsToWallRightDistance(i) {
@@ -53,7 +53,7 @@ class Scene extends THREE.Scene {
         let wallX = wallPosition.x;
         let wallZ = wallPosition.z;
 
-        return Math.sqrt((ballX - wallX) * (ballX - wallX) + (ballZ - wallZ) * (ballZ - wallZ));
+        return (ballX - wallX) * (ballX - wallX);
     }
 
     ballsToWallUpDistance(i) {
@@ -64,7 +64,7 @@ class Scene extends THREE.Scene {
         let wallX = wallPosition.x;
         let wallZ = wallPosition.z;
 
-        return Math.sqrt((ballX - wallX) * (ballX - wallX) + (ballZ - wallZ) * (ballZ - wallZ));
+        return (ballZ - wallZ) * (ballZ - wallZ);
     }
 
     ballsToWallDownDistance(i) {
@@ -75,6 +75,6 @@ class Scene extends THREE.Scene {
         let wallX = wallPosition.x;
         let wallZ = wallPosition.z;
 
-        return Math.sqrt((ballX - wallX) * (ballX - wallX) + (ballZ - wallZ) * (ballZ - wallZ));
+        return (ballZ - wallZ) * (ballZ - wallZ);
     }
 }

@@ -98,26 +98,27 @@ function animate() {
         incrementFlag = true;
     }
 
-    //for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
         if (incrementFlag == true) {
-            balls[0].setVelocity(balls[0].getVelocity() + 1);
+            balls[i].setVelocity(balls[i].getVelocity() + 1);
         }
 
         //colisoes
-        let distance = scene.ballsToWallSum(0);
-        let ballToWallLeft = scene.ballsToWallLeftDistance(0);
-        let ballToWallRight = scene.ballsToWallRightDistance(0);
-        let ballToWallUp = scene.ballsToWallUpDistance(0);
-        let ballToWallDown = scene.ballsToWallDownDistance(0);
+        let distance = scene.ballsToWallSum(i);
+        let ballToWallLeft = scene.ballsToWallLeftDistance(i);
+        let ballToWallRight = scene.ballsToWallRightDistance(i);
+        let ballToWallUp = scene.ballsToWallUpDistance(i);
+        let ballToWallDown = scene.ballsToWallDownDistance(i);
+
         if (distance > ballToWallLeft || distance > ballToWallRight ||
                 distance > ballToWallUp || distance > ballToWallDown) {
-            balls[0].rotateY(balls[0].getRotationY() - Math.PI/2);
+            balls[i].rotateY(balls[i].getRotationY() - Math.PI/180);
         //fim colisoes
         }
         else {
-            balls[0].translateX(balls[0].getVelocity() * delta);
+            balls[i].translateX(balls[i].getVelocity() * delta);
         }
-    //}
+    }
     incrementFlag = false;
     render();
     requestAnimationFrame(animate);
