@@ -31,7 +31,7 @@ class Scene extends THREE.Scene {
 
     //colisoes
     ballsToWallSum(i) {
-        return (this.balls[i].getRadius() + this.room.getWallThickness())*(this.balls[i].getRadius() + this.room.getWallThickness()); //(this.room.getWallThickness() / 2);
+        return (this.balls[i].getRadius() + this.room.getWallThickness() / 2)  * (this.balls[i].getRadius() + this.room.getWallThickness() / 2); //(this.room.getWallThickness() / 2);
     }
 
     ballsToWallLeftDistance(i) {
