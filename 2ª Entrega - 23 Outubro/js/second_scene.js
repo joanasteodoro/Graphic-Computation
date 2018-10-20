@@ -100,23 +100,33 @@ function animate() {
 
     for (let i = 0; i < 10; i++) {
         if (incrementFlag == true) {
-            balls[i].setVelocity(balls[i].getVelocity() + 1);
+            balls[0].setVelocity(balls[i].getVelocity() + 1);
         }
 
         //colisoes
-        let distance = scene.ballsToWallSum(i);
-        let ballToWallLeft = scene.ballsToWallLeftDistance(i);
-        let ballToWallRight = scene.ballsToWallRightDistance(i);
-        let ballToWallUp = scene.ballsToWallUpDistance(i);
-        let ballToWallDown = scene.ballsToWallDownDistance(i);
+        var distance = scene.ballsToWallSum(i);
+        var ballToWallLeft = scene.ballsToWallLeftDistance(i);
+        var ballToWallRight = scene.ballsToWallRightDistance(i);
+        var ballToWallUp = scene.ballsToWallUpDistance(i);
+        var ballToWallDown = scene.ballsToWallDownDistance(i);
 
-        if (distance > ballToWallLeft || distance > ballToWallRight ||
-                distance > ballToWallUp || distance > ballToWallDown) {
-            balls[i].rotateY(balls[i].getRotationY() - Math.PI/180);
-        //fim colisoes
+        if(balls[i].mayRotateFlag) {
+            if(distance > ballToWallUp || distance > ballToWallDown) {
+                let angle = (Math.PI - 2 * (Math.PI / 2 - balls[i].getRotationY()));
+                if(balls[i].getRotationY() < Math.PI / 2) balls[i].rotateY(0 - angle);
+                else balls[i].rotateY(angle)
+            }
+            else if(distance > ballToWallLeft || distance > ballToWallRight) {
+                let angle = (2 * (Math.PI / 2 - balls[i].getRotationY()));
+                if(balls[i].getRotationY() < (0 - Math.PI / 2)) balls[i].rotateY(0 - angle);
+                else balls[i].rotateY(angle)
+            }
+            balls[i].translateX(balls[i].getVelocity() * delta);
+            balls[i].mayRotateFlag = false;
         }
         else {
             balls[i].translateX(balls[i].getVelocity() * delta);
+            balls[i].mayRotateFlag = true
         }
     }
     incrementFlag = false;

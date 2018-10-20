@@ -8,6 +8,7 @@ class Ball extends THREE.Object3D {
         this.dir = dir;
         this.vel = vel;
         this.radius = radius;
+        this.mayRotateFlag = true;
 
         let material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
         let geometry = new THREE.SphereGeometry(this.radius, 10, 10);

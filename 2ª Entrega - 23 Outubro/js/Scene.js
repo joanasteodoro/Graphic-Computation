@@ -15,7 +15,7 @@ class Scene extends THREE.Scene {
             let posX = THREE.Math.randFloat(-width / 2 + radius, width / 2 - radius);
             let posY = radius;
             let posZ = THREE.Math.randFloat(-depth / 2 + radius, depth / 2 - radius);
-            let dir = THREE.Math.randFloat(0, 2 * Math.PI);
+            let dir = THREE.Math.randFloat(0 - Math.PI, Math.PI);
             let vel = THREE.Math.randFloat(1, 10);
             this.balls[i] = new Ball(this, posX, posY, posZ, dir, vel, radius);
         }
