@@ -21,6 +21,50 @@ class Scene extends THREE.Scene {
         }
     }
 
+
+    resize(windowWidth, windowHeight, ratio) {
+        var roomWidth = this.room.getRoomWidth();
+        var roomHeight = this.room.getRoomDepth();
+        // variable to mantain the room aspect ratio
+        var roomAspectRatio = roomWidth / roomHeight;
+        // current ratio of the window
+        var currentWindowRatio = windowWidth / windowHeight;
+
+        // if there is no need to resize the scene's content
+        var centerX = this.room.getPositionX();
+        var distanceX = centerX + roomWidth / 2;
+
+        var centerZ = this.room.getPositionZ();
+        var distanceZ = centerZ + roomHeight / 2;
+
+        console.log(distanceX);
+        console.log(distanceZ);
+
+        if ((windowWidth / 2) < distanceX || (windowHeight / 2) < distanceZ) {
+            console.log("chegou");
+            return {
+              width: windowWidth,
+              height: windowHeight
+            };
+        }
+        // if the height has to be adjusted to the diminishing width
+        else if (currentWindowRatio < roomAspectRatio) {
+            console.log("chegou2");
+            return {
+                width: windowWidth,
+                height: windowWidth / ratio
+            };
+        }
+        // if the width has to be adjusted to the diminishing height
+        else if (currentWindowRatio > roomAspectRatio) {
+            console.log("chegou3");
+            return {
+                width: windowHeight * ratio,
+                height: windowHeight
+            };
+        }
+    }
+
     getBalls() {
         return this.balls;
     }

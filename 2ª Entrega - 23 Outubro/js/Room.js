@@ -8,7 +8,7 @@ class Room extends THREE.Object3D {
 
         this.wallThickness = 0.4;
         this.depth = 15 - this.wallThickness; // l
-        this.width = 2 * this.depth;
+        this.width = 2 * this.depth; // 2l
 
         this.height = Math.sqrt(5) / 10 * this.depth;
 
@@ -34,6 +34,14 @@ class Room extends THREE.Object3D {
 
     getWallThickness() {
         return this.wallThickness;
+    }
+
+    getPositionX() {
+        return this.position.x;
+    }
+
+    getPositionZ() {
+        return this.position.z;
     }
 
     getLeftWallPosition() {

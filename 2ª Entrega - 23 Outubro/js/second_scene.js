@@ -1,10 +1,14 @@
 var scene, camera, renderer;
 var camera1, camera2, camera3;
+
 var balls;
+
 var time = new THREE.Clock();
 var delta, sinceBeginning;
 var incrementFlag = false;
 var level, levelAux;
+
+const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 
 function switchCamera(nCamera) {
     'use strict';
@@ -15,16 +19,11 @@ function switchCamera(nCamera) {
 function onResize() {
     'use strict';
 
-    if (window.innerHeight > 0 && window.innerWidth > 0) {
-        camera.left = window.innerWidth / -50;
-        camera.right = window.innerWidth / 50;
-        camera.top = window.innerHeight / 50;
-        camera.bottom = window.innerHeight / -50;
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+    var newDimensions = scene.resize(window.innerWidth, window.innerHeight, ASPECT_RATIO);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }
+    renderer.setSize(newDimensions.width, newDimensions.height);
 }
 
 function onKeyDown(e) {
