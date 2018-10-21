@@ -38,6 +38,10 @@ class Ball extends THREE.Object3D {
         return this.ball.position.z;
     }
 
+    getPosition() {
+        return this.ball.position;
+    }
+
     setPositionX(x) {
         this.ball.position.x = x;
     }

@@ -15,7 +15,6 @@ function switchCamera(nCamera) {
     camera = nCamera;
 }
 
-// CHANGE FUNCTION ONRESIZE
 function onResize() {
     'use strict';
 
@@ -69,12 +68,14 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     scene = new Scene();
-
     balls = scene.getBalls();
 
+    // adjust cameras
     camera1 = new OrthographicCamera(0, 100, 0); // Upper camera #1
-    camera2 = new PerspectiveCamera(15, 20, 10); // Allows to see the whole terrain #2
-    camera3 = new PerspectiveCamera(100, 30, 0); // Same as #2 but mobile #3
+    camera2 = new PerspectiveCamera(); // Allows to see the whole terrain #2
+    camera2.setPosition(17, 20, 20);
+    camera2.setLookAt(0, 0, 0);
+    camera3 = balls[0].getCamera(); // Same as #2 but mobile #3
     switchCamera(camera1);
 
     time.start();
@@ -129,6 +130,11 @@ function animate() {
         }
     }
     incrementFlag = false;
+
+    // makes camera3 follow the first ball
+    /*camera3.setPosition(balls[0].getPositionX() + 5, balls[0].getPositionY() + 5, balls[0].getPositionZ());
+    camera3.lookAt(balls[0].getPosition());*/
+
     render();
     requestAnimationFrame(animate);
 }

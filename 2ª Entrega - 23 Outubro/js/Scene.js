@@ -1,5 +1,5 @@
 class Scene extends THREE.Scene {
-    constructor() {
+    constructor(camera) {
         super();
         this.background = new THREE.Color("rgb(247, 231, 207)");
         this.add(new THREE.AxisHelper(50));
@@ -17,7 +17,13 @@ class Scene extends THREE.Scene {
             let posZ = THREE.Math.randFloat(-depth / 2 + radius, depth / 2 - radius);
             let dir = THREE.Math.randFloat(0 - Math.PI, Math.PI);
             let vel = THREE.Math.randFloat(1, 10);
-            this.balls[i] = new Ball(this, posX, posY, posZ, dir, vel, radius);
+            // adds a camera to the first ball
+            if (i == 0) {
+                this.balls[i] = new BallWithCamera(this, posX, posY, posZ, dir, vel, radius);
+            }
+            else {
+                this.balls[i] = new Ball(this, posX, posY, posZ, dir, vel, radius);
+            }
         }
     }
 
