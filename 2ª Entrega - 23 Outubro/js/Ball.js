@@ -9,6 +9,8 @@ class Ball extends THREE.Object3D {
         this.vel = vel;
         this.radius = radius;
         this.mayRotateFlag = true;
+        this.realAngle = dir;
+        console.log(this.realAngle);
 
         let material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
         let geometry = new THREE.SphereGeometry(this.radius, 10, 10);
@@ -54,6 +56,10 @@ class Ball extends THREE.Object3D {
         this.ball.position.z = z;
     }
 
+    setRealAngle(angle) {
+        this.realAngle += angle;
+    }
+
     translateX(x) {
         this.ball.translateX(x);
     }
@@ -66,6 +72,10 @@ class Ball extends THREE.Object3D {
         this.ball.translateZ(z);
     }
 
+    getRealAngle() {
+        return this.realAngle;
+    }
+
     getRotationY() {
         return this.ball.rotation.y;
     }
@@ -76,6 +86,7 @@ class Ball extends THREE.Object3D {
 
     rotateY(angle) {
         this.ball.rotateY(angle);
+        this.realAngle += angle;
     }
 
     rotateZ(angle) {

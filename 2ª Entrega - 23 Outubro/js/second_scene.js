@@ -100,7 +100,7 @@ function animate() {
 
     for (let i = 0; i < 10; i++) {
         if (incrementFlag == true) {
-            balls[0].setVelocity(balls[i].getVelocity() + 1);
+            balls[i].setVelocity(balls[i].getVelocity() + 1);
         }
 
         //colisoes
@@ -109,17 +109,31 @@ function animate() {
         var ballToWallRight = scene.ballsToWallRightDistance(i);
         var ballToWallUp = scene.ballsToWallUpDistance(i);
         var ballToWallDown = scene.ballsToWallDownDistance(i);
-
+        
         if(balls[i].mayRotateFlag) {
             if(distance > ballToWallUp || distance > ballToWallDown) {
                 let angle = (Math.PI - 2 * (Math.PI / 2 - balls[i].getRotationY()));
-                if(balls[i].getRotationY() < Math.PI / 2) balls[i].rotateY(0 - angle);
-                else balls[i].rotateY(angle)
+                if(balls[i].getRealAngle() < (Math.PI / 2)) {
+                    console.log('caso não fodido: ' + balls[i].getRotationY());
+                    balls[i].rotateY(0 - angle);
+                    balls[i].setRealAngle(0 - angle);
+                } else {
+                    console.log('caso fodido');
+                    balls[i].rotateY(angle);
+                    balls[i].setRealAngle(angle);
+                }
+
             }
             else if(distance > ballToWallLeft || distance > ballToWallRight) {
-                let angle = (2 * (Math.PI / 2 - balls[i].getRotationY()));
-                if(balls[i].getRotationY() < (0 - Math.PI / 2)) balls[i].rotateY(0 - angle);
-                else balls[i].rotateY(angle)
+                let angle = Math.PI - (2 * balls[i].getRotationY());
+                if(balls[i].getRealAngle() > (Math.PI / 2)) {
+                    balls[i].rotateY(0 - angle);
+                    balls[i].setRealAngle(0 - angle);
+                } 
+                else {
+                    balls[i].rotateY(angle)
+                    balls[i].setRealAngle(angle);
+                } 
             }
             balls[i].translateX(balls[i].getVelocity() * delta);
             balls[i].mayRotateFlag = false;

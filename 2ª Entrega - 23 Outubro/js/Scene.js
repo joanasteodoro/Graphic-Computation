@@ -15,7 +15,7 @@ class Scene extends THREE.Scene {
             let posX = THREE.Math.randFloat(-width / 2 + radius, width / 2 - radius);
             let posY = radius;
             let posZ = THREE.Math.randFloat(-depth / 2 + radius, depth / 2 - radius);
-            let dir = THREE.Math.randFloat(0 - Math.PI, Math.PI);
+            let dir = THREE.Math.randFloat(3 * Math.PI / 4, 3 * Math.PI / 4);
             let vel = THREE.Math.randFloat(1, 10);
             // adds a camera to the first ball
             if (i == 0) {
