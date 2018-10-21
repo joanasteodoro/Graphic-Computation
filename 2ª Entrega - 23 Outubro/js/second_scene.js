@@ -87,6 +87,33 @@ function init() {
     window.addEventListener("resize", onResize);
 }
 
+function computePosition(ball, delta) {
+    var posX = ball.getPositionX() + (ball.getVelocity() * delta * Math.sin(ball.getRealAngle()));
+    var posZ = ball.getPositionZ() + (ball.getVelocity() * delta * Math.cos(ball.getRealAngle()));
+    tentativePos = new THREE.Vector3(posX, ball.getPositionY(), posZ);
+    return tentativePos;
+}
+
+function checkLimits(tentativePos, ball) {
+    var posX = tentativePos.x;
+    var posZ = tentativePos.z;
+
+    if(tentativePos.x - ball.getRadius() < -15) {
+        posX = -15 + ball.getRadius();
+    }
+    if(tentativePos.x + ball.getRadius() > 15) {
+        posX = 15 - ball.getRadius();
+    }
+    if(tentativePos.z + ball.getRadius() > 7.5) {
+        posZ = 7.5 - ball.getRadius();
+    }
+    if(tentativePos.z - ball.getRadius() < - 7.5) {
+        posZ = -7.5 + ball.getRadius();
+    }
+    newPosition = new THREE.Vector3(posX, tentativePos.y, posZ);
+    return newPosition
+}
+
 function animate() {
     'use strict';
 
@@ -111,20 +138,45 @@ function animate() {
         var ballToWallDown = scene.ballsToWallDownDistance(i);
         
         if(balls[i].mayRotateFlag) {
-            if(distance > ballToWallUp || distance > ballToWallDown) {
+            var tentativePosition;
+            var currentPosition;
+
+            if(distance > ballToWallUp) {
+                tentativePosition = computePosition(balls[i], delta);
+                currentPosition = checkLimits(tentativePosition, balls[i]);
+                balls[i].setPositionX(currentPosition.x);
+                balls[i].setPositionZ(currentPosition.z);
+
                 let angle = (Math.PI - 2 * (Math.PI / 2 - balls[i].getRotationY()));
                 if(balls[i].getRealAngle() < (Math.PI / 2)) {
-                    console.log('caso não fodido: ' + balls[i].getRotationY());
                     balls[i].rotateY(0 - angle);
                     balls[i].setRealAngle(0 - angle);
                 } else {
-                    console.log('caso fodido');
                     balls[i].rotateY(angle);
                     balls[i].setRealAngle(angle);
                 }
+            }
+            else if(distance > ballToWallDown) {
+                tentativePosition = computePosition(balls[i], delta);
+                currentPosition = checkLimits(tentativePosition, balls[i]);
+                balls[i].setPositionX(currentPosition.x);
+                balls[i].setPositionZ(currentPosition.z);
 
+                let angle = (Math.PI - 2 * (Math.PI / 2 + balls[i].getRotationY()));
+                if(balls[i].getRealAngle() < (0 - Math.PI / 2)) {
+                    balls[i].rotateY(0 - angle);
+                    balls[i].setRealAngle(0 - angle);
+                } else {
+                    balls[i].rotateY(angle);
+                    balls[i].setRealAngle(angle);
+                }
             }
             else if(distance > ballToWallLeft || distance > ballToWallRight) {
+                tentativePosition = computePosition(balls[i], delta);
+                currentPosition = checkLimits(tentativePosition, balls[i]);
+                balls[i].setPositionX(currentPosition.x);
+                balls[i].setPositionZ(currentPosition.z);
+
                 let angle = Math.PI - (2 * balls[i].getRotationY());
                 if(balls[i].getRealAngle() > (Math.PI / 2)) {
                     balls[i].rotateY(0 - angle);
@@ -140,7 +192,7 @@ function animate() {
         }
         else {
             balls[i].translateX(balls[i].getVelocity() * delta);
-            balls[i].mayRotateFlag = true
+            balls[i].mayRotateFlag = true;
         }
     }
     incrementFlag = false;

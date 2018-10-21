@@ -58,6 +58,8 @@ class Ball extends THREE.Object3D {
 
     setRealAngle(angle) {
         this.realAngle += angle;
+        //if(this.realAngle > Math.PI) this.realAngle -= (2 * Math.PI);
+        //if(this.realAngle < Math.PI) this.realAngle += (2 * Math.PI);
     }
 
     translateX(x) {
