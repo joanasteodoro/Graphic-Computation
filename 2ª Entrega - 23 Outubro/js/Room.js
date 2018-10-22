@@ -7,7 +7,7 @@ class Room extends THREE.Object3D {
         this.position.set(x, y, z);
 
         this.wallThickness = 0.4;
-        this.depth = 15 - this.wallThickness; // l
+        this.depth = 15; // l
         this.width = 2 * this.depth; // 2l
 
         this.height = Math.sqrt(5) / 10 * this.depth;

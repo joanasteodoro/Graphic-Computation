@@ -11,6 +11,8 @@ class Ball extends THREE.Object3D {
         this.mayRotateFlag = true;
         this.realAngle = dir;
 
+        this.ballColliding = -1;
+
         let material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
         let geometry = new THREE.SphereGeometry(this.radius, 10, 10);
         let ball = new THREE.Mesh(geometry, material);
@@ -25,6 +27,14 @@ class Ball extends THREE.Object3D {
         this.scene.add(ball);
 
         this.ball.rotateY(dir);
+    }
+
+    getBallColliding() {
+        return this.ballColliding;
+    }
+
+    setBallColliding(ball) {
+        this.ballColliding = ball;
     }
 
     getPositionX() {

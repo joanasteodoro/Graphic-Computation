@@ -98,17 +98,21 @@ function checkLimits(tentativePos, ball) {
     var posX = tentativePos.x;
     var posZ = tentativePos.z;
 
-    if(tentativePos.x - ball.getRadius() < -15) {
-        posX = -15 + ball.getRadius();
+    // left wall
+    if(tentativePos.x - ball.getRadius() < -(15+0.2)) {
+        posX = -15 + ball.getRadius() + 5;
     }
-    if(tentativePos.x + ball.getRadius() > 15) {
-        posX = 15 - ball.getRadius();
+    // right wall
+    if(tentativePos.x + ball.getRadius() > 15+0.2) {
+        posX = 15 - ball.getRadius() - 5;
     }
-    if(tentativePos.z + ball.getRadius() > 7.5) {
-        posZ = 7.5 - ball.getRadius();
+    // down wall
+    if(tentativePos.z + ball.getRadius() > 7.5+0.2) {
+        posZ = 7.5 - ball.getRadius() - 5;
     }
-    if(tentativePos.z - ball.getRadius() < - 7.5) {
-        posZ = -7.5 + ball.getRadius();
+    // up wall
+    if(tentativePos.z - ball.getRadius() < - (7.5 + 0.2)) {
+        posZ = -7.5 + ball.getRadius() + 5;
     }
     newPosition = new THREE.Vector3(posX, tentativePos.y, posZ);
     return newPosition
@@ -125,90 +129,80 @@ function animate() {
         incrementFlag = true;
     }
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 3; i++) {
         if (incrementFlag == true) {
-            balls[i].setVelocity(new THREE.Vector3(balls[i].getVelocityX() + 0.5, 0, balls[i].getVelocityZ() + 0.5));
+            balls[i].setVelocity(new THREE.Vector3(balls[i].getVelocityX() + 0.5, 0, balls[i].getVelocityZ() + 1));
         }
 
         // colisoes com as paredes
-        var distance = scene.ballsToWallSum(i);
-        var ballToWallLeft = scene.ballsToWallLeftDistance(i);
-        var ballToWallRight = scene.ballsToWallRightDistance(i);
-        var ballToWallUp = scene.ballsToWallUpDistance(i);
-        var ballToWallDown = scene.ballsToWallDownDistance(i);
-
-        if(balls[i].mayRotateFlag) {
-            var tentativePosition;
-            var currentPosition;
-
-            if(distance > ballToWallUp) {
-                tentativePosition = computePosition(balls[i], delta);
-                currentPosition = checkLimits(tentativePosition, balls[i]);
-                balls[i].setPositionX(currentPosition.x);
-                balls[i].setPositionZ(currentPosition.z);
-                balls[i].setVelocityX(balls[i].getVelocityX());
-                balls[i].setVelocityZ(-balls[i].getVelocityZ());
-
-            }
-            if(distance > ballToWallDown) {
-                tentativePosition = computePosition(balls[i], delta);
-                currentPosition = checkLimits(tentativePosition, balls[i]);
-                balls[i].setPositionX(currentPosition.x);
-                balls[i].setPositionZ(currentPosition.z);
-
-                balls[i].setVelocityX(balls[i].getVelocityX());
-                balls[i].setVelocityZ(-balls[i].getVelocityZ());
-            }
-            if(distance > ballToWallLeft || distance > ballToWallRight) {
-                tentativePosition = computePosition(balls[i], delta);
-                currentPosition = checkLimits(tentativePosition, balls[i]);
-                balls[i].setPositionX(currentPosition.x);
-                balls[i].setPositionZ(currentPosition.z);
-
-                balls[i].setVelocityX(-balls[i].getVelocityX());
-                balls[i].setVelocityZ(balls[i].getVelocityZ());
-            }
-            balls[i].setPositionX(balls[i].getPositionX() + balls[i].getVelocityX() * delta);
-            balls[i].setPositionZ(balls[i].getPositionZ() + balls[i].getVelocityZ() * delta);
-            balls[i].mayRotateFlag = false;
-        }
-        else {
-            balls[i].setPositionX(balls[i].getPositionX() + balls[i].getVelocityX() * delta);
-            balls[i].setPositionZ(balls[i].getPositionZ() + balls[i].getVelocityZ() * delta);
-            balls[i].mayRotateFlag = true;
-        }
+        scene.collisionWithWalls(i);
 
         // colisoes com as outras bolas
-        /*for (let j = i + 1; j < 10; j++) {
-            var distanceToBall = scene.ballToBallSum(i, j);
-            var ballToBall = scene.ballToBallDistance(i, j);
-
-            if(balls[i].mayRotateFlag) {
-                var tentativePositionBalls;
-                var currentPositionBalls;
-
-                if(distanceToBall > ballToBall) {
-                    tentativePositionBalls = computePosition(balls[i], delta);
-                    currentPositionBalls = checkLimits(tentativePositionBalls, balls[i]);
-                    balls[i].setPositionX(currentPositionBalls.x);
-                    balls[i].setPositionZ(currentPositionBalls.z);
-
-                    let angle = (Math.PI - 2 * (Math.PI / 2 - balls[i].getRotationY()));
-                    if(balls[i].getRealAngle() < (Math.PI / 2)) {
-                        balls[i].rotateY(0 - angle);
-                        balls[i].setRealAngle(0 - angle);
-                    } else {
-                        balls[i].rotateY(angle);
-                        balls[i].setRealAngle(angle);
-                    }
-                }
-            }
-            else {
-                balls[i].translateX(balls[i].getVelocity() * delta);
-                balls[i].mayRotateFlag = true;
-            }
-        }*/
+        for (let j = i + 1; j < 3; j++) {
+            scene.setFlagsBallToBallCollision(i, j)
+        }
+        scene.checkBallWithinBounds(i);
     }
+
+    for (let i = 0; i < 3; i++) {
+        var ballColliding = balls[i].getBallColliding();
+        if(ballColliding != -1) {
+            var newVelX = balls[ballColliding].getVelocityX();
+            var newVelY = balls[ballColliding].getVelocityY();
+            var newVelZ = balls[ballColliding].getVelocityZ();
+
+            var currentVelX = balls[i].getVelocityX();
+            var currentVelY = balls[i].getVelocityY();
+            var currentVelZ = balls[i].getVelocityZ();
+
+            var difVelX = (currentVelX - newVelX);
+            var difVelY = (currentVelY - newVelY)
+            var prod = (currentVelX - newVelX) * (balls[i].getPositionX() - balls[ballColliding].getPositionX()) +
+                (currentVelY - newVelY) * (balls[i].getPositionY() - balls[ballColliding].getPositionY()) +
+                (currentVelZ - newVelZ) * (balls[i].getPositionZ() - balls[ballColliding].getPositionZ());
+
+            var prod2 = (newVelX - currentVelX) * (balls[ballColliding].getPositionX() - balls[i].getPositionX()) +
+                (newVelY - currentVelY) * (balls[ballColliding].getPositionY() - balls[i].getPositionY()) +
+                (newVelZ - currentVelZ) * (balls[ballColliding].getPositionZ() - balls[i].getPositionZ());
+
+
+            balls[i].setVelocityX((balls[i].getVelocityX() - (prod
+                /scene.ballToBallDistance(i, ballColliding))*(balls[i].getPositionX() - balls[ballColliding].getPositionX())));
+
+            balls[i].setVelocityY(newVelY);
+
+            balls[i].setVelocityZ((balls[i].getVelocityZ() - (prod
+                /scene.ballToBallDistance(i, ballColliding))*(balls[i].getPositionZ() - balls[ballColliding].getPositionZ())));
+
+            balls[ballColliding].setVelocityX(-(balls[ballColliding].getVelocityX() - (prod2
+                /scene.ballToBallDistance(ballColliding, i))*(balls[ballColliding].getPositionX() - balls[i].getPositionX())));
+
+            balls[ballColliding].setVelocityY(currentVelY);
+
+            balls[ballColliding].setVelocityZ(-(balls[ballColliding].getVelocityZ() - (prod2
+                /scene.ballToBallDistance(ballColliding, i))*(balls[ballColliding].getPositionZ() - balls[i].getPositionZ())));
+
+
+            /*balls[i].setVelocityX(newVelZ);
+            balls[i].setVelocityY(newVelY);
+            balls[i].setVelocityZ(newVelX);
+
+            balls[ballColliding].setVelocityX(currentVelZ);
+            balls[ballColliding].setVelocityY(currentVelY);
+            balls[ballColliding].setVelocityZ(currentVelX);*/
+
+            balls[i].setBallColliding(-1);
+            balls[ballColliding].setBallColliding(-1);
+
+        }
+        scene.checkBallWithinBounds(i);
+    }
+
+    for(let i = 0; i < 3; i++) {
+        scene.updateBallPosition(i, delta);
+        scene.checkBallWithinBounds(i);
+    }
+
     incrementFlag = false;
 
     render();
