@@ -130,13 +130,13 @@ function animate() {
             balls[i].setVelocity(balls[i].getVelocity() + 1);
         }
 
-        //colisoes
+        // colisoes com as paredes
         var distance = scene.ballsToWallSum(i);
         var ballToWallLeft = scene.ballsToWallLeftDistance(i);
         var ballToWallRight = scene.ballsToWallRightDistance(i);
         var ballToWallUp = scene.ballsToWallUpDistance(i);
         var ballToWallDown = scene.ballsToWallDownDistance(i);
-        
+
         if(balls[i].mayRotateFlag) {
             var tentativePosition;
             var currentPosition;
@@ -156,7 +156,7 @@ function animate() {
                     balls[i].setRealAngle(angle);
                 }
             }
-            else if(distance > ballToWallDown) {
+            if(distance > ballToWallDown) {
                 tentativePosition = computePosition(balls[i], delta);
                 currentPosition = checkLimits(tentativePosition, balls[i]);
                 balls[i].setPositionX(currentPosition.x);
@@ -171,7 +171,7 @@ function animate() {
                     balls[i].setRealAngle(angle);
                 }
             }
-            else if(distance > ballToWallLeft || distance > ballToWallRight) {
+            if(distance > ballToWallLeft || distance > ballToWallRight) {
                 tentativePosition = computePosition(balls[i], delta);
                 currentPosition = checkLimits(tentativePosition, balls[i]);
                 balls[i].setPositionX(currentPosition.x);
@@ -181,11 +181,11 @@ function animate() {
                 if(balls[i].getRealAngle() > (Math.PI / 2)) {
                     balls[i].rotateY(0 - angle);
                     balls[i].setRealAngle(0 - angle);
-                } 
+                }
                 else {
                     balls[i].rotateY(angle)
                     balls[i].setRealAngle(angle);
-                } 
+                }
             }
             balls[i].translateX(balls[i].getVelocity() * delta);
             balls[i].mayRotateFlag = false;
@@ -194,12 +194,39 @@ function animate() {
             balls[i].translateX(balls[i].getVelocity() * delta);
             balls[i].mayRotateFlag = true;
         }
+
+        // colisoes com as outras bolas
+        for (let j = i + 1; j < 10; j++) {
+            var distanceToBall = scene.ballToBallSum(i, j);
+            var ballToBall = scene.ballToBallDistance(i, j);
+
+            if(balls[i].mayRotateFlag) {
+                var tentativePositionBalls;
+                var currentPositionBalls;
+
+                if(distanceToBall > ballToBall) {
+                    tentativePositionBalls = computePosition(balls[i], delta);
+                    currentPositionBalls = checkLimits(tentativePositionBalls, balls[i]);
+                    balls[i].setPositionX(currentPositionBalls.x);
+                    balls[i].setPositionZ(currentPositionBalls.z);
+
+                    let angle = (Math.PI - 2 * (Math.PI / 2 - balls[i].getRotationY()));
+                    if(balls[i].getRealAngle() < (Math.PI / 2)) {
+                        balls[i].rotateY(0 - angle);
+                        balls[i].setRealAngle(0 - angle);
+                    } else {
+                        balls[i].rotateY(angle);
+                        balls[i].setRealAngle(angle);
+                    }
+                }
+            }
+            else {
+                balls[i].translateX(balls[i].getVelocity() * delta);
+                balls[i].mayRotateFlag = true;
+            }
+        }
     }
     incrementFlag = false;
-
-    // makes camera3 follow the first ball
-    /*camera3.setPosition(balls[0].getPositionX() + 5, balls[0].getPositionY() + 5, balls[0].getPositionZ());
-    camera3.lookAt(balls[0].getPosition());*/
 
     render();
     requestAnimationFrame(animate);

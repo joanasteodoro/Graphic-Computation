@@ -79,18 +79,29 @@ class Scene extends THREE.Scene {
         return this.room;
     }
 
-    //colisoes
+    // colisoes com as outras bolas
+    ballToBallSum(i , j) {
+        return this.balls[i].getRadius() + this.balls[j].getRadius();
+    }
+
+    ballToBallDistance(i, j) {
+        let ball1X = this.balls[i].getPositionX();
+
+        let ball2X = this.balls[j].getPositionX();
+
+        return (ball1X - ball2X) * (ball1X - ball2X);
+    }
+
+    // colisoes com as paredes
     ballsToWallSum(i) {
         return (this.balls[i].getRadius() + this.room.getWallThickness() / 2)  * (this.balls[i].getRadius() + this.room.getWallThickness() / 2); //(this.room.getWallThickness() / 2);
     }
 
     ballsToWallLeftDistance(i) {
         let ballX = this.balls[i].getPositionX();
-        let ballZ = this.balls[i].getPositionZ();
 
         let wallPosition = this.room.getLeftWallPosition();
         let wallX = wallPosition.x;
-        let wallZ = wallPosition.z;
 
         return (ballX - wallX) * (ballX - wallX);
     }
