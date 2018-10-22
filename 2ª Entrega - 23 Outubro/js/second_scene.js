@@ -19,9 +19,28 @@ function onResize() {
     'use strict';
 
     var newDimensions = scene.resize(window.innerWidth, window.innerHeight, ASPECT_RATIO);
-    camera.aspect = window.innerWidth / window.innerHeight;
+    /*camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
+    renderer.setSize(newDimensions.width, newDimensions.height);*/
+
+	if ( ASPECT_RATIO > ( window.innerWidth / window.innerHeight ) ) {
+
+		camera.left   = ( window.innerHeight * ASPECT_RATIO ) / -50;
+		camera.right  = ( window.innerHeight * ASPECT_RATIO ) /  50;
+		camera.top    = window.innerHeight / 50;
+		camera.bottom = window.innerHeight / -50;
+
+	} else {
+
+		camera.left   = window.innerWidth / -50;
+		camera.right  = window.innerWidth /  50;
+		camera.top    = ( window.innerWidth / ASPECT_RATIO ) / 50;
+		camera.bottom = ( window.innerWidth / ASPECT_RATIO ) / -50;
+
+	}
+
+	camera.updateProjectionMatrix();
     renderer.setSize(newDimensions.width, newDimensions.height);
 }
 
@@ -85,37 +104,6 @@ function init() {
     window.addEventListener("keydown", onKeyDown);
 
     window.addEventListener("resize", onResize);
-}
-
-function computePosition(ball, delta) {
-    var posX = ball.getPositionX() + ball.getVelocityX() * delta;
-    var posZ = ball.getPositionZ() + ball.getVelocityZ() * delta;
-    tentativePos = new THREE.Vector3(posX, ball.getPositionY(), posZ);
-    return tentativePos;
-}
-
-function checkLimits(tentativePos, ball) {
-    var posX = tentativePos.x;
-    var posZ = tentativePos.z;
-
-    // left wall
-    if(tentativePos.x - ball.getRadius() < -(15+0.2)) {
-        posX = -15 + ball.getRadius() + 5;
-    }
-    // right wall
-    if(tentativePos.x + ball.getRadius() > 15+0.2) {
-        posX = 15 - ball.getRadius() - 5;
-    }
-    // down wall
-    if(tentativePos.z + ball.getRadius() > 7.5+0.2) {
-        posZ = 7.5 - ball.getRadius() - 5;
-    }
-    // up wall
-    if(tentativePos.z - ball.getRadius() < - (7.5 + 0.2)) {
-        posZ = -7.5 + ball.getRadius() + 5;
-    }
-    newPosition = new THREE.Vector3(posX, tentativePos.y, posZ);
-    return newPosition
 }
 
 function animate() {
@@ -182,17 +170,10 @@ function animate() {
             balls[ballColliding].setVelocityZ(-(balls[ballColliding].getVelocityZ() - (prod2
                 /scene.ballToBallDistance(ballColliding, i))*(balls[ballColliding].getPositionZ() - balls[i].getPositionZ())));
 
-
-            /*balls[i].setVelocityX(newVelZ);
-            balls[i].setVelocityY(newVelY);
-            balls[i].setVelocityZ(newVelX);
-
-            balls[ballColliding].setVelocityX(currentVelZ);
-            balls[ballColliding].setVelocityY(currentVelY);
-            balls[ballColliding].setVelocityZ(currentVelX);*/
-
             balls[i].setBallColliding(-1);
             balls[ballColliding].setBallColliding(-1);
+
+            scene.checkBallInsideBall(i, ballColliding);
 
         }
         scene.checkBallWithinBounds(i);

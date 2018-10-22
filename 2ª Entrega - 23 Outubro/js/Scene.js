@@ -81,10 +81,15 @@ class Scene extends THREE.Scene {
     }
 
     checkBallInsideBall(i, j) {
-        /*var upperBound = this.room.getRoomDepth() / 2;
-        var lowerBound = - upperBound;
-        var rightBound = this.room.getRoomWidth() / 2;
-        var leftBound = - rightBound;*/
+        var distanceToBall = this.ballToBallSum(i, j);
+        var ballToBall = this.ballToBallDistance(i, j);
+        var distanceX = this.ballToBallDistanceX(i, j);
+        var distanceZ = this.ballToBallDistanceZ(i, j);
+        
+        if(distanceToBall > ballToBall) {
+            this.balls[i].setPositionX(this.balls[i].getPositionX() + distanceX);
+            this.balls[i].setPositionZ(this.balls[i].getPositionZ() + distanceZ);
+        }
     }
 
     checkBallWithinBounds(i) {
@@ -120,6 +125,7 @@ class Scene extends THREE.Scene {
         if(distanceToBall >= ballToBall) {
             this.balls[i].setBallColliding(j);
         }
+
     }
 
     ballToBallSum(i , j) {
@@ -134,6 +140,20 @@ class Scene extends THREE.Scene {
         let ball2Z = this.balls[j].getPositionZ();
 
         return (ball1X - ball2X)**2 + (ball1Z - ball2Z)**2 ;
+    }
+
+    ballToBallDistanceX(i, j) {
+        let ball1X = this.balls[i].getPositionX();
+        let ball2X = this.balls[j].getPositionX();
+
+        return (ball1X - ball2X);
+    }
+
+    ballToBallDistanceZ(i, j) {
+        let ball1Z = this.balls[i].getPositionZ();
+        let ball2Z = this.balls[j].getPositionZ();
+
+        return (ball1Z - ball2Z);
     }
 
     // colisoes com as paredes
