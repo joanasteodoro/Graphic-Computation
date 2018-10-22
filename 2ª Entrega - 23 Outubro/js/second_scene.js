@@ -88,8 +88,8 @@ function init() {
 }
 
 function computePosition(ball, delta) {
-    var posX = ball.getPositionX() + (ball.getVelocity() * delta * Math.sin(ball.getRealAngle()));
-    var posZ = ball.getPositionZ() + (ball.getVelocity() * delta * Math.cos(ball.getRealAngle()));
+    var posX = ball.getPositionX() + ball.getVelocityX() * delta;
+    var posZ = ball.getPositionZ() + ball.getVelocityZ() * delta;
     tentativePos = new THREE.Vector3(posX, ball.getPositionY(), posZ);
     return tentativePos;
 }
@@ -127,7 +127,7 @@ function animate() {
 
     for (let i = 0; i < 10; i++) {
         if (incrementFlag == true) {
-            balls[i].setVelocity(balls[i].getVelocity() + 1);
+            balls[i].setVelocity(new THREE.Vector3(balls[i].getVelocityX() + 0.5, 0, balls[i].getVelocityZ() + 0.5));
         }
 
         // colisoes com as paredes
@@ -146,15 +146,9 @@ function animate() {
                 currentPosition = checkLimits(tentativePosition, balls[i]);
                 balls[i].setPositionX(currentPosition.x);
                 balls[i].setPositionZ(currentPosition.z);
+                balls[i].setVelocityX(balls[i].getVelocityX());
+                balls[i].setVelocityZ(-balls[i].getVelocityZ());
 
-                let angle = (Math.PI - 2 * (Math.PI / 2 - balls[i].getRotationY()));
-                if(balls[i].getRealAngle() < (Math.PI / 2)) {
-                    balls[i].rotateY(0 - angle);
-                    balls[i].setRealAngle(0 - angle);
-                } else {
-                    balls[i].rotateY(angle);
-                    balls[i].setRealAngle(angle);
-                }
             }
             if(distance > ballToWallDown) {
                 tentativePosition = computePosition(balls[i], delta);
@@ -162,14 +156,8 @@ function animate() {
                 balls[i].setPositionX(currentPosition.x);
                 balls[i].setPositionZ(currentPosition.z);
 
-                let angle = (Math.PI - 2 * (Math.PI / 2 + balls[i].getRotationY()));
-                if(balls[i].getRealAngle() < (0 - Math.PI / 2)) {
-                    balls[i].rotateY(0 - angle);
-                    balls[i].setRealAngle(0 - angle);
-                } else {
-                    balls[i].rotateY(angle);
-                    balls[i].setRealAngle(angle);
-                }
+                balls[i].setVelocityX(balls[i].getVelocityX());
+                balls[i].setVelocityZ(-balls[i].getVelocityZ());
             }
             if(distance > ballToWallLeft || distance > ballToWallRight) {
                 tentativePosition = computePosition(balls[i], delta);
@@ -177,26 +165,21 @@ function animate() {
                 balls[i].setPositionX(currentPosition.x);
                 balls[i].setPositionZ(currentPosition.z);
 
-                let angle = Math.PI - (2 * balls[i].getRotationY());
-                if(balls[i].getRealAngle() > (Math.PI / 2)) {
-                    balls[i].rotateY(0 - angle);
-                    balls[i].setRealAngle(0 - angle);
-                }
-                else {
-                    balls[i].rotateY(angle)
-                    balls[i].setRealAngle(angle);
-                }
+                balls[i].setVelocityX(-balls[i].getVelocityX());
+                balls[i].setVelocityZ(balls[i].getVelocityZ());
             }
-            balls[i].translateX(balls[i].getVelocity() * delta);
+            balls[i].setPositionX(balls[i].getPositionX() + balls[i].getVelocityX() * delta);
+            balls[i].setPositionZ(balls[i].getPositionZ() + balls[i].getVelocityZ() * delta);
             balls[i].mayRotateFlag = false;
         }
         else {
-            balls[i].translateX(balls[i].getVelocity() * delta);
+            balls[i].setPositionX(balls[i].getPositionX() + balls[i].getVelocityX() * delta);
+            balls[i].setPositionZ(balls[i].getPositionZ() + balls[i].getVelocityZ() * delta);
             balls[i].mayRotateFlag = true;
         }
 
         // colisoes com as outras bolas
-        for (let j = i + 1; j < 10; j++) {
+        /*for (let j = i + 1; j < 10; j++) {
             var distanceToBall = scene.ballToBallSum(i, j);
             var ballToBall = scene.ballToBallDistance(i, j);
 
@@ -224,7 +207,7 @@ function animate() {
                 balls[i].translateX(balls[i].getVelocity() * delta);
                 balls[i].mayRotateFlag = true;
             }
-        }
+        }*/
     }
     incrementFlag = false;
 

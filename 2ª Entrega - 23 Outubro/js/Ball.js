@@ -1,16 +1,15 @@
 class Ball extends THREE.Object3D {
-    constructor(scene, x, y, z, dir, vel, radius) {
+    constructor(scene, x, y, z, dir, velX, velY, velZ, radius) {
         super();
 
         this.scene = scene;
 
         this.pos = new THREE.Vector3(x, y, z);
         this.dir = dir;
-        this.vel = vel;
+        this.vel = new THREE.Vector3(velX, velY, velZ);
         this.radius = radius;
         this.mayRotateFlag = true;
         this.realAngle = dir;
-        console.log(this.realAngle);
 
         let material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
         let geometry = new THREE.SphereGeometry(this.radius, 10, 10);
@@ -113,6 +112,30 @@ class Ball extends THREE.Object3D {
 
     setVelocity(vel) {
         this.vel = vel;
+    }
+
+    getVelocityX() {
+        return this.vel.x;
+    }
+
+    setVelocityX(vel) {
+        this.vel.x = vel;
+    }
+
+    getVelocityY() {
+        return this.vel.y;
+    }
+
+    setVelocityY(vel) {
+        this.vel.y = vel;
+    }
+
+    getVelocityZ() {
+        return this.vel.z;
+    }
+
+    setVelocityZ(vel) {
+        this.vel.z = vel;
     }
 
     switchAxisVisibility() {

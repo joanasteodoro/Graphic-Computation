@@ -1,6 +1,6 @@
 class BallWithCamera extends Ball {
-    constructor(scene, x, y, z, dir, vel, radius) {
-        super(scene, x, y, z, dir, vel, radius);
+    constructor(scene, x, y, z, dir, velX, velY, velZ, radius) {
+        super(scene, x, y, z, dir, velX, velY, velZ, radius);
 
         this.camera = new PerspectiveCamera();
         /*this.camera.position.x = this.getPositionX();

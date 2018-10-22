@@ -16,13 +16,15 @@ class Scene extends THREE.Scene {
             let posY = radius;
             let posZ = THREE.Math.randFloat(-depth / 2 + radius, depth / 2 - radius);
             let dir = THREE.Math.randFloat(- Math.PI, Math.PI);
-            let vel = THREE.Math.randFloat(1, 10);
+            let velX = THREE.Math.randFloat(1, 10) * Math.sin(dir);
+            let velY = 0;
+            let velZ = THREE.Math.randFloat(1, 10) * Math.cos(dir);
             // adds a camera to the first ball
             if (i == 0) {
-                this.balls[i] = new BallWithCamera(this, posX, posY, posZ, dir, vel, radius);
+                this.balls[i] = new BallWithCamera(this, posX, posY, posZ, dir, velX, velY, velZ, radius);
             }
             else {
-                this.balls[i] = new Ball(this, posX, posY, posZ, dir, vel, radius);
+                this.balls[i] = new Ball(this, posX, posY, posZ, dir, velX, velY, velZ, radius);
             }
         }
     }
