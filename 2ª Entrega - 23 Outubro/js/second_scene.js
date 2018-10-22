@@ -138,10 +138,12 @@ function animate() {
         var ballToWallDown = scene.ballsToWallDownDistance(0);
         
         if(balls[0].mayRotateFlag) {
+            console.log('colisão')
             var tentativePosition;
             var currentPosition;
 
             if(distance > ballToWallUp) {
+                console.log('wallUp')
                 tentativePosition = computePosition(balls[0], delta);
                 currentPosition = checkLimits(tentativePosition, balls[0]);
                 balls[0].setPositionX(currentPosition.x);
@@ -160,7 +162,6 @@ function animate() {
                     balls[0].setRealAngle((0-Math.PI) + angle / 2);
                 }
                 console.log('new angle:' + balls[0].getRealAngle()*180/Math.PI);
-                balls[0].mayRotateFlag = false;
             }
             else if(distance > ballToWallDown) {
                 tentativePosition = computePosition(balls[0], delta);
@@ -231,12 +232,39 @@ function animate() {
             balls[0].translateX(balls[0].getVelocity() * delta);
             balls[0].mayRotateFlag = true;
         }
+
+        // colisoes com as outras bolas
+        /*for (let j = i + 1; j < 10; j++) {
+            var distanceToBall = scene.ballToBallSum(i, j);
+            var ballToBall = scene.ballToBallDistance(i, j);
+
+            if(balls[i].mayRotateFlag) {
+                var tentativePositionBalls;
+                var currentPositionBalls;
+
+                if(distanceToBall > ballToBall) {
+                    tentativePositionBalls = computePosition(balls[i], delta);
+                    currentPositionBalls = checkLimits(tentativePositionBalls, balls[i]);
+                    balls[i].setPositionX(currentPositionBalls.x);
+                    balls[i].setPositionZ(currentPositionBalls.z);
+
+                    let angle = (Math.PI - 2 * (Math.PI / 2 - balls[i].getRotationY()));
+                    if(balls[i].getRealAngle() < (Math.PI / 2)) {
+                        balls[i].rotateY(0 - angle);
+                        balls[i].setRealAngle(0 - angle);
+                    } else {
+                        balls[i].rotateY(angle);
+                        balls[i].setRealAngle(angle);
+                    }
+                }
+            }
+            else {
+                balls[i].translateX(balls[i].getVelocity() * delta);
+                balls[i].mayRotateFlag = true;
+            }*/
+        //}
     //}
     incrementFlag = false;
-
-    // makes camera3 follow the first ball
-    /*camera3.setPosition(balls[0].getPositionX() + 5, balls[0].getPositionY() + 5, balls[0].getPositionZ());
-    camera3.lookAt(balls[0].getPosition());*/
 
     render();
     requestAnimationFrame(animate);
