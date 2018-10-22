@@ -125,76 +125,113 @@ function animate() {
         incrementFlag = true;
     }
 
-    for (let i = 0; i < 10; i++) {
+    //for (let i = 0; i < 10; i++) {
         if (incrementFlag == true) {
-            balls[i].setVelocity(balls[i].getVelocity() + 1);
+            balls[0].setVelocity(balls[0].getVelocity() + 1);
         }
 
         //colisoes
-        var distance = scene.ballsToWallSum(i);
-        var ballToWallLeft = scene.ballsToWallLeftDistance(i);
-        var ballToWallRight = scene.ballsToWallRightDistance(i);
-        var ballToWallUp = scene.ballsToWallUpDistance(i);
-        var ballToWallDown = scene.ballsToWallDownDistance(i);
+        var distance = scene.ballsToWallSum(0);
+        var ballToWallLeft = scene.ballsToWallLeftDistance(0);
+        var ballToWallRight = scene.ballsToWallRightDistance(0);
+        var ballToWallUp = scene.ballsToWallUpDistance(0);
+        var ballToWallDown = scene.ballsToWallDownDistance(0);
         
-        if(balls[i].mayRotateFlag) {
+        if(balls[0].mayRotateFlag) {
             var tentativePosition;
             var currentPosition;
 
             if(distance > ballToWallUp) {
-                tentativePosition = computePosition(balls[i], delta);
-                currentPosition = checkLimits(tentativePosition, balls[i]);
-                balls[i].setPositionX(currentPosition.x);
-                balls[i].setPositionZ(currentPosition.z);
-
-                let angle = (Math.PI - 2 * (Math.PI / 2 - balls[i].getRotationY()));
-                if(balls[i].getRealAngle() < (Math.PI / 2)) {
-                    balls[i].rotateY(0 - angle);
-                    balls[i].setRealAngle(0 - angle);
+                tentativePosition = computePosition(balls[0], delta);
+                currentPosition = checkLimits(tentativePosition, balls[0]);
+                balls[0].setPositionX(currentPosition.x);
+                balls[0].setPositionZ(currentPosition.z);
+                
+                if(balls[0].getRealAngle() < (Math.PI / 2)) {
+                    let relAng = (Math.PI / 2 - balls[0].getRealAngle());
+                    let angle = 2 * (Math.PI / 2 - relAng);
+                    balls[0].rotateY(0 - angle);
+                    balls[0].setRealAngle((0 - angle)/2);
                 } else {
-                    balls[i].rotateY(angle);
-                    balls[i].setRealAngle(angle);
+                    console.log('maior que 90');
+                    let relAng = (balls[0].getRealAngle() - Math.PI / 2);
+                    let angle = 2 * (Math.PI / 2 - relAng);
+                    balls[0].rotateY(angle);
+                    balls[0].setRealAngle((0-Math.PI) + angle / 2);
                 }
+                console.log('new angle:' + balls[0].getRealAngle()*180/Math.PI);
+                balls[0].mayRotateFlag = false;
             }
             else if(distance > ballToWallDown) {
-                tentativePosition = computePosition(balls[i], delta);
-                currentPosition = checkLimits(tentativePosition, balls[i]);
-                balls[i].setPositionX(currentPosition.x);
-                balls[i].setPositionZ(currentPosition.z);
+                tentativePosition = computePosition(balls[0], delta);
+                currentPosition = checkLimits(tentativePosition, balls[0]);
+                balls[0].setPositionX(currentPosition.x);
+                balls[0].setPositionZ(currentPosition.z);
 
-                let angle = (Math.PI - 2 * (Math.PI / 2 + balls[i].getRotationY()));
-                if(balls[i].getRealAngle() < (0 - Math.PI / 2)) {
-                    balls[i].rotateY(0 - angle);
-                    balls[i].setRealAngle(0 - angle);
+                //let angle = (Math.PI - 2 * (Math.PI / 2 + balls[0].getRotationY()));
+                if(balls[0].getRealAngle() < (0 - Math.PI / 2)) {
+                    let relAng = (0 - balls[0].getRealAngle()) - (Math.PI / 2);
+                    let angle = 2 * (Math.PI / 2 - relAng);
+                    balls[0].rotateY(0 - angle);
+                    balls[0].setRealAngle(Math.PI - angle / 2);
                 } else {
-                    balls[i].rotateY(angle);
-                    balls[i].setRealAngle(angle);
+                    let relAng = (Math.PI / 2 - (0 - balls[0].getRealAngle()));
+                    let angle = 2 * (Math.PI / 2 - relAng);
+                    balls[0].rotateY(angle);
+                    balls[0].setRealAngle(angle/2);
                 }
+                console.log(balls[0].getRealAngle()*180/Math.PI);
             }
-            else if(distance > ballToWallLeft || distance > ballToWallRight) {
-                tentativePosition = computePosition(balls[i], delta);
-                currentPosition = checkLimits(tentativePosition, balls[i]);
-                balls[i].setPositionX(currentPosition.x);
-                balls[i].setPositionZ(currentPosition.z);
+            else if(distance > ballToWallLeft) {
+                tentativePosition = computePosition(balls[0], delta);
+                currentPosition = checkLimits(tentativePosition, balls[0]);
+                balls[0].setPositionX(currentPosition.x);
+                balls[0].setPositionZ(currentPosition.z);
 
-                let angle = Math.PI - (2 * balls[i].getRotationY());
-                if(balls[i].getRealAngle() > (Math.PI / 2)) {
-                    balls[i].rotateY(0 - angle);
-                    balls[i].setRealAngle(0 - angle);
+                if(balls[0].getRealAngle() < 0) {
+                    let relAng = (0 - balls[0].getRealAngle() - Math.PI / 2);
+                    let angle = 2 * relAng;
+                    balls[0].rotateY(0 - angle);
+                    balls[0].setRealAngle((0-Math.PI/2) - angle/2);
+                    console.log(balls[0].getRealAngle()*180/Math.PI);
                 } 
                 else {
-                    balls[i].rotateY(angle)
-                    balls[i].setRealAngle(angle);
+                    let relAng = balls[0].getRealAngle() - Math.PI /2;
+                    let angle = 2 * (Math.PI - relAng);
+                    balls[0].rotateY(0-angle)
+                    balls[0].setRealAngle(angle / 2);
+                    console.log(balls[0].getRealAngle()*180 / Math.PI);
+                }
+            } 
+            else if(distance > ballToWallRight) {
+                tentativePosition = computePosition(balls[0], delta);
+                currentPosition = checkLimits(tentativePosition, balls[0]);
+                balls[0].setPositionX(currentPosition.x);
+                balls[0].setPositionZ(currentPosition.z);
+
+                if(balls[0].getRealAngle() < 0) {
+                    let relAng = (Math.PI / 2 - (0 - balls[0].getRealAngle()));
+                    let angle = 2 * relAng;
+                    balls[0].rotateY(0 - angle);
+                    balls[0].setRealAngle((0-Math.PI/2) - angle/2);
+                    console.log(balls[0].getRealAngle()*180/Math.PI);
+                } 
+                else {
+                    let relAng = (Math.PI / 2 - balls[0].getRealAngle());
+                    let angle = 2 * relAng;
+                    balls[0].rotateY(angle)
+                    balls[0].setRealAngle(Math.PI / 2 + angle / 2);
+                    console.log(balls[0].getRealAngle()*180 / Math.PI);
                 } 
             }
-            balls[i].translateX(balls[i].getVelocity() * delta);
-            balls[i].mayRotateFlag = false;
+            balls[0].translateX(balls[0].getVelocity() * delta);
+            balls[0].mayRotateFlag = false;
         }
         else {
-            balls[i].translateX(balls[i].getVelocity() * delta);
-            balls[i].mayRotateFlag = true;
+            balls[0].translateX(balls[0].getVelocity() * delta);
+            balls[0].mayRotateFlag = true;
         }
-    }
+    //}
     incrementFlag = false;
 
     // makes camera3 follow the first ball
