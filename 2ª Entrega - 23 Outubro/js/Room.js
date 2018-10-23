@@ -68,7 +68,7 @@ class Room extends THREE.Object3D {
         else if (side == 'f') { // front wall
             geometry = new THREE.BoxGeometry(this.wallThickness, this.height, 30.4);
         }
-        var material = new THREE.MeshBasicMaterial({color: "rgb(255, 219, 77)", side: THREE.DoubleSide}); // renders on both sides
+        var material = new THREE.MeshBasicMaterial({color: "rgb(142, 196, 206)", side: THREE.DoubleSide}); // renders on both sides
         var wall = new THREE.Mesh(geometry, material);
 
         if (side == 'f') { // front wall
@@ -86,7 +86,7 @@ class Room extends THREE.Object3D {
 
     createFloor(width, depth) {
         var geometry = new THREE.PlaneBufferGeometry(width + this.wallThickness, depth + this.wallThickness, 8, 8);
-        var material = new THREE.MeshBasicMaterial({ color:"rgb(51, 17, 0)", side: THREE.DoubleSide }); // renders on both sides
+        var material = new THREE.MeshBasicMaterial({ color:"rgb(55, 58, 56)", side: THREE.DoubleSide }); // renders on both sides
         var plane = new THREE.Mesh(geometry, material);
 
         plane.rotation.x = Math.PI / 2;

@@ -13,11 +13,12 @@ class Ball extends THREE.Object3D {
 
         this.ballColliding = -1;
 
-        let material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
+        let material = new THREE.MeshBasicMaterial({ color:"rgb(206, 219, 221)", wireframe: true });
         let geometry = new THREE.SphereGeometry(this.radius, 10, 10);
         let ball = new THREE.Mesh(geometry, material);
 
         this.axis = new THREE.AxisHelper(3);
+        this.axis.visible = false;
 
         ball.add(this.axis);
 
