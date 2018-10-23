@@ -124,6 +124,7 @@ function animate() {
 
         // colisoes com as paredes
         scene.collisionWithWalls(i);
+        balls[i].ballRolling();
 
         // colisoes com as outras bolas
         for (let j = i + 1; j < 3; j++) {
@@ -170,11 +171,11 @@ function animate() {
             balls[ballColliding].setVelocityZ(-(balls[ballColliding].getVelocityZ() - (prod2
                 /scene.ballToBallDistance(ballColliding, i))*(balls[ballColliding].getPositionZ() - balls[i].getPositionZ())));
 
+
             balls[i].setBallColliding(-1);
             balls[ballColliding].setBallColliding(-1);
 
             scene.checkBallInsideBall(i, ballColliding);
-
         }
         scene.checkBallWithinBounds(i);
     }

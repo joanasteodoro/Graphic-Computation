@@ -1,5 +1,5 @@
 class Ball extends THREE.Object3D {
-    constructor(scene, x, y, z, dir, velX, velY, velZ, radius) {
+    constructor(scene, x, y, z, dir, velX, velY, velZ, radius, hasCamera) {
         super();
 
         this.scene = scene;
@@ -21,12 +21,32 @@ class Ball extends THREE.Object3D {
 
         ball.add(this.axis);
 
+        //if(!(hasCamera)) {
         ball.position.set(x, y, z);
+        //}
 
         this.ball = ball;
-        this.scene.add(ball);
 
         this.ball.rotateY(dir);
+
+        //if(!(hasCamera)) {
+        this.scene.add(this.ball);
+        //}
+    }
+
+    rotateBall() {
+        /*var aimP = new THREE.Vector3();
+        aimP.copy(this.getPosition()).add(this.getVelocity());
+        this.ball.lookAt(aimP);*/
+        var matrix = new THREE.Matrix4();
+        matrix.extractRotation( this.ball.matrix );
+
+        var direction = new THREE.Vector3( 1, 0, 0 );
+        matrix.multiplyVector3( direction );
+    }
+
+    ballRolling() {
+        this.rotateZ(this.getVelocityX() / this.getVelocityZ());
     }
 
     getBallColliding() {
@@ -65,12 +85,6 @@ class Ball extends THREE.Object3D {
         this.ball.position.z = z;
     }
 
-    setRealAngle(angle) {
-        this.realAngle += angle;
-        //if(this.realAngle > Math.PI) this.realAngle -= (2 * Math.PI);
-        //if(this.realAngle < Math.PI) this.realAngle += (2 * Math.PI);
-    }
-
     translateX(x) {
         this.ball.translateX(x);
     }
@@ -81,10 +95,6 @@ class Ball extends THREE.Object3D {
 
     translateZ(z) {
         this.ball.translateZ(z);
-    }
-
-    getRealAngle() {
-        return this.realAngle;
     }
 
     getRotationY() {

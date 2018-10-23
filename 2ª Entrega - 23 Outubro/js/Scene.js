@@ -1,7 +1,7 @@
 class Scene extends THREE.Scene {
     constructor(camera) {
         super();
-        this.background = new THREE.Color("rgb(247, 231, 207)");
+        this.background = new THREE.Color("rgb(255, 255, 255)");
         this.add(new THREE.AxisHelper(50));
 
         this.room = new Room(this, 0, 0 ,0);
@@ -16,15 +16,16 @@ class Scene extends THREE.Scene {
             let posY = radius;
             let posZ = THREE.Math.randFloat(-depth / 2 + radius, depth / 2 - radius);
             let dir = THREE.Math.randFloat(- Math.PI, Math.PI);
-            let velX = THREE.Math.randFloat(1, 10) * Math.sin(dir);
+            let velX = THREE.Math.randFloat(1, 5) * Math.sin(dir);
             let velY = 0;
-            let velZ = THREE.Math.randFloat(1, 10) * Math.cos(dir);
+            let velZ = THREE.Math.randFloat(1, 5) * Math.cos(dir);
             // adds a camera to the first ball
             if (i == 0) {
-                this.balls[i] = new BallWithCamera(this, posX, posY, posZ, dir, velX, velY, velZ, radius);
+                this.balls[i] = new BallWithCamera(this, posX, posY, posZ, dir, velX, velY, velZ, radius, true);
             }
             else {
-                this.balls[i] = new Ball(this, posX, posY, posZ, dir, velX, velY, velZ, radius);
+                this.balls[i] = new Ball(this, posX, posY, posZ, dir, velX, velY, velZ, radius, false);
+                //this.add(this.balls[i]);
             }
         }
     }
@@ -85,10 +86,17 @@ class Scene extends THREE.Scene {
         var ballToBall = this.ballToBallDistance(i, j);
         var distanceX = this.ballToBallDistanceX(i, j);
         var distanceZ = this.ballToBallDistanceZ(i, j);
-        
+        var radius = this.balls[i].getRadius();
+
+
+
         if(distanceToBall > ballToBall) {
-            this.balls[i].setPositionX(this.balls[i].getPositionX() + distanceX);
-            this.balls[i].setPositionZ(this.balls[i].getPositionZ() + distanceZ);
+            var x = radius * distanceX / Math.sqrt(ballToBall) - distanceX / 2;
+            var z = radius * distanceZ / Math.sqrt(ballToBall) - distanceZ / 2;
+            this.balls[i].setPositionX(this.balls[i].getPositionX() + x);
+            this.balls[i].setPositionZ(this.balls[i].getPositionZ() + z);
+            this.balls[j].setPositionX(this.balls[j].getPositionX() - x);
+            this.balls[j].setPositionZ(this.balls[j].getPositionZ() - z);
         }
     }
 
