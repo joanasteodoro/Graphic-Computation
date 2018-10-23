@@ -35,18 +35,11 @@ class Ball extends THREE.Object3D {
     }
 
     rotateBall() {
-        /*var aimP = new THREE.Vector3();
-        aimP.copy(this.getPosition()).add(this.getVelocity());
-        this.ball.lookAt(aimP);*/
-        var matrix = new THREE.Matrix4();
-        matrix.extractRotation( this.ball.matrix );
-
-        var direction = new THREE.Vector3( 1, 0, 0 );
-        matrix.multiplyVector3( direction );
+        this.ball.lookAt(new THREE.Vector3(this.getVelocityX(), 0, this.getVelocityZ()));
     }
 
     ballRolling() {
-        this.rotateZ(this.getVelocityX() / this.getVelocityZ());
+        this.rotateZ(this.getVelocity());
     }
 
     getBallColliding() {

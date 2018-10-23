@@ -1,5 +1,5 @@
 class Scene extends THREE.Scene {
-    constructor(camera) {
+    constructor(n_balls) {
         super();
         this.background = new THREE.Color("rgb(255, 255, 255)");
         this.add(new THREE.AxisHelper(50));
@@ -8,7 +8,7 @@ class Scene extends THREE.Scene {
 
         this.balls = [];
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < n_balls; i++) {
             let width = this.room.getRoomWidth();
             let depth = this.room.getRoomDepth();
             let radius = this.room.getRoomHeight() / 2;
@@ -185,6 +185,7 @@ class Scene extends THREE.Scene {
             this.balls[i].setVelocityX(-this.balls[i].getVelocityX());
             this.balls[i].setVelocityZ(this.balls[i].getVelocityZ());
         }
+        this.balls[i].setVelocityY(-this.balls[i].getVelocityY());
         this.updateBallPosition(i, delta);
     }
 
