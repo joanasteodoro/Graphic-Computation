@@ -175,17 +175,20 @@ class Scene extends THREE.Scene {
         if(distance >= ballToWallUp) {
             this.balls[i].setVelocityX(this.balls[i].getVelocityX());
             this.balls[i].setVelocityZ(-this.balls[i].getVelocityZ());
+            this.balls[i].rotateBall();
 
         }
         if(distance >= ballToWallDown) {
             this.balls[i].setVelocityX(this.balls[i].getVelocityX());
             this.balls[i].setVelocityZ(-balls[i].getVelocityZ());
+            this.balls[i].rotateBall();
         }
         if(distance >= ballToWallLeft || distance >= ballToWallRight) {
             this.balls[i].setVelocityX(-this.balls[i].getVelocityX());
             this.balls[i].setVelocityZ(this.balls[i].getVelocityZ());
+            this.balls[i].rotateBall();
         }
-        this.balls[i].setVelocityY(-this.balls[i].getVelocityY());
+        this.balls[i].setVelocityY(this.balls[i].getVelocityY());
         this.updateBallPosition(i, delta);
     }
 

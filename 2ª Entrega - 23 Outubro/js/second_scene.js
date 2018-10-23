@@ -117,13 +117,11 @@ function animate() {
     for (let i = 0; i < N_BALLS; i++) {
         if (incrementFlag == true) {
             balls[i].setVelocity(new THREE.Vector3(balls[i].getVelocityX() + 0.5, 0, balls[i].getVelocityZ() + 1));
-            balls[i].rotateBall();
         }
 
         // colisoes com as paredes
         scene.collisionWithWalls(i);
         //balls[i].ballRolling();
-        balls[i].rotateBall();
 
         // colisoes com as outras bolas
         for (let j = i + 1; j < N_BALLS; j++) {
@@ -160,6 +158,8 @@ function animate() {
             balls[i].setVelocityZ((balls[i].getVelocityZ() - (prod
                 /scene.ballToBallDistance(i, ballColliding))*(balls[i].getPositionZ() - balls[ballColliding].getPositionZ())));
 
+            balls[i].rotateBall();
+
             balls[ballColliding].setVelocityX(-(balls[ballColliding].getVelocityX() - (prod2
                 /scene.ballToBallDistance(ballColliding, i))*(balls[ballColliding].getPositionX() - balls[i].getPositionX())));
 
@@ -168,7 +168,6 @@ function animate() {
             balls[ballColliding].setVelocityZ(-(balls[ballColliding].getVelocityZ() - (prod2
                 /scene.ballToBallDistance(ballColliding, i))*(balls[ballColliding].getPositionZ() - balls[i].getPositionZ())));
 
-            balls[i].rotateBall();
             balls[ballColliding].rotateBall();
 
             balls[i].setBallColliding(-1);
@@ -182,7 +181,6 @@ function animate() {
     for(let i = 0; i < N_BALLS; i++) {
         scene.updateBallPosition(i, delta);
         //balls[i].ballRolling();
-        balls[i].rotateBall();
         scene.checkBallWithinBounds(i);
     }
 

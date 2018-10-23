@@ -28,7 +28,7 @@ class Ball extends THREE.Object3D {
 
         this.ball = ball;
 
-        this.ball.rotateY(dir);
+        this.rotateBall();
 
         //if(!(hasCamera)) {
         this.scene.add(this.ball);
@@ -36,8 +36,18 @@ class Ball extends THREE.Object3D {
     }
 
     rotateBall() {
-        var dir = new THREE.Vector3(this.getVelocityX(), 0, this.getVelocityZ());
-        this.ball.lookAt(dir.normalize());
+        var unityX  = new THREE.Vector3(1, 0, 0);
+        var angle  = unityX.angleTo(this.getVelocity());
+
+        var z = this.getVelocityZ();
+        if (z > 0) {
+            this.ball.rotation.y = -angle;
+        }
+        else {
+            this.ball.rotation.y = angle;
+        }
+        /*var dir = new THREE.Vector3(this.getVelocityX(), 0, this.getVelocityZ());
+        this.ball.lookAt(dir.normalize());*/
     }
 
     ballRolling() {
