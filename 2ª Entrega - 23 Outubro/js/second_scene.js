@@ -146,9 +146,7 @@ function animate() {
             var currentVelX = balls[i].getVelocityX();
             var currentVelY = balls[i].getVelocityY();
             var currentVelZ = balls[i].getVelocityZ();
-
-            var difVelX = (currentVelX - newVelX);
-            var difVelY = (currentVelY - newVelY)
+            
             var prod = (currentVelX - newVelX) * (balls[i].getPositionX() - balls[ballColliding].getPositionX()) +
                 (currentVelY - newVelY) * (balls[i].getPositionY() - balls[ballColliding].getPositionY()) +
                 (currentVelZ - newVelZ) * (balls[i].getPositionZ() - balls[ballColliding].getPositionZ());

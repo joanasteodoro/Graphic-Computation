@@ -36,7 +36,8 @@ class Ball extends THREE.Object3D {
     }
 
     rotateBall() {
-        this.ball.lookAt(new THREE.Vector3(this.getVelocityX(), 0, this.getVelocityZ()));
+        var dir = new THREE.Vector3(this.getVelocityX(), 0, this.getVelocityZ());
+        this.ball.lookAt(dir.normalize());
     }
 
     ballRolling() {
