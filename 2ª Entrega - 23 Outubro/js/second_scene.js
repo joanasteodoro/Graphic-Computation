@@ -20,10 +20,6 @@ function onResize() {
     'use strict';
 
     var newDimensions = scene.resize(window.innerWidth, window.innerHeight, ASPECT_RATIO);
-    /*camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(newDimensions.width, newDimensions.height);*/
 
 	if ( ASPECT_RATIO > ( window.innerWidth / window.innerHeight ) ) {
 
@@ -146,7 +142,7 @@ function animate() {
             var currentVelX = balls[i].getVelocityX();
             var currentVelY = balls[i].getVelocityY();
             var currentVelZ = balls[i].getVelocityZ();
-            
+
             var prod = (currentVelX - newVelX) * (balls[i].getPositionX() - balls[ballColliding].getPositionX()) +
                 (currentVelY - newVelY) * (balls[i].getPositionY() - balls[ballColliding].getPositionY()) +
                 (currentVelZ - newVelZ) * (balls[i].getPositionZ() - balls[ballColliding].getPositionZ());
