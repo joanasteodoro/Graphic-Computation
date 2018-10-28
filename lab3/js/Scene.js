@@ -1,14 +1,22 @@
 class Scene extends THREE.Scene {
-    constructor() {
+    constructor(windowWidth, windowHeight) {
         super();
-        this.background = new THREE.Color("rgb(247, 231, 207)");
+        this.background = new THREE.Color("rgb(255, 255, 255)");
         this.add(new THREE.AxisHelper(50));
 
+        this.floor = new Floor(this, 0, -2, 0, 20, 20);
+
         this.plane = new Plane(this, 0, 0, 0);
+
+        this.sun = new Sun(this, 0, 5, 0);
     }
 
     getPlane() {
         return this.plane;
+    }
+
+    getSun() {
+        return this.sun;
     }
 
     /*resize(windowWidth, windowHeight, ratio) {

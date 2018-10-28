@@ -69,6 +69,24 @@ function onKeyDown(e) {
             scene.getPlane().rotateZ(ANGLE);
             break;
 
+        // change shading between Gouraud (diffuse) and Phong
+        case 71: //G
+        case 103: //g
+            scene.getPlane().changeShading();
+            break;
+
+        // activate/deactivate illumination calculation
+        case 76: //L
+        case 108: //l
+            scene.getPlane().onOffLight();
+            break;
+
+        // turn on/off sun light
+        case 78: //N
+        case 110: //n
+            scene.getSun().onOffSunLight();
+            break;
+
 
         default:
              break;
@@ -89,7 +107,7 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    scene = new Scene();
+    scene = new Scene(window.innerWidth, window.innerHeight);
 
     // adjust cameras
     camera1 = new PerspectiveCamera(10, 10, 0, 0, 0, 0); // Upper camera #1

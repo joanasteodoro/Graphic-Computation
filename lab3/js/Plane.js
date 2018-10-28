@@ -2,6 +2,8 @@ class Plane extends ConstructableObject {
     constructor(scene, x, y, z) {
         super();
 
+        this.currentMaterial = 0;
+
         this.materials = [];
         this.makePlaneMaterials();
 
@@ -13,13 +15,17 @@ class Plane extends ConstructableObject {
 
         this.plane = new THREE.Group();
 
-        this.plane.add(this.makePlaneCockpitGeometry(0));
-        this.plane.add(this.makePlaneFrontGeometry(0));
+        this.plane.add(this.makePlaneCockpitGeometry(0, 0, 0, this.currentMaterial));
+
+        var frontLength = 4;
+        this.plane.add(this.makePlaneTailGeometry(-((frontLength / 2)), 0, 0, this.currentMaterial, frontLength));
+
+        this.children = this.plane.children;
 
         scene.add(this.plane);
     }
 
-    makePlaneCockpitGeometry(materialIndex) {
+    makePlaneCockpitGeometry(x, y, z, materialIndex) {
         let geometry = new THREE.Geometry();
 
         this.createVertexBoxGroup(this.cockpitVertices, 0, 1, 1, 0, 1, 0); // cube box
@@ -40,14 +46,20 @@ class Plane extends ConstructableObject {
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
 
+        planeMesh.receiveShadow = true;
+
+        planeMesh.position.x = x;
+        planeMesh.position.y = y;
+        planeMesh.position.z = z;
+
         //this.add(planeMesh);
         return planeMesh
     }
 
-    makePlaneFrontGeometry(materialIndex) {
+    makePlaneTailGeometry(x, y, z, materialIndex, height) {
         let geometry = new THREE.Geometry();
 
-        this.createVertexPyramidGroup(this.frontVertices, 2, 1, 1, 0.5, 0, 1, 0);
+        this.createVertexPyramidGroup(this.frontVertices, height, 1, 1, 2, 0, 2, 0);
 
 
         // play connect the dots with index values from the vertexes array
@@ -65,15 +77,53 @@ class Plane extends ConstructableObject {
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
 
-        console.log(planeMesh.position);
+        planeMesh.receiveShadow = true;
+
+        planeMesh.position.x = x;
+        planeMesh.position.y = y;
+        planeMesh.position.z = z;
+
         //this.add(planeMesh);
         return planeMesh;
     }
 
     makePlaneMaterials() {
         this.materials[0] = new THREE.MeshBasicMaterial({color: 0x646363, wireframe: true, side: THREE.DoubleSide});
-        this.materials[1] = new THREE.MeshPhongMaterial({color: 0x646363, wireframe: true, side: THREE.DoubleSide});
-        this.materials[2] = new THREE.MeshLambertMaterial({color: 0x646363, wireframe: true, side: THREE.DoubleSide});
+        this.materials[1] = new THREE.MeshPhongMaterial({color: 0x646363, side: THREE.DoubleSide});
+        this.materials[2] = new THREE.MeshLambertMaterial({color: 0x646363, side: THREE.DoubleSide});
+    }
+
+    changeMaterial() {
+        for(let i = 0; i < this.children.length; i++) {
+            if(this.children[i] instanceof THREE.Mesh) {
+                this.children[i].material = this.materials[this.currentMaterial];
+            }
+        }
+    }
+
+    // g
+    changeShading() {
+        if (this.currentMaterial == 2) {
+            this.currentMaterial = 1; //Phong
+        }
+        else {
+            this.currentMaterial = 1; //Lambert (Gouraud Shadian)
+        }
+
+        this.changeMaterial();
+    }
+
+    // l
+    onOffLight() {
+        if (this.currentMaterial == 0) {
+            // VER SE E POR A PHONG OU A LAMBERT ??????
+            this.currentMaterial = 1;
+        }
+        else {
+            this.currentMaterial = 0;
+        }
+
+        this.changeMaterial();
     }
 
     getPositionX() {
