@@ -18,7 +18,7 @@ class Plane extends ConstructableObject {
         this.plane.add(this.makePlaneCockpitGeometry(0, 0, 0, this.currentMaterial));
 
         var frontLength = 4;
-        this.plane.add(this.makePlaneTailGeometry(-((frontLength / 2)), 0, 0, this.currentMaterial, frontLength));
+        this.plane.add(this.makePlaneTailGeometry(-((frontLength / 3)), 0, 0, this.currentMaterial, frontLength));
 
         this.children = this.plane.children;
 

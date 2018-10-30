@@ -24,7 +24,7 @@ class ConstructableObject extends THREE.Object3D {
             new THREE.Vector3(x0, y0, z0), // vertex 1
             new THREE.Vector3(x0, y0, z1), // vertex 2
 
-            new THREE.Vector3(x0 - height, (y0-y1) / 2, (z0-z1) / 2), // vertex 5
+            new THREE.Vector3(-height, (y0-y1) / 2, (z0-z1) / 2), // vertex 5
         );
     }
 
