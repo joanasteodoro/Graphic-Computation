@@ -48,15 +48,11 @@ class ConstructableObject extends THREE.Object3D {
     /* Creates a face for a given geometry*/
     createTriangleFace(vector, v0, v1, v2, side) {
         if (side) {
-            vector.push(
-                new THREE.Face3(v0, v2, v1)
-            );
+            vector.push(new THREE.Face3(v0, v2, v1));
         }
 
         else {
-            vector.push(
-                new THREE.Face3(v0, v1, v2)
-            );
+            vector.push(new THREE.Face3(v0, v1, v2));
         }
     }
 }

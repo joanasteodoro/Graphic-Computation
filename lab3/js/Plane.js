@@ -32,15 +32,15 @@ class Plane extends ConstructableObject {
 
         // play connect the dots with index values from the vertexes array
         this.createSquareFace(this.cockpitFaces, 2, 3, 0, 1, 0); // Front face1
-    	this.createSquareFace(this.cockpitFaces, 6, 7, 5, 4, 1); // Back face2
+    	  this.createSquareFace(this.cockpitFaces, 6, 7, 5, 4, 1); // Back face2
         this.createSquareFace(this.cockpitFaces, 0, 1, 5, 4, 0); // Bottom face3
-    	this.createSquareFace(this.cockpitFaces, 2, 3, 7, 6, 1); // Up face4
+    	  this.createSquareFace(this.cockpitFaces, 2, 3, 7, 6, 1); // Up face4
         this.createSquareFace(this.cockpitFaces, 3, 7, 5, 0, 0); // Right face5
-    	this.createSquareFace(this.cockpitFaces, 2, 6, 4, 0, 1); // Left face6
+    	  this.createSquareFace(this.cockpitFaces, 2, 6, 4, 0, 1); // Left face6
 
-		geometry.vertices = this.cockpitVertices;
-		geometry.faces = this.cockpitFaces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.cockpitVertices;
+    		geometry.faces = this.cockpitFaces;
+    		geometry.computeFaceNormals();
 
         geometry.normalize();
 
@@ -53,7 +53,7 @@ class Plane extends ConstructableObject {
         planeMesh.position.z = z;
 
         //this.add(planeMesh);
-        return planeMesh
+        return planeMesh;
     }
 
     makePlaneTailGeometry(x, y, z, materialIndex, height) {
@@ -64,14 +64,14 @@ class Plane extends ConstructableObject {
 
         // play connect the dots with index values from the vertexes array
         this.createSquareFace(this.frontFaces, 2, 3, 0, 1, 0); // pyramid base
-    	this.createTriangleFace(this.frontFaces, 2, 1, 4, 1); // Side1
+    	  this.createTriangleFace(this.frontFaces, 2, 1, 4, 1); // Side1
         this.createTriangleFace(this.frontFaces, 1, 0, 4, 0); // Side2
-    	this.createTriangleFace(this.frontFaces, 0, 3, 4, 1); // Side3
+    	  this.createTriangleFace(this.frontFaces, 0, 3, 4, 1); // Side3
         this.createTriangleFace(this.frontFaces, 3, 2, 4, 1); // Side4
 
-		geometry.vertices = this.frontVertices;
-		geometry.faces = this.frontFaces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.frontVertices;
+    		geometry.faces = this.frontFaces;
+    		geometry.computeFaceNormals();
 
         geometry.normalize();
 
