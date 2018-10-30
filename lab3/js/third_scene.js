@@ -12,8 +12,6 @@ function switchCamera(nCamera) {
 function onResize() {
     'use strict';
 
-    //var newDimensions = scene.resize(window.innerWidth, window.innerHeight, ASPECT_RATIO);
-
 	if ( ASPECT_RATIO > ( window.innerWidth / window.innerHeight ) ) {
 
 		camera.left   = ( window.innerHeight * ASPECT_RATIO ) / -50;
@@ -31,8 +29,7 @@ function onResize() {
 	}
 
 	camera.updateProjectionMatrix();
-    //renderer.setSize(newDimensions.width, newDimensions.height);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function onKeyDown(e) {
