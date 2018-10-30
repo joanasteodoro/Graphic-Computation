@@ -59,4 +59,24 @@ class ConstructableObject extends THREE.Object3D {
             );
         }
     }
+
+    //ESTA MAL!
+    createFaceCubeGroup(vector) {
+        // play connect the dots with index values from the vertexes array
+        this.createSquareFace(this.cockpitFaces, 2, 3, 0, 1, 0); // Front face1
+    	this.createSquareFace(this.cockpitFaces, 6, 7, 5, 4, 1); // Back face2
+        this.createSquareFace(this.cockpitFaces, 0, 1, 5, 4, 0); // Bottom face3
+    	this.createSquareFace(this.cockpitFaces, 2, 3, 7, 6, 1); // Up face4
+        this.createSquareFace(this.cockpitFaces, 3, 7, 5, 0, 0); // Right face5
+    	this.createSquareFace(this.cockpitFaces, 2, 6, 4, 0, 1); // Left face6
+    }
+
+    createFacePyramidGroup(vector) {
+        // play connect the dots with index values from the vertexes array
+        this.createSquareFace(vector, 2, 3, 0, 1, 0); // pyramid base
+    	this.createTriangleFace(vector, 2, 1, 4, 1); // Side1
+        this.createTriangleFace(vector, 1, 0, 4, 0); // Side2
+    	this.createTriangleFace(vector, 0, 3, 4, 1); // Side3
+        this.createTriangleFace(vector, 3, 2, 4, 1); // Side4
+    }
 }

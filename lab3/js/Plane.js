@@ -16,6 +16,12 @@ class Plane extends ConstructableObject {
         this.frontVertices = [];
         this.frontFaces = [];
 
+        this.rightWingVertices = [];
+        this.rightWingFaces = [];
+
+        this.leftWingVertices = [];
+        this.leftWingFaces = [];
+
         this.plane = new THREE.Group();
 
         this.plane.add(this.makePlaneCockpitGeometry(this.currentMaterial));
@@ -23,6 +29,9 @@ class Plane extends ConstructableObject {
         this.plane.add(this.makePlaneTailGeometry(this.currentMaterial, 4));
 
         this.plane.add(this.makePlaneFrontGeometry(this.currentMaterial, 1));
+
+        this.plane.add(this.makePlaneRightWingGeometry(this.currentMaterial, 1));
+        this.plane.add(this.makePlaneLeftWingGeometry(this.currentMaterial, 1));
 
         this.children = this.plane.children;
 
@@ -32,15 +41,9 @@ class Plane extends ConstructableObject {
     makePlaneCockpitGeometry(materialIndex) {
         let geometry = new THREE.Geometry();
 
-        this.createVertexBoxGroup(this.cockpitVertices, 0, 1, 1, 0, 1, 0); // cube box
+        this.createVertexBoxGroup(this.cockpitVertices, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5); // cube box
 
-        // play connect the dots with index values from the vertexes array
-        this.createSquareFace(this.cockpitFaces, 2, 3, 0, 1, 0); // Front face1
-    	this.createSquareFace(this.cockpitFaces, 6, 7, 5, 4, 1); // Back face2
-        this.createSquareFace(this.cockpitFaces, 0, 1, 5, 4, 0); // Bottom face3
-    	this.createSquareFace(this.cockpitFaces, 2, 3, 7, 6, 1); // Up face4
-        this.createSquareFace(this.cockpitFaces, 3, 7, 5, 0, 0); // Right face5
-    	this.createSquareFace(this.cockpitFaces, 2, 6, 4, 0, 1); // Left face6
+        this.createFaceCubeGroup(this.cockpitFaces);
 
 		geometry.vertices = this.cockpitVertices;
 		geometry.faces = this.cockpitFaces;
@@ -50,18 +53,13 @@ class Plane extends ConstructableObject {
 
         planeMesh.receiveShadow = true;
 
-        /*planeMesh.position.x = x;
-        planeMesh.position.y = y;
-        planeMesh.position.z = z;*/
-
-        //this.add(planeMesh);
         return planeMesh
     }
 
     makePlaneTailGeometry(materialIndex, height) {
         let geometry = new THREE.Geometry();
 
-        let pyramidTop = new THREE.Vector3(1 - height, (0.5 - 0) / 2, (1 - 0) / 2)
+        let pyramidTop = new THREE.Vector3(0.5 - height, 0, 0)
 
         this.tailVertices.push(this.cockpitVertices[2],
             this.cockpitVertices[6],
@@ -69,12 +67,7 @@ class Plane extends ConstructableObject {
             this.cockpitVertices[0], pyramidTop);
 
 
-        // play connect the dots with index values from the vertexes array
-        this.createSquareFace(this.tailFaces, 2, 3, 0, 1, 0); // pyramid base
-    	this.createTriangleFace(this.tailFaces, 2, 1, 4, 1); // Side1
-        this.createTriangleFace(this.tailFaces, 1, 0, 4, 0); // Side2
-    	this.createTriangleFace(this.tailFaces, 0, 3, 4, 1); // Side3
-        this.createTriangleFace(this.tailFaces, 3, 2, 4, 1); // Side4
+        this.createFacePyramidGroup(this.tailFaces);
 
 		geometry.vertices = this.tailVertices;
 		geometry.faces = this.tailFaces;
@@ -90,9 +83,9 @@ class Plane extends ConstructableObject {
     makePlaneFrontGeometry(materialIndex, height) {
         let geometry = new THREE.Geometry();
 
-        let pyramidTop = new THREE.Vector3(1 + height, (0.5 - 0) / 2, (1 - 0) / 2);
-        let pyramidMiddle1 = new THREE.Vector3(1, 0.5, 0);
-        let pyramidMiddle2 = new THREE.Vector3(1, 0.5, 1);
+        let pyramidTop = new THREE.Vector3(0.5 + height, 0, 0);
+        let pyramidMiddle1 = new THREE.Vector3(0.5, 0, -0.5);
+        let pyramidMiddle2 = new THREE.Vector3(0.5, 0, 0.5);
 
         this.frontVertices.push(pyramidMiddle2,
             pyramidMiddle1,
@@ -100,12 +93,7 @@ class Plane extends ConstructableObject {
             this.cockpitVertices[1], pyramidTop);
 
 
-        // play connect the dots with index values from the vertexes array
-        this.createSquareFace(this.frontFaces, 2, 3, 0, 1, 0); // pyramid base
-    	this.createTriangleFace(this.frontFaces, 2, 1, 4, 1); // Side1
-        this.createTriangleFace(this.frontFaces, 1, 0, 4, 0); // Side2
-    	this.createTriangleFace(this.frontFaces, 0, 3, 4, 1); // Side3
-        this.createTriangleFace(this.frontFaces, 3, 2, 4, 1); // Side4
+        this.createFacePyramidGroup(this.frontFaces);
 
 		geometry.vertices = this.frontVertices;
 		geometry.faces = this.frontFaces;
@@ -115,11 +103,56 @@ class Plane extends ConstructableObject {
 
         planeMesh.receiveShadow = true;
 
-        /*planeMesh.position.x = x;
-        planeMesh.position.y = y;
-        planeMesh.position.z = z;*/
+        return planeMesh;
+    }
 
-        //this.add(planeMesh);
+    makePlaneRightWingGeometry(materialIndex, height) {
+        let geometry = new THREE.Geometry();
+
+        let pyramidTop = new THREE.Vector3(0.5 + height, 0, 0);
+        let pyramidMiddle1 = new THREE.Vector3(0.5, 0, -0.5);
+        let pyramidMiddle2 = new THREE.Vector3(0.5, 0, 0.5);
+
+        this.rightWingVertices.push(pyramidMiddle2,
+            pyramidMiddle1,
+            this.cockpitVertices[5],
+            this.cockpitVertices[1], pyramidTop);
+
+        this.createFacePyramidGroup(this.rightWingFaces);
+
+		geometry.vertices = this.rightWingVertices;
+		geometry.faces = this.rightWingFaces;
+		geometry.computeFaceNormals();
+
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+
+        planeMesh.receiveShadow = true;
+
+        return planeMesh;
+    }
+
+    makePlaneLeftWingGeometry(materialIndex, height) {
+        let geometry = new THREE.Geometry();
+
+        let pyramidTop = new THREE.Vector3(0.5 + height, 0, 0);
+        let pyramidMiddle1 = new THREE.Vector3(0.5, 0, -0.5);
+        let pyramidMiddle2 = new THREE.Vector3(0.5, 0, 0.5);
+
+        this.leftWingVertices.push(pyramidMiddle2,
+            pyramidMiddle1,
+            this.cockpitVertices[5],
+            this.cockpitVertices[1], pyramidTop);
+
+        this.createFacePyramidGroup(this.leftWingFaces);
+
+		geometry.vertices = this.leftWingVertices;
+		geometry.faces = this.leftWingFaces;
+		geometry.computeFaceNormals();
+
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+
+        planeMesh.receiveShadow = true;
+
         return planeMesh;
     }
 
