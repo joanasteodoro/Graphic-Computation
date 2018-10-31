@@ -22,16 +22,32 @@ class Plane extends ConstructableObject {
         this.leftWingVertices = [];
         this.leftWingFaces = [];
 
+        this.stabilizer1Vertices = [];
+        this.stabilizer1Faces = [];
+
+        this.stabilizer2Vertices = [];
+        this.stabilizer2Faces = [];
+
+        this.stabilizer3Vertices = [];
+        this.stabilizer3Faces = [];
+
         this.plane = new THREE.Group();
 
         this.plane.add(this.makePlaneCockpitGeometry(this.currentMaterial));
 
-        this.plane.add(this.makePlaneTailGeometry(this.currentMaterial, 4));
+        this.tailLength = 4;
+        this.plane.add(this.makePlaneTailGeometry(this.currentMaterial, this.tailLength));
 
-        this.plane.add(this.makePlaneFrontGeometry(this.currentMaterial, 1));
+        this.frontLength = 1;
+        this.plane.add(this.makePlaneFrontGeometry(this.currentMaterial, this.frontLength));
 
-        this.plane.add(this.makePlaneRightWingGeometry(this.currentMaterial, 1));
-        this.plane.add(this.makePlaneLeftWingGeometry(this.currentMaterial, 1));
+        this.planeWidth = 3;
+        this.plane.add(this.makePlaneRightWingGeometry(this.currentMaterial, this.planeWidth));
+        this.plane.add(this.makePlaneLeftWingGeometry(this.currentMaterial, this.planeWidth));
+
+        this.plane.add(this.makePlaneStabilizer1Geometry(this.currentMaterial, this.tailLength));
+        this.plane.add(this.makePlaneStabilizer2Geometry(this.currentMaterial, this.tailLength));
+        this.plane.add(this.makePlaneStabilizer3Geometry(this.currentMaterial, this.tailLength));
 
         this.children = this.plane.children;
 
@@ -106,17 +122,19 @@ class Plane extends ConstructableObject {
         return planeMesh;
     }
 
-    makePlaneRightWingGeometry(materialIndex, height) {
+    makePlaneRightWingGeometry(materialIndex, planeWidth) {
         let geometry = new THREE.Geometry();
 
-        let pyramidTop = new THREE.Vector3(0.5 + height, 0, 0);
-        let pyramidMiddle1 = new THREE.Vector3(0.5, 0, -0.5);
-        let pyramidMiddle2 = new THREE.Vector3(0.5, 0, 0.5);
+        let pyramidTop = new THREE.Vector3(0, 0, -planeWidth);
+        let pyramidBase1 = new THREE.Vector3(-0.5, -0.1, -0.5);
+        let pyramidBase2 = new THREE.Vector3(0.5, -0.1, -0.5);
+        let pyramidBase3 = new THREE.Vector3(-0.5, 0.1, -0.5);
+        let pyramidBase4 = new THREE.Vector3(0.5, 0.1, -0.5);
 
-        this.rightWingVertices.push(pyramidMiddle2,
-            pyramidMiddle1,
-            this.cockpitVertices[5],
-            this.cockpitVertices[1], pyramidTop);
+        this.rightWingVertices.push(pyramidBase1,
+            pyramidBase2,
+            pyramidBase4,
+            pyramidBase3, pyramidTop);
 
         this.createFacePyramidGroup(this.rightWingFaces);
 
@@ -131,17 +149,20 @@ class Plane extends ConstructableObject {
         return planeMesh;
     }
 
-    makePlaneLeftWingGeometry(materialIndex, height) {
+    makePlaneLeftWingGeometry(materialIndex, planeWidth) {
         let geometry = new THREE.Geometry();
 
-        let pyramidTop = new THREE.Vector3(0.5 + height, 0, 0);
-        let pyramidMiddle1 = new THREE.Vector3(0.5, 0, -0.5);
-        let pyramidMiddle2 = new THREE.Vector3(0.5, 0, 0.5);
+        let pyramidTop = new THREE.Vector3(0, 0, planeWidth);
+        let pyramidBase1 = new THREE.Vector3(-0.5, -0.1, 0.5);
+        let pyramidBase2 = new THREE.Vector3(0.5, -0.1, 0.5);
+        let pyramidBase3 = new THREE.Vector3(-0.5, 0.1, 0.5);
+        let pyramidBase4 = new THREE.Vector3(0.5, 0.1, 0.5);
 
-        this.leftWingVertices.push(pyramidMiddle2,
-            pyramidMiddle1,
-            this.cockpitVertices[5],
-            this.cockpitVertices[1], pyramidTop);
+        this.leftWingVertices.push(pyramidBase1,
+            pyramidBase2,
+            pyramidBase4,
+            pyramidBase3, pyramidTop);
+
 
         this.createFacePyramidGroup(this.leftWingFaces);
 
@@ -156,8 +177,92 @@ class Plane extends ConstructableObject {
         return planeMesh;
     }
 
+    makePlaneStabilizer1Geometry(materialIndex, tailLength) {
+        let geometry = new THREE.Geometry();
+
+        let pyramidTop = new THREE.Vector3(-tailLength + 1, 0, 0.5);
+        let pyramidBase1 = new THREE.Vector3(-0.1 - tailLength + 1, -0.1, 0);
+        let pyramidBase2 = new THREE.Vector3(0.1 - tailLength + 1, -0.1, 0);
+        let pyramidBase3 = new THREE.Vector3(-0.1 - tailLength + 1, 0.1, 0);
+        let pyramidBase4 = new THREE.Vector3(0.1 - tailLength + 1, 0.1, 0);
+
+        this.stabilizer1Vertices.push(pyramidBase1,
+            pyramidBase2,
+            pyramidBase4,
+            pyramidBase3, pyramidTop);
+
+
+        this.createFacePyramidGroup(this.stabilizer1Faces);
+
+		geometry.vertices = this.stabilizer1Vertices;
+		geometry.faces = this.stabilizer1Faces;
+		geometry.computeFaceNormals();
+
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+
+        planeMesh.receiveShadow = true;
+
+        return planeMesh;
+    }
+
+    makePlaneStabilizer2Geometry(materialIndex, tailLength) {
+        let geometry = new THREE.Geometry();
+
+        let pyramidTop = new THREE.Vector3(-tailLength + 1, 0, -0.5);
+        let pyramidBase1 = new THREE.Vector3(-0.1 - tailLength + 1, -0.1, 0);
+        let pyramidBase2 = new THREE.Vector3(0.1 - tailLength + 1, -0.1, 0);
+        let pyramidBase3 = new THREE.Vector3(-0.1 - tailLength + 1, 0.1, 0);
+        let pyramidBase4 = new THREE.Vector3(0.1 - tailLength + 1, 0.1, 0);
+
+        this.stabilizer2Vertices.push(pyramidBase1,
+            pyramidBase2,
+            pyramidBase4,
+            pyramidBase3, pyramidTop);
+
+
+        this.createFacePyramidGroup(this.stabilizer2Faces);
+
+		geometry.vertices = this.stabilizer2Vertices;
+		geometry.faces = this.stabilizer2Faces;
+		geometry.computeFaceNormals();
+
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+
+        planeMesh.receiveShadow = true;
+
+        return planeMesh;
+    }
+
+    makePlaneStabilizer3Geometry(materialIndex, tailLength) {
+        let geometry = new THREE.Geometry();
+
+        let pyramidTop = new THREE.Vector3(-tailLength + 1, 0.5, 0);
+        let pyramidBase1 = new THREE.Vector3(-0.1 - tailLength + 1, 0, -0.1);
+        let pyramidBase2 = new THREE.Vector3(0.1 - tailLength + 1, 0, -0.1);
+        let pyramidBase3 = new THREE.Vector3(-0.1 - tailLength + 1, 0, 0.1);
+        let pyramidBase4 = new THREE.Vector3(0.1 - tailLength + 1, 0, 0.1);
+
+        this.stabilizer3Vertices.push(pyramidBase1,
+            pyramidBase2,
+            pyramidBase4,
+            pyramidBase3, pyramidTop);
+
+
+        this.createFacePyramidGroup(this.stabilizer3Faces);
+
+		geometry.vertices = this.stabilizer3Vertices;
+		geometry.faces = this.stabilizer3Faces;
+		geometry.computeFaceNormals();
+
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+
+        planeMesh.receiveShadow = true;
+
+        return planeMesh;
+    }
+
     makePlaneMaterials() {
-        this.materials[0] = new THREE.MeshBasicMaterial({color: 0x646363, wireframe: true, side: THREE.DoubleSide});
+        this.materials[0] = new THREE.MeshBasicMaterial({color: 0x646363, side: THREE.DoubleSide});
         this.materials[1] = new THREE.MeshPhongMaterial({color: 0x646363, side: THREE.DoubleSide});
         this.materials[2] = new THREE.MeshLambertMaterial({color: 0x646363, side: THREE.DoubleSide});
     }

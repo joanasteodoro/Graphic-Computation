@@ -60,15 +60,21 @@ class ConstructableObject extends THREE.Object3D {
         }
     }
 
-    //ESTA MAL!
+    //ESTA MAL
     createFaceCubeGroup(vector) {
         // play connect the dots with index values from the vertexes array
-        this.createSquareFace(this.cockpitFaces, 2, 3, 0, 1, 0); // Front face1
-    	this.createSquareFace(this.cockpitFaces, 6, 7, 5, 4, 1); // Back face2
-        this.createSquareFace(this.cockpitFaces, 0, 1, 5, 4, 0); // Bottom face3
-    	this.createSquareFace(this.cockpitFaces, 2, 3, 7, 6, 1); // Up face4
-        this.createSquareFace(this.cockpitFaces, 3, 7, 5, 0, 0); // Right face5
-    	this.createSquareFace(this.cockpitFaces, 2, 6, 4, 0, 1); // Left face6
+        vector.push( new THREE.Face3(2, 3, 7), //up
+            new THREE.Face3(7, 6, 2));
+        vector.push( new THREE.Face3(0, 1, 5), //down
+            new THREE.Face3(5, 4, 0));
+        vector.push( new THREE.Face3(3, 7, 5), //right
+            new THREE.Face3(5, 1, 3));
+        vector.push( new THREE.Face3(2, 6, 4), //left
+            new THREE.Face3(4, 0, 2));
+        vector.push( new THREE.Face3(2, 3, 1), //front
+            new THREE.Face3(1, 0, 2));
+        vector.push( new THREE.Face3(6, 7, 5), //back
+            new THREE.Face3(5, 4, 6));
     }
 
     createFacePyramidGroup(vector) {
