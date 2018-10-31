@@ -4,6 +4,8 @@ class Plane extends ConstructableObject {
 
         this.currentMaterial = 0;
 
+        this.currentMaterialL = 1; //only alternates between phong or lambert and basic
+
         this.materials = [];
         this.makePlaneMaterials();
 
@@ -68,6 +70,7 @@ class Plane extends ConstructableObject {
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][1]);
 
         planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
 
         planeMesh.name = "cockpit";
 
@@ -94,6 +97,7 @@ class Plane extends ConstructableObject {
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][0]);
 
         planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
 
         planeMesh.name = "tail";
 
@@ -122,6 +126,7 @@ class Plane extends ConstructableObject {
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][0]);
 
         planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
 
         planeMesh.name = "front";
 
@@ -151,6 +156,7 @@ class Plane extends ConstructableObject {
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
 
         planeMesh.name = "wing";
 
@@ -181,6 +187,7 @@ class Plane extends ConstructableObject {
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
 
         planeMesh.name = "wing";
 
@@ -211,6 +218,7 @@ class Plane extends ConstructableObject {
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
 
         planeMesh.name = "stabilizer";
 
@@ -241,6 +249,7 @@ class Plane extends ConstructableObject {
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
 
         planeMesh.name = "stabilizer";
 
@@ -271,6 +280,7 @@ class Plane extends ConstructableObject {
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+        planeMesh.castShadow = true;
 
         planeMesh.name = "stabilizer";
 
@@ -282,38 +292,40 @@ class Plane extends ConstructableObject {
         this.materials[0].push(new THREE.MeshBasicMaterial({color: 0x646363, side: THREE.DoubleSide}),
                                 new THREE.MeshBasicMaterial({color: "rgb(59, 82, 119)", side: THREE.DoubleSide}),
                                 new THREE.MeshBasicMaterial({color: "rgb(74, 75, 76)", side: THREE.DoubleSide}));
-        this.materials[1] = new THREE.MeshPhongMaterial({color: 0x646363, side: THREE.DoubleSide});
-        this.materials[2] = new THREE.MeshLambertMaterial({color: 0x646363, side: THREE.DoubleSide});
+        this.materials[1] = [];
+        this.materials[1].push(new THREE.MeshPhongMaterial({color: 0x646363, side: THREE.DoubleSide}),
+                                new THREE.MeshPhongMaterial({color: "rgb(59, 82, 119)", side: THREE.DoubleSide}),
+                                new THREE.MeshPhongMaterial({color: "rgb(74, 75, 76)", side: THREE.DoubleSide}));
+        this.materials[2] = [];
+        this.materials[2].push(new THREE.MeshLambertMaterial({color: 0x646363, side: THREE.DoubleSide}),
+                                new THREE.MeshLambertMaterial({color: "rgb(59, 82, 119)", side: THREE.DoubleSide}),
+                                new THREE.MeshLambertMaterial({color: "rgb(74, 75, 76)", side: THREE.DoubleSide}));
     }
 
     changeMaterial() {
         for(let i = 0; i < this.children.length; i++) {
             if(this.children[i] instanceof THREE.Mesh) {
-                if(this.currentMaterial == 0) {
-                    if(this.children[i].name == "cockpit") {
-                        this.children[i].material = this.materials[this.currentMaterial][1];
-                    }
-                    else if(this.children[i].name == "tail" || this.children[i].name == "front") {
-                        this.children[i].material = this.materials[this.currentMaterial][0];
-                    }
-                    else if(this.children[i].name == "wing" || this.children[i].name == "stabilizer") {
-                        this.children[i].material = this.materials[this.currentMaterial][2];
-                    }
+                if(this.children[i].name == "cockpit") {
+                    this.children[i].material = this.materials[this.currentMaterial][1];
                 }
-                else {
-                    this.children[i].material = this.materials[this.currentMaterial];
+                else if(this.children[i].name == "tail" || this.children[i].name == "front") {
+                    this.children[i].material = this.materials[this.currentMaterial][0];
+                }
+                else if(this.children[i].name == "wing" || this.children[i].name == "stabilizer") {
+                    this.children[i].material = this.materials[this.currentMaterial][2];
                 }
             }
         }
     }
 
     // g
+    // switches from phong to lamber
     changeShading() {
         if (this.currentMaterial == 2) {
             this.currentMaterial = 1; //Phong
         }
-        else {
-            this.currentMaterial = 1; //Lambert (Gouraud Shadian)
+        else if (this.currentMaterial == 1) {
+            this.currentMaterial = 2; //Lambert (Gouraud Shadian)
         }
 
         this.changeMaterial();
@@ -322,10 +334,10 @@ class Plane extends ConstructableObject {
     // l
     onOffLight() {
         if (this.currentMaterial == 0) {
-            // VER SE E POR A PHONG OU A LAMBERT ??????
-            this.currentMaterial = 1;
+            this.currentMaterial = this.currentMaterialL;
         }
         else {
+            this.currentMaterialL = this.currentMaterial;
             this.currentMaterial = 0;
         }
 

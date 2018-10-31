@@ -4,13 +4,24 @@ class Scene extends THREE.Scene {
         this.background = new THREE.Color("rgb(255, 255, 255)");
         this.add(new THREE.AxisHelper(50));
 
-        this.floor = new Floor(this, 0, -2, 0, 20, 20);
+        this.floor = new Floor(this, 0, -4, 0, 20, 20);
 
         this.plane = new Plane(this, 0, 0, 0);
 
         this.sun = new Sun(this, 0, 5, 0);
 
-        this.spotlight1 = new Spotlight(this, "rgb(255, 255, 255)");
+        this.spotlight1 = new Spotlight(this,"rgb(255, 255, 255)", 2, -3.5, -4,
+                                        -Math.PI / 2, -Math.PI / 4, 1.6, -3.5, -3.6, 1.5, -3.5, -4.5, -3, 4, 9);
+        this.spotlight2 = new Spotlight(this,"rgb(255, 255, 255)", -2, -3.5, -4,
+                                        -Math.PI / 2, Math.PI / 4, -1.6, -3.5, -3.6, -1.5, -3.5, -4.5, 3, 4, 9);
+        this.spotlight3 = new Spotlight(this,"rgb(255, 255, 255)", 2, -3.5, 4,
+                                        -Math.PI / 2, -3 * Math.PI / 4, 1.6, -3.5, 3.6, 1, -3.5, 4.5, -3, 4, -9);
+        this.spotlight4 = new Spotlight(this,"rgb(255, 255, 255)", -2, -3.5, 4,
+                                        -Math.PI / 2, 3 * Math.PI / 4, -1.6, -3.5, 3.6, -1.5, -3.5, 4.5, 3, 4, -9);
+    }
+
+    getFloor() {
+        return this.floor;
     }
 
     getPlane() {
@@ -21,41 +32,19 @@ class Scene extends THREE.Scene {
         return this.sun;
     }
 
-    /*resize(windowWidth, windowHeight, ratio) {
-        var roomWidth = this.room.getRoomWidth();
-        var roomHeight = this.room.getRoomDepth();
-        // variable to mantain the room aspect ratio
-        var roomAspectRatio = roomWidth / roomHeight;
-        // current ratio of the window
-        var currentWindowRatio = windowWidth / windowHeight;
+    getSpotlight1() {
+        return this.spotlight1;
+    }
 
-        // if there is no need to resize the scene's content
-        var centerX = this.room.getPositionX();
-        var distanceX = centerX + roomWidth / 2;
+    getSpotlight2() {
+        return this.spotlight2;
+    }
 
-        var centerZ = this.room.getPositionZ();
-        var distanceZ = centerZ + roomHeight / 2;
+    getSpotlight3() {
+        return this.spotlight3;
+    }
 
-        if ((windowWidth / 2) < distanceX || (windowHeight / 2) < distanceZ) {
-            return {
-              width: windowWidth,
-              height: windowHeight
-            };
-        }
-        // if the height has to be adjusted to the diminishing width
-        else if (currentWindowRatio < roomAspectRatio) {
-            return {
-                width: windowWidth,
-                height: windowWidth / ratio
-            };
-        }
-        // if the width has to be adjusted to the diminishing height
-        else if (currentWindowRatio > roomAspectRatio) {
-            return {
-                width: windowHeight * ratio,
-                height: windowHeight
-            };
-        }
-    }*/
-
+    getSpotlight4() {
+        return this.spotlight4;
+    }
 }

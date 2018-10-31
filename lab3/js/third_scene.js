@@ -1,7 +1,7 @@
 var scene, camera, renderer;
 var camera1, camera2, camera3;
 
-const ASPECT_RATIO = window.innerWidth / window.innerHeight;
+const ASPECT_RATIO = 80;
 const ANGLE = Math.PI / 8;
 
 function switchCamera(nCamera) {
@@ -58,14 +58,30 @@ function onKeyDown(e) {
     switch(keyCode) {
 
         case 49: // 1
-            switchCamera(camera1);
+            scene.getSpotlight1().onOffSpotlight();
             break;
 
         case 50: // 2
-            switchCamera(camera2);
+            scene.getSpotlight2().onOffSpotlight();
             break;
 
         case 51: // 3
+            scene.getSpotlight3().onOffSpotlight();
+            break;
+
+        case 52: // 4
+            scene.getSpotlight4().onOffSpotlight();
+            break;
+
+        case 65: // a
+            switchCamera(camera1);
+            break;
+
+        case 83: // s
+            switchCamera(camera2);
+            break;
+
+        case 68: // d
             switchCamera(camera3);
             break;
 
@@ -89,12 +105,14 @@ function onKeyDown(e) {
         case 71: //G
         case 103: //g
             scene.getPlane().changeShading();
+            scene.getFloor().changeShading();
             break;
 
         // activate/deactivate illumination calculation
         case 76: //L
         case 108: //l
             scene.getPlane().onOffLight();
+            scene.getFloor().onOffLight();
             break;
 
         // turn on/off sun light
