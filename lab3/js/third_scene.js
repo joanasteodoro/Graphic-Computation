@@ -12,27 +12,43 @@ function switchCamera(nCamera) {
 function onResize() {
     'use strict';
 
-    //var newDimensions = scene.resize(window.innerWidth, window.innerHeight, ASPECT_RATIO);
-
-	if ( ASPECT_RATIO > ( window.innerWidth / window.innerHeight ) ) {
-
-		camera.left   = ( window.innerHeight * ASPECT_RATIO ) / -50;
-		camera.right  = ( window.innerHeight * ASPECT_RATIO ) /  50;
-		camera.top    = window.innerHeight / 50;
-		camera.bottom = window.innerHeight / -50;
-
-	} else {
-
-		camera.left   = window.innerWidth / -50;
-		camera.right  = window.innerWidth /  50;
-		camera.top    = ( window.innerWidth / ASPECT_RATIO ) / 50;
-		camera.bottom = ( window.innerWidth / ASPECT_RATIO ) / -50;
-
-	}
-
-	camera.updateProjectionMatrix();
-    //renderer.setSize(newDimensions.width, newDimensions.height);
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    let ratio = window.innerWidth/window.innerHeight;
+
+
+    if (window.innerHeight > 0 && window.innerWidth > 0) {
+        let val = 1400/window.innerWidth;
+        camera1.aspect = ratio;
+        var vet = new THREE.Vector3(0,60,60);
+        vet.multiplyScalar(val);
+        camera1.position.x = vet.x;
+        camera1.position.y = vet.y;
+        camera1.position.z = vet.z;
+        camera1.updateProjectionMatrix();
+
+        camera3.aspect = ratio;
+        var vet = new THREE.Vector3(-30, 15, 0);
+        vet.multiplyScalar(val);
+        camera3.position.x = vet.x;
+        camera3.position.y = vet.y;
+        camera3.position.z = vet.z;
+        camera3.updateProjectionMatrix();
+    }
+
+    if (ratio > 1) {
+        camera2.left = -ratio * ASPECT_RATIO / 2;
+        camera2.right = ratio * ASPECT_RATIO / 2;
+        camera2.top = ASPECT_RATIO / 2;
+        camera2.bottom = -ASPECT_RATIO / 2;
+    }
+    else {
+        camera2.left = -ASPECT_RATIO / 2;
+        camera2.right = ASPECT_RATIO / 2;
+        camera2.top = ASPECT_RATIO / (2 * ratio);
+        camera2.bottom = -ASPECT_RATIO / (2 * ratio);
+    }
+    camera2.updateProjectionMatrix();
 }
 
 function onKeyDown(e) {

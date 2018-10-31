@@ -65,9 +65,11 @@ class Plane extends ConstructableObject {
 		geometry.faces = this.cockpitFaces;
 		geometry.computeFaceNormals();
 
-        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][1]);
 
         planeMesh.receiveShadow = true;
+
+        planeMesh.name = "cockpit";
 
         return planeMesh
     }
@@ -89,9 +91,11 @@ class Plane extends ConstructableObject {
 		geometry.faces = this.tailFaces;
 		geometry.computeFaceNormals();
 
-        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][0]);
 
         planeMesh.receiveShadow = true;
+
+        planeMesh.name = "tail";
 
         return planeMesh;
     }
@@ -115,9 +119,11 @@ class Plane extends ConstructableObject {
 		geometry.faces = this.frontFaces;
 		geometry.computeFaceNormals();
 
-        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][0]);
 
         planeMesh.receiveShadow = true;
+
+        planeMesh.name = "front";
 
         return planeMesh;
     }
@@ -142,9 +148,11 @@ class Plane extends ConstructableObject {
 		geometry.faces = this.rightWingFaces;
 		geometry.computeFaceNormals();
 
-        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+
+        planeMesh.name = "wing";
 
         return planeMesh;
     }
@@ -170,9 +178,11 @@ class Plane extends ConstructableObject {
 		geometry.faces = this.leftWingFaces;
 		geometry.computeFaceNormals();
 
-        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+
+        planeMesh.name = "wing";
 
         return planeMesh;
     }
@@ -198,9 +208,11 @@ class Plane extends ConstructableObject {
 		geometry.faces = this.stabilizer1Faces;
 		geometry.computeFaceNormals();
 
-        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+
+        planeMesh.name = "stabilizer";
 
         return planeMesh;
     }
@@ -226,9 +238,11 @@ class Plane extends ConstructableObject {
 		geometry.faces = this.stabilizer2Faces;
 		geometry.computeFaceNormals();
 
-        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+
+        planeMesh.name = "stabilizer";
 
         return planeMesh;
     }
@@ -254,15 +268,20 @@ class Plane extends ConstructableObject {
 		geometry.faces = this.stabilizer3Faces;
 		geometry.computeFaceNormals();
 
-        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex]);
+        let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
         planeMesh.receiveShadow = true;
+
+        planeMesh.name = "stabilizer";
 
         return planeMesh;
     }
 
     makePlaneMaterials() {
-        this.materials[0] = new THREE.MeshBasicMaterial({color: 0x646363, side: THREE.DoubleSide});
+        this.materials[0] = [];
+        this.materials[0].push(new THREE.MeshBasicMaterial({color: 0x646363, side: THREE.DoubleSide}),
+                                new THREE.MeshBasicMaterial({color: "rgb(59, 82, 119)", side: THREE.DoubleSide}),
+                                new THREE.MeshBasicMaterial({color: "rgb(74, 75, 76)", side: THREE.DoubleSide}));
         this.materials[1] = new THREE.MeshPhongMaterial({color: 0x646363, side: THREE.DoubleSide});
         this.materials[2] = new THREE.MeshLambertMaterial({color: 0x646363, side: THREE.DoubleSide});
     }
@@ -270,7 +289,20 @@ class Plane extends ConstructableObject {
     changeMaterial() {
         for(let i = 0; i < this.children.length; i++) {
             if(this.children[i] instanceof THREE.Mesh) {
-                this.children[i].material = this.materials[this.currentMaterial];
+                if(this.currentMaterial == 0) {
+                    if(this.children[i].name == "cockpit") {
+                        this.children[i].material = this.materials[this.currentMaterial][1];
+                    }
+                    else if(this.children[i].name == "tail" || this.children[i].name == "front") {
+                        this.children[i].material = this.materials[this.currentMaterial][0];
+                    }
+                    else if(this.children[i].name == "wing" || this.children[i].name == "stabilizer") {
+                        this.children[i].material = this.materials[this.currentMaterial][2];
+                    }
+                }
+                else {
+                    this.children[i].material = this.materials[this.currentMaterial];
+                }
             }
         }
     }

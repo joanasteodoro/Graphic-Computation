@@ -9,6 +9,8 @@ class Scene extends THREE.Scene {
         this.plane = new Plane(this, 0, 0, 0);
 
         this.sun = new Sun(this, 0, 5, 0);
+
+        this.spotlight1 = new Spotlight(this, "rgb(255, 255, 255)");
     }
 
     getPlane() {
