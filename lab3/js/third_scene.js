@@ -18,37 +18,31 @@ function onResize() {
 
 
     if (window.innerHeight > 0 && window.innerWidth > 0) {
-        let val = 1400/window.innerWidth;
+        let val = 800/window.innerWidth;
         camera1.aspect = ratio;
-        var vet = new THREE.Vector3(0,60,60);
+        var vet = new THREE.Vector3(10, 10, 0);
         vet.multiplyScalar(val);
         camera1.position.x = vet.x;
         camera1.position.y = vet.y;
         camera1.position.z = vet.z;
         camera1.updateProjectionMatrix();
 
+        camera2.aspect = ratio;
+        var vet = new THREE.Vector3(0, 10, 10);
+        vet.multiplyScalar(val);
+        camera2.position.x = vet.x;
+        camera2.position.y = vet.y;
+        camera2.position.z = vet.z;
+        camera2.updateProjectionMatrix();
+
         camera3.aspect = ratio;
-        var vet = new THREE.Vector3(-30, 15, 0);
+        var vet = new THREE.Vector3(10, 0, 10);
         vet.multiplyScalar(val);
         camera3.position.x = vet.x;
         camera3.position.y = vet.y;
         camera3.position.z = vet.z;
         camera3.updateProjectionMatrix();
     }
-
-    if (ratio > 1) {
-        camera2.left = -ratio * ASPECT_RATIO / 2;
-        camera2.right = ratio * ASPECT_RATIO / 2;
-        camera2.top = ASPECT_RATIO / 2;
-        camera2.bottom = -ASPECT_RATIO / 2;
-    }
-    else {
-        camera2.left = -ASPECT_RATIO / 2;
-        camera2.right = ASPECT_RATIO / 2;
-        camera2.top = ASPECT_RATIO / (2 * ratio);
-        camera2.bottom = -ASPECT_RATIO / (2 * ratio);
-    }
-    camera2.updateProjectionMatrix();
 }
 
 function onKeyDown(e) {

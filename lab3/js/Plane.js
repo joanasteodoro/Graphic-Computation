@@ -291,15 +291,15 @@ class Plane extends ConstructableObject {
         this.materials[0] = [];
         this.materials[0].push(new THREE.MeshBasicMaterial({color: 0x646363, side: THREE.DoubleSide}),
                                 new THREE.MeshBasicMaterial({color: "rgb(59, 82, 119)", side: THREE.DoubleSide}),
-                                new THREE.MeshBasicMaterial({color: "rgb(74, 75, 76)", side: THREE.DoubleSide}));
+                                new THREE.MeshBasicMaterial({color: "rgb(36, 38, 40)", side: THREE.DoubleSide}));
         this.materials[1] = [];
         this.materials[1].push(new THREE.MeshPhongMaterial({color: 0x646363, side: THREE.DoubleSide}),
                                 new THREE.MeshPhongMaterial({color: "rgb(59, 82, 119)", side: THREE.DoubleSide}),
-                                new THREE.MeshPhongMaterial({color: "rgb(74, 75, 76)", side: THREE.DoubleSide}));
+                                new THREE.MeshPhongMaterial({color: "rgb(36, 38, 40)", side: THREE.DoubleSide}));
         this.materials[2] = [];
         this.materials[2].push(new THREE.MeshLambertMaterial({color: 0x646363, side: THREE.DoubleSide}),
                                 new THREE.MeshLambertMaterial({color: "rgb(59, 82, 119)", side: THREE.DoubleSide}),
-                                new THREE.MeshLambertMaterial({color: "rgb(74, 75, 76)", side: THREE.DoubleSide}));
+                                new THREE.MeshLambertMaterial({color: "rgb(36, 38, 40)", side: THREE.DoubleSide}));
     }
 
     changeMaterial() {
