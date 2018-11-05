@@ -2,7 +2,7 @@ var scene, camera, renderer;
 var camera1, camera2, camera3;
 
 const ASPECT_RATIO = 80;
-const ANGLE = Math.PI / 8;
+const ANGLE = Math.PI / 32;
 
 function switchCamera(nCamera) {
     'use strict';
@@ -45,6 +45,30 @@ function onResize() {
     }
 }
 
+function onKeyUp(e) {
+    'use strict';
+
+    var keyCode = e.keyCode;
+    switch(keyCode) {
+        
+        case 38: // up arrow
+            console.log('up up')
+            scene.setUpRotationFlag(false);
+            break;
+        case 40: // down arrow
+            scene.setDownRotationFlag(false);
+            break;
+        case 39: // right arrow
+            scene.setRightRotationFlag(false);
+            break;
+        case 37: // left arrow
+            scene.setLeftRotationFlag(false);
+            break;
+        default:
+            break;
+    }
+}
+
 function onKeyDown(e) {
     'use strict';
 
@@ -81,18 +105,18 @@ function onKeyDown(e) {
 
         // rotate around z - blue axis
         case 38: // up arrow
-            scene.getPlane().rotateZ(ANGLE);
+            scene.setUpRotationFlag(true);
             break;
         case 40: // down arrow
-            scene.getPlane().rotateZ(-ANGLE);
+            scene.setDownRotationFlag(true);
             break;
 
         // rotate around y - green axis
         case 39: // right arrow
-            scene.getPlane().rotateY(-ANGLE);
+            scene.setRightRotationFlag(true);
             break;
         case 37: // left arrow
-            scene.getPlane().rotateY(ANGLE);
+            scene.setLeftRotationFlag(true);
             break;
 
         // change shading between Gouraud (diffuse) and Phong
@@ -114,7 +138,6 @@ function onKeyDown(e) {
         case 110: //n
             scene.getSun().onOffSunLight();
             break;
-
 
         default:
              break;
@@ -146,12 +169,29 @@ function init() {
     render();
 
     window.addEventListener("keydown", onKeyDown);
-
+    window.addEventListener("keyup", onKeyUp);
     window.addEventListener("resize", onResize);
 }
 
 function animate() {
     'use strict';
+
+    if (scene.getUpRotationFlag()) {
+        scene.getPlane().rotateZ(ANGLE);
+        console.log('rodar up')
+    } 
+    if (scene.getDownRotationFlag()) {
+        scene.getPlane().rotateZ(-ANGLE);
+        console.log('rodar down')
+    } 
+    if (scene.getLeftRotationFlag()) {
+        scene.getPlane().rotateY(ANGLE);
+        console.log('rodar left')
+    } 
+    if (scene.getRightRotationFlag()) {
+        scene.getPlane().rotateY(-ANGLE);
+        console.log('rodar left')
+    } 
 
     render();
     requestAnimationFrame(animate);

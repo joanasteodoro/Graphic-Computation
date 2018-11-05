@@ -18,6 +18,13 @@ class Scene extends THREE.Scene {
                                         -Math.PI / 2, -3 * Math.PI / 4, 1.6, -3.5, 3.6, 1, -3.5, 4.5, -3, 4, -9);
         this.spotlight4 = new Spotlight(this,"rgb(255, 255, 255)", -2, -3.5, 4,
                                         -Math.PI / 2, 3 * Math.PI / 4, -1.6, -3.5, 3.6, -1.5, -3.5, 4.5, 3, 4, -9);
+        
+        this.rotationFlags = {
+            up: false,
+            down: false,
+            left: false,
+            right: false
+        }
     }
 
     getFloor() {
@@ -46,5 +53,37 @@ class Scene extends THREE.Scene {
 
     getSpotlight4() {
         return this.spotlight4;
+    }
+
+    getUpRotationFlag() {
+        return this.rotationFlags.up;
+    }
+
+    getDownRotationFlag() {
+        return this.rotationFlags.down;
+    }
+
+    getLeftRotationFlag() {
+        return this.rotationFlags.left;
+    }
+
+    getRightRotationFlag() {
+        return this.rotationFlags.right;
+    }
+
+    setUpRotationFlag(b) {
+        this.rotationFlags.up = b;
+    }
+
+    setDownRotationFlag(b) {
+        this.rotationFlags.down = b;
+    }
+
+    setLeftRotationFlag(b) {
+        this.rotationFlags.left = b;
+    }
+
+    setRightRotationFlag(b) {
+        this.rotationFlags.right = b;
     }
 }
