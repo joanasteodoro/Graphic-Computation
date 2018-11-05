@@ -60,7 +60,6 @@ class ConstructableObject extends THREE.Object3D {
         }
     }
 
-    //ESTA MAL
     createFaceCubeGroup(vector) {
         // play connect the dots with index values from the vertexes array
         vector.push( new THREE.Face3(2, 3, 7), //up
@@ -80,9 +79,9 @@ class ConstructableObject extends THREE.Object3D {
     createFacePyramidGroup(vector) {
         // play connect the dots with index values from the vertexes array
         this.createSquareFace(vector, 2, 3, 0, 1, 0); // pyramid base
-    	this.createTriangleFace(vector, 2, 1, 4, 1); // Side1
+    	  this.createTriangleFace(vector, 2, 1, 4, 1); // Side1
         this.createTriangleFace(vector, 1, 0, 4, 0); // Side2
-    	this.createTriangleFace(vector, 0, 3, 4, 1); // Side3
+    	  this.createTriangleFace(vector, 0, 3, 4, 1); // Side3
         this.createTriangleFace(vector, 3, 2, 4, 1); // Side4
     }
 }

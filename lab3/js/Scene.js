@@ -10,15 +10,11 @@ class Scene extends THREE.Scene {
 
         this.sun = new Sun(this, 0, 5, 0);
 
-        this.spotlight1 = new Spotlight(this,"rgb(255, 255, 255)", 2, -3.5, -4,
-                                        -Math.PI / 2, -Math.PI / 4, 1.6, -3.5, -3.6, 1.5, -3.5, -4.5, -3, 4, 9);
-        this.spotlight2 = new Spotlight(this,"rgb(255, 255, 255)", -2, -3.5, -4,
-                                        -Math.PI / 2, Math.PI / 4, -1.6, -3.5, -3.6, -1.5, -3.5, -4.5, 3, 4, 9);
-        this.spotlight3 = new Spotlight(this,"rgb(255, 255, 255)", 2, -3.5, 4,
-                                        -Math.PI / 2, -3 * Math.PI / 4, 1.6, -3.5, 3.6, 1, -3.5, 4.5, -3, 4, -9);
-        this.spotlight4 = new Spotlight(this,"rgb(255, 255, 255)", -2, -3.5, 4,
-                                        -Math.PI / 2, 3 * Math.PI / 4, -1.6, -3.5, 3.6, -1.5, -3.5, 4.5, 3, 4, -9);
-        
+        this.spotlight1 = new Spotlight(this,"rgb(255, 255, 255)", 1);
+        this.spotlight2 = new Spotlight(this,"rgb(255, 255, 255)", 2);
+        this.spotlight3 = new Spotlight(this,"rgb(255, 255, 255)", 3);
+        this.spotlight4 = new Spotlight(this,"rgb(255, 255, 255)", 4);
+
         this.rotationFlags = {
             up: false,
             down: false,

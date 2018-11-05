@@ -1,7 +1,7 @@
 var scene, camera, renderer;
 var camera1, camera2, camera3;
 
-const ASPECT_RATIO = 80;
+const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const ANGLE = Math.PI / 32;
 
 function switchCamera(nCamera) {
@@ -10,7 +10,7 @@ function switchCamera(nCamera) {
 }
 
 function onResize() {
-    'use strict';
+  'use strict';
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -18,7 +18,7 @@ function onResize() {
 
 
     if (window.innerHeight > 0 && window.innerWidth > 0) {
-        let val = 800/window.innerWidth;
+        let val = 1400/window.innerWidth;
         camera1.aspect = ratio;
         var vet = new THREE.Vector3(10, 10, 0);
         vet.multiplyScalar(val);
@@ -42,7 +42,8 @@ function onResize() {
         camera3.position.y = vet.y;
         camera3.position.z = vet.z;
         camera3.updateProjectionMatrix();
-    }
+      }
+
 }
 
 function onKeyUp(e) {
@@ -50,7 +51,7 @@ function onKeyUp(e) {
 
     var keyCode = e.keyCode;
     switch(keyCode) {
-        
+
         case 38: // up arrow
             console.log('up up')
             scene.setUpRotationFlag(false);
@@ -179,19 +180,19 @@ function animate() {
     if (scene.getUpRotationFlag()) {
         scene.getPlane().rotateZ(ANGLE);
         console.log('rodar up')
-    } 
+    }
     if (scene.getDownRotationFlag()) {
         scene.getPlane().rotateZ(-ANGLE);
         console.log('rodar down')
-    } 
+    }
     if (scene.getLeftRotationFlag()) {
         scene.getPlane().rotateY(ANGLE);
         console.log('rodar left')
-    } 
+    }
     if (scene.getRightRotationFlag()) {
         scene.getPlane().rotateY(-ANGLE);
         console.log('rodar left')
-    } 
+    }
 
     render();
     requestAnimationFrame(animate);

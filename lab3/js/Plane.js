@@ -63,9 +63,9 @@ class Plane extends ConstructableObject {
 
         this.createFaceCubeGroup(this.cockpitFaces);
 
-		geometry.vertices = this.cockpitVertices;
-		geometry.faces = this.cockpitFaces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.cockpitVertices;
+    		geometry.faces = this.cockpitFaces;
+    		geometry.computeFaceNormals();
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][1]);
 
@@ -74,7 +74,7 @@ class Plane extends ConstructableObject {
 
         planeMesh.name = "cockpit";
 
-        return planeMesh
+        return planeMesh;
     }
 
     makePlaneTailGeometry(materialIndex, height) {
@@ -90,9 +90,9 @@ class Plane extends ConstructableObject {
 
         this.createFacePyramidGroup(this.tailFaces);
 
-		geometry.vertices = this.tailVertices;
-		geometry.faces = this.tailFaces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.tailVertices;
+    		geometry.faces = this.tailFaces;
+    		geometry.computeFaceNormals();
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][0]);
 
@@ -119,9 +119,9 @@ class Plane extends ConstructableObject {
 
         this.createFacePyramidGroup(this.frontFaces);
 
-		geometry.vertices = this.frontVertices;
-		geometry.faces = this.frontFaces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.frontVertices;
+    		geometry.faces = this.frontFaces;
+    		geometry.computeFaceNormals();
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][0]);
 
@@ -149,9 +149,9 @@ class Plane extends ConstructableObject {
 
         this.createFacePyramidGroup(this.rightWingFaces);
 
-		geometry.vertices = this.rightWingVertices;
-		geometry.faces = this.rightWingFaces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.rightWingVertices;
+    		geometry.faces = this.rightWingFaces;
+    		geometry.computeFaceNormals();
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
@@ -180,9 +180,9 @@ class Plane extends ConstructableObject {
 
         this.createFacePyramidGroup(this.leftWingFaces);
 
-		geometry.vertices = this.leftWingVertices;
-		geometry.faces = this.leftWingFaces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.leftWingVertices;
+    		geometry.faces = this.leftWingFaces;
+    		geometry.computeFaceNormals();
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
@@ -211,9 +211,9 @@ class Plane extends ConstructableObject {
 
         this.createFacePyramidGroup(this.stabilizer1Faces);
 
-		geometry.vertices = this.stabilizer1Vertices;
-		geometry.faces = this.stabilizer1Faces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.stabilizer1Vertices;
+    		geometry.faces = this.stabilizer1Faces;
+    		geometry.computeFaceNormals();
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 
@@ -242,9 +242,9 @@ class Plane extends ConstructableObject {
 
         this.createFacePyramidGroup(this.stabilizer2Faces);
 
-		geometry.vertices = this.stabilizer2Vertices;
-		geometry.faces = this.stabilizer2Faces;
-		geometry.computeFaceNormals();
+    		geometry.vertices = this.stabilizer2Vertices;
+    		geometry.faces = this.stabilizer2Faces;
+    		geometry.computeFaceNormals();
 
         let planeMesh = new THREE.Mesh(geometry, this.materials[materialIndex][2]);
 

@@ -1,5 +1,5 @@
 class Spotlight extends THREE.SpotLight {
-    constructor(scene, color, x, y, z, angleX, angleZ, bx, by, bz, sx, sy, sz, tx, ty, tz) {
+    constructor(scene, color, spotlightIndex) {
         super(color, 1);
         this.castShadow = true;
 
@@ -13,15 +13,20 @@ class Spotlight extends THREE.SpotLight {
         scene.add(this);
         scene.add(this.target);
 
-        this.target.position.set(tx, ty, tz);
-
-        this.position.set(sx, sy, sz);
-
         this.spotlight = new THREE.Object3D();
 
-        this.spotlight.add(this.makeSpotlightHead(x, y, z, angleX, angleZ));
-        this.spotlight.add(this.makeSpotlightBulb(bx, by, bz));
-
+        if (spotlightIndex == 1) {
+            this.makeSpotlight1();
+        }
+        else if (spotlightIndex == 2) {
+            this.makeSpotlight2();
+        }
+        else if (spotlightIndex == 3) {
+            this.makeSpotlight3();
+        }
+        else {
+            this.makeSpotlight4();
+        }
         scene.add(this.spotlight);
     }
 
@@ -50,6 +55,98 @@ class Spotlight extends THREE.SpotLight {
         bulb.position.z = z;
 
         return bulb;
+    }
+
+    makeSpotlight1() {
+        let x = 2;
+        let y = -3.5;
+        let z = -4;
+        let angleX = -Math.PI / 2;
+        let angleZ = -Math.PI / 4;
+        let bx = 1.6;
+        let by = -3.5;
+        let bz = -3.6;
+        let sx = 1.5;
+        let sy = -3.5;
+        let sz = -4.5;
+        let tx = -3;
+        let ty = 4;
+        let tz = 9;
+
+        this.target.position.set(tx, ty, tz);
+        this.position.set(sx, sy, sz);
+
+        this.spotlight.add(this.makeSpotlightHead(x, y, z, angleX, angleZ));
+        this.spotlight.add(this.makeSpotlightBulb(bx, by, bz));
+    }
+
+    makeSpotlight2() {
+        let x = -2;
+        let y = -3.5;
+        let z = -4;
+        let angleX = -Math.PI / 2;
+        let angleZ = Math.PI / 4;
+        let bx = -1.6;
+        let by = -3.5;
+        let bz = -3.6;
+        let sx = -1.5;
+        let sy = -3.5;
+        let sz = -4.5;
+        let tx = 3;
+        let ty = 4;
+        let tz = 9;
+
+        this.target.position.set(tx, ty, tz);
+        this.position.set(sx, sy, sz);
+
+        this.spotlight.add(this.makeSpotlightHead(x, y, z, angleX, angleZ));
+        this.spotlight.add(this.makeSpotlightBulb(bx, by, bz));
+    }
+
+    makeSpotlight3() {
+        let x = 2;
+        let y = -3.5;
+        let z = 4;
+        let angleX = -Math.PI / 2;
+        let angleZ = -3 * Math.PI / 4;
+        let bx = 1.6;
+        let by = -3.5;
+        let bz = 3.6;
+        let sx = 1.5;
+        let sy = -3.5;
+        let sz = 4.5;
+        let tx = -3;
+        let ty = 4;
+        let tz = -9;
+
+        this.target.position.set(tx, ty, tz);
+        this.position.set(sx, sy, sz);
+
+        this.spotlight.add(this.makeSpotlightHead(x, y, z, angleX, angleZ));
+        this.spotlight.add(this.makeSpotlightBulb(bx, by, bz));
+    }
+
+    makeSpotlight4() {
+        let x = -2;
+        let y = -3.5;
+        let z = 4;
+        let angleX = -Math.PI / 2;
+        let angleZ = 3 * Math.PI / 4;
+        let bx = -1.6;
+        let by = -3.5;
+        let bz = 3.6;
+        let sx = -1.5;
+        let sy = -3.5;
+        let sz = 4.5;
+        let tx = 3;
+        let ty = 4;
+        let tz = -9;
+
+        this.target.position.set(tx, ty, tz);
+        this.position.set(sx, sy, sz);
+
+        this.spotlight.add(this.makeSpotlightHead(x, y, z, angleX, angleZ));
+        this.spotlight.add(this.makeSpotlightBulb(bx, by, bz));
     }
 
     onOffSpotlight() {
