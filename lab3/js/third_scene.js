@@ -79,20 +79,20 @@ function onKeyDown(e) {
             switchCamera(camera3);
             break;
 
-        // rotate around y - green axis
+        // rotate around z - blue axis
         case 38: // up arrow
-            scene.getPlane().rotateY(-ANGLE);
+            scene.getPlane().rotateZ(ANGLE);
             break;
         case 40: // down arrow
-            scene.getPlane().rotateY(ANGLE);
-            break;
-
-        // rotate around z - blue axis
-        case 39: // right arrow
             scene.getPlane().rotateZ(-ANGLE);
             break;
+
+        // rotate around y - green axis
+        case 39: // right arrow
+            scene.getPlane().rotateY(-ANGLE);
+            break;
         case 37: // left arrow
-            scene.getPlane().rotateZ(ANGLE);
+            scene.getPlane().rotateY(ANGLE);
             break;
 
         // change shading between Gouraud (diffuse) and Phong
