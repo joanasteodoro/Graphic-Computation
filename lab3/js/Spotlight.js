@@ -10,6 +10,8 @@ class Spotlight extends THREE.SpotLight {
         this.shadow.camera.far = 100;
         this.shadow.camera.fov = 30;
 
+        this.angle = Math.PI / 3;
+
         scene.add(this);
         scene.add(this.target);
 
@@ -151,5 +153,13 @@ class Spotlight extends THREE.SpotLight {
 
     onOffSpotlight() {
         this.visible = !this.visible;
+    }
+
+    getAngle() {
+        return this.angle;
+    }
+
+    setAngle(angle) {
+        this.angle = angle;
     }
 }

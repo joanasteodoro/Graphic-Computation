@@ -53,7 +53,6 @@ function onKeyUp(e) {
     switch(keyCode) {
 
         case 38: // up arrow
-            console.log('up up')
             scene.setUpRotationFlag(false);
             break;
         case 40: // down arrow
