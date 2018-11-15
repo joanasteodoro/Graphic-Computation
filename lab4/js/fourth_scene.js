@@ -1,14 +1,8 @@
 var game, camera, renderer;
-var camera1, camera2, camera3;
 var controls;
 
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const ANGLE = Math.PI / 32;
-
-function switchCamera(nCamera) {
-    'use strict';
-    camera = nCamera;
-}
 
 function onResize() {
   'use strict';
@@ -36,13 +30,6 @@ function onResize() {
         camera2.position.z = vet.z;
         camera2.updateProjectionMatrix();
 
-        camera3.aspect = ratio;
-        var vet = new THREE.Vector3(10, 0, 10);
-        vet.multiplyScalar(val);
-        camera3.position.x = vet.x;
-        camera3.position.y = vet.y;
-        camera3.position.z = vet.z;
-        camera3.updateProjectionMatrix();
       }
 
 }
@@ -52,7 +39,6 @@ function onKeyUp(e) {
 
     var keyCode = e.keyCode;
     switch(keyCode) {
-
         /*
         case 38: // up arrow
             scene.setUpRotationFlag(false);
@@ -77,6 +63,11 @@ function onKeyDown(e) {
 
     var keyCode = e.keyCode;
     switch(keyCode) {
+      case 83: //s
+        game.switchCamera(game.getCamera2());
+        console.log(game.getCamera2());
+        render();
+        break;
         /*
         case 49: // 1
             scene.getSpotlight1().onOffSpotlight();
@@ -96,14 +87,6 @@ function onKeyDown(e) {
 
         case 65: // a
             switchCamera(camera1);
-            break;
-
-        case 83: // s
-            switchCamera(camera2);
-            break;
-
-        case 68: // d
-            switchCamera(camera3);
             break;
 
         // rotate around z - blue axis
@@ -149,10 +132,6 @@ function onKeyDown(e) {
             reset();
             break;
 
-        // s - pause
-        case 83:
-            break;
-
         default:
             break;
 
@@ -161,7 +140,7 @@ function onKeyDown(e) {
 
 function render() {
     'use strict';
-    renderer.render(game.getScene(), game.getCamera());
+    renderer.render(game.getScene(), game.getCurrentCamera());
 }
 
 function reset() {
@@ -175,7 +154,7 @@ function init() {
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-
+  //  camera2 = new OrthographicCamera(0, 100, 0); // Allows to see the whole terrain #2
     /* instance of the game that will be renewed when 'reset' is pressed */
     game = new Game(window.innerWidth, window.innerHeight);
     controls = game.getControls();
