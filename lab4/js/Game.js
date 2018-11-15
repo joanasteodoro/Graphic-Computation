@@ -27,6 +27,10 @@ class Game {
       return this.currentCamera;
     }
 
+    getBall(){
+      return this.ball;
+    }
+
     getControls() {
         return this.controls;
     }

@@ -8,6 +8,14 @@ class Ball extends THREE.Object3D {
         this.mayRotateFlag = false;
         this.realAngle = dir;
 
+        //movement
+        this.acceleration = 0;
+        this.previousVelocity = 0;
+        this.currentVelocity = 0;
+        this.maximumVelocity = 0.5;
+        this.minimumVelocity = -0.5;
+
+
         let material = new THREE.MeshBasicMaterial({ color:"rgb(206, 219, 221)", wireframe: false });
         let geometry = new THREE.SphereGeometry(2, 10, 10);
         this.mesh = new THREE.Mesh(geometry, material);
@@ -22,7 +30,8 @@ class Ball extends THREE.Object3D {
     }
 
     rotateBall() {
-        var unityX  = new THREE.Vector3(1, 0, 0);
+        this.mesh.rotation.y += (Math.PI / 32);
+        /*var unityX  = new THREE.Vector3(1, 0, 0);
         var angle  = unityX.angleTo(this.getVelocity());
 
         var z = this.getVelocityZ();
@@ -31,7 +40,7 @@ class Ball extends THREE.Object3D {
         }
         else {
             this.ball.rotation.y = angle;
-        }
+        }*/
     }
 
     //makes ball start rotating or stop depending on mayRotate flag
@@ -41,6 +50,22 @@ class Ball extends THREE.Object3D {
 
     ballRolling() {
         this.rotateZ(this.getVelocity());
+    }
+
+    setAcceleration(acceleration) {
+        this.acceleration = acceleration;
+    }
+
+    setPreviousVelocity(vel) {
+        this.previousVelocity = vel;
+    }
+
+    setCurrentVelocity(vel) {
+        this.currentVelocity = vel;
+    }
+
+    setAngleToMove(angle) {
+        this.angleToMove = angle;
     }
 
     getPositionX() {

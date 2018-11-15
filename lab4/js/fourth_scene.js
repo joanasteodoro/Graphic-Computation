@@ -67,13 +67,13 @@ function onKeyDown(e) {
         game.switchCamera(game.getCamera2());
         break;
       case 68: //d
-        scene.getDirectionalLight().onOffLight();
+        game.getScene().getDirectionalLight().onOffLight();
         break;
       case 80: //p
-        scene.getPointLight().onOffLight();
+        game.getScene().getPointLight().onOffLight();
         break;
       case 87: //w
-        scene.traverse(function (node) {
+        game.getScene().traverse(function (node) {
           if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;
         });
         break;
@@ -85,7 +85,7 @@ function onKeyDown(e) {
         break;
 
       case 66: //b
-      
+        game.getBall().rotateBall();
         break;
         /*
         case 49: // 1
