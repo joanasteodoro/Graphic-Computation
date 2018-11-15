@@ -142,8 +142,15 @@ function onKeyDown(e) {
             scene.getSun().onOffSunLight();s
             break;
         */
+       /* r - reset
+       probably will need to check if the game is on pause
+       */
         case 82:
             reset();
+            break;
+
+        // s - pause
+        case 83:
             break;
 
         default:

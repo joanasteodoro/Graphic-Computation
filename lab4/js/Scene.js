@@ -3,6 +3,7 @@ class Scene extends THREE.Scene {
         super();
         this.background = new THREE.Color("rgb(255, 255, 255)");
         this.add(new THREE.AxisHelper(50));
+        this.chessBoard = new Board(this);
         /*
         this.floor = new Floor(this, 0, -4, 0, 20, 20);
 
