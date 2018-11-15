@@ -1,11 +1,7 @@
 class Board extends THREE.Object3D {
     constructor() {
         super();
-
         this.createTexture();
-
-        this.vertices = [];
-        this.faces = [];
         this.createMesh();
     }
 

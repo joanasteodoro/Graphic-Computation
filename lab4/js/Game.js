@@ -8,12 +8,14 @@ class Game {
         this.directionalLight = new DirectionalLight(3, 5, 3);
         this.pointLight = new PointLight(0, 5, 0);
         this.chessBoard = new Board();
-        //this.magicCube = new this.magicCube();
-        //this.ball = new Ball(1, 1, 1, 0.5, 0.5, 0, 0);
+        this.magicCube = new MagicCube();
+        this.ball = new Ball(1, 1, 1, 0.5, 0.5, 0, 0);
         this.scene.add(this.chessBoard.getMesh());
-        //this.scene.add(this.ball.getBallMesh());
+        this.scene.add(this.magicCube.getMesh());
+        this.scene.add(this.ball.getMesh());
         this.scene.add(this.directionalLight);
         this.scene.add(this.pointLight);
+        
     }
 
     getScene() {
