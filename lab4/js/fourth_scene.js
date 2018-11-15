@@ -72,6 +72,17 @@ function onKeyDown(e) {
       case 80: //p
         scene.getPointLight().onOffLight();
         break;
+      case 87: //w
+        scene.traverse(function (node) {
+          if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;
+        });
+        break;
+      // activate/deactivate illumination calculation
+      case 76: //L
+      case 108: //l
+        //scene.getPlane().onOffLight();
+        //scene.getFloor().onOffLight();
+        break;
         /*
         case 49: // 1
             scene.getSpotlight1().onOffSpotlight();
