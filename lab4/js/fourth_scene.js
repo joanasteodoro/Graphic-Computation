@@ -65,8 +65,6 @@ function onKeyDown(e) {
     switch(keyCode) {
       case 83: //s
         game.switchCamera(game.getCamera2());
-        console.log(game.getCamera2());
-        render();
         break;
         /*
         case 49: // 1

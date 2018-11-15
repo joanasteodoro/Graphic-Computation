@@ -3,12 +3,13 @@ class Scene extends THREE.Scene {
         super();
         this.background = new THREE.Color("rgb(255, 255, 255)");
         this.add(new THREE.AxisHelper(50));
+        this.directionalLight = new DirectionalLight(this, 0, 5, 0);
+        this.pointLight = new PointLight(this, 5, 5, 5);
         /*
         this.floor = new Floor(this, 0, -4, 0, 20, 20);
 
         this.plane = new Plane(this, 0, 0, 0);
 
-        this.sun = new Sun(this, 0, 5, 0);
 
         this.spotlight1 = new Spotlight(this,"rgb(255, 255, 255)", 1);
         this.spotlight2 = new Spotlight(this,"rgb(255, 255, 255)", 2);
