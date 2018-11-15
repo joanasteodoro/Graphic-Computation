@@ -5,7 +5,7 @@ class Ball extends THREE.Object3D {
         this.pos = new THREE.Vector3(x, y, z);
         this.dir = dir;
         this.vel = new THREE.Vector3(velX, velY, velZ);
-        this.mayRotateFlag = true;
+        this.mayRotateFlag = false;
         this.realAngle = dir;
 
         let material = new THREE.MeshBasicMaterial({ color:"rgb(206, 219, 221)", wireframe: false });
@@ -32,6 +32,11 @@ class Ball extends THREE.Object3D {
         else {
             this.ball.rotation.y = angle;
         }
+    }
+
+    //makes ball start rotating or stop depending on mayRotate flag
+    rotateStopBall(){
+      this.mayRotateFlag = true;
     }
 
     ballRolling() {

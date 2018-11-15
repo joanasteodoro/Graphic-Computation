@@ -83,6 +83,10 @@ function onKeyDown(e) {
         //scene.getPlane().onOffLight();
         //scene.getFloor().onOffLight();
         break;
+
+      case 66: //b
+      
+        break;
         /*
         case 49: // 1
             scene.getSpotlight1().onOffSpotlight();
