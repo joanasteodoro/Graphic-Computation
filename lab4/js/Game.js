@@ -32,6 +32,10 @@ class Game {
         
     }
 
+    update() {
+        
+    }
+
     getScene() {
         return this.scene;
     }

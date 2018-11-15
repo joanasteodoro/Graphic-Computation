@@ -34,49 +34,30 @@ function onResize() {
 
 }
 
-function onKeyUp(e) {
-    'use strict';
-
-    var keyCode = e.keyCode;
-    switch(keyCode) {
-        /*
-        case 38: // up arrow
-            scene.setUpRotationFlag(false);
-            break;
-        case 40: // down arrow
-            scene.setDownRotationFlag(false);
-            break;
-        case 39: // right arrow
-            scene.setRightRotationFlag(false);
-            break;
-        case 37: // left arrow
-            scene.setLeftRotationFlag(false);
-            break;
-        */
-        default:
-            break;
-    }
-}
-
 function onKeyDown(e) {
     'use strict';
 
     var keyCode = e.keyCode;
+    
     switch(keyCode) {
       case 83: //s
         game.switchCamera(game.getCamera2());
         break;
+
       case 68: //d
         game.getDirectionalLight().onOffLight();
         break;
+
       case 80: //p
         game.getPointLight().onOffLight();
         break;
+
       case 87: //w
         game.getScene().traverse(function (node) {
           if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;
         });
         break;
+
       // activate/deactivate illumination calculation
       case 76: //L
       case 108: //l
@@ -86,63 +67,7 @@ function onKeyDown(e) {
       case 66: //b
         game.getBall().rotateBall();
         break;
-        /*
-        case 49: // 1
-            scene.getSpotlight1().onOffSpotlight();
-            break;
 
-        case 50: // 2
-            scene.getSpotlight2().onOffSpotlight();
-            break;
-
-        case 51: // 3
-            scene.getSpotlight3().onOffSpotlight();
-            break;
-
-        case 52: // 4
-            scene.getSpotlight4().onOffSpotlight();
-            break;
-
-        case 65: // a
-            switchCamera(camera1);
-            break;
-
-        // rotate around z - blue axis
-        case 38: // up arrow
-            scene.setUpRotationFlag(true);
-            break;
-        case 40: // down arrow
-            scene.setDownRotationFlag(true);
-            break;
-
-        // rotate around y - green axis
-        case 39: // right arrow
-            scene.setRightRotationFlag(true);
-            break;
-        case 37: // left arrow
-            scene.setLeftRotationFlag(true);
-            break;
-
-        // change shading between Gouraud (diffuse) and Phong
-        case 71: //G
-        case 103: //g
-            scene.getPlane().changeShading();
-            scene.getFloor().changeShading();
-            break;
-
-        // activate/deactivate illumination calculation
-        case 76: //L
-        case 108: //l
-            scene.getPlane().onOffLight();
-            scene.getFloor().onOffLight();
-            break;
-
-        // turn on/off sun light
-        case 78: //N
-        case 110: //n
-            scene.getSun().onOffSunLight();s
-            break;
-        */
        /* r - reset
        probably will need to check if the game is on pause
        */
@@ -181,12 +106,16 @@ function init() {
     render();
 
     window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("keyup", onKeyUp);
     window.addEventListener("resize", onResize);
 }
 
 function animate() {
     'use strict';
+
+    delta = time.getDelta();
+    sinceBeginning = time.getElapsedTime();
+
+    game.update();
 
     controls.update();
     render();

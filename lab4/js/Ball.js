@@ -38,5 +38,8 @@ class Ball extends THREE.Object3D {
     updateMaterial(index) {
         this.mesh.material = this.materials[index];
     }
-    //rotateY
+
+    /*rotateY() {
+        this.mesh.rotation.y
+    }*/
 }
