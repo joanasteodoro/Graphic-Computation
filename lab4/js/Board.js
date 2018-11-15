@@ -1,8 +1,10 @@
 class Board extends THREE.Object3D {
-    constructor() {
+    constructor(index) {
         super();
         this.createTexture();
-        this.createMesh();
+        this.materials = [];
+        this.createMaterials();
+        this.createMesh(index);
     }
 
     createTexture() {
@@ -12,30 +14,15 @@ class Board extends THREE.Object3D {
         
     }
 
-    createMesh() {
-        /*let geometry = new THREE.Geometry();
+    createMaterials() {
+        this.materials.push(new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0x111111, shininess: 10, wireframe: false, map: this.texture}));
+        this.materials.push(new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false, map: this.texture}));
+    }
 
-        for(let line = 0; line < 5; line++) {
-            for(let col = 0; col < 5; col++) {
-                this.vertices.push(new THREE.Vector3(line, 0, col));
-            }
-        }
-
-        // creates 32 triangular faces
-        for(let index = 0; index < 19; index++) {
-            if(index != 4 & index != 9 & index != 14) {
-                this.faces.push(new THREE.Face3(index, index+1, index+6));
-                this.faces.push(new THREE.Face3(index, index+6, index+5));
-            }
-        }
-
-        geometry.vertices = this.vertices;
-        geometry.faces = this.faces;
-        geometry.computeFaceNormals();*/
+    createMesh(index) {
         let geometry = new THREE.PlaneBufferGeometry(5, 5, 8, 8);
 
-        let material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0x111111, shininess: 10, wireframe: false, map: this.texture});
-        this.mesh = new THREE.Mesh(geometry, material);
+        this.mesh = new THREE.Mesh(geometry, this.materials[index]);
 
         this.mesh.receiveShadow = true;
         this.mesh.castShadow = true;
@@ -48,5 +35,9 @@ class Board extends THREE.Object3D {
 
     getMesh()  {
         return this.mesh;
+    }
+
+    updateMaterial(index) {
+        this.mesh.material = this.materials[index];
     }
 }

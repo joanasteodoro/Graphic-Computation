@@ -80,8 +80,7 @@ function onKeyDown(e) {
       // activate/deactivate illumination calculation
       case 76: //L
       case 108: //l
-        //scene.getPlane().onOffLight();
-        //scene.getFloor().onOffLight();
+        game.switchMeshLightFlag();
         break;
 
       case 66: //b
