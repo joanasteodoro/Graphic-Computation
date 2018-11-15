@@ -1,4 +1,4 @@
-var scene, camera, renderer;
+var game, camera, renderer;
 var camera1, camera2, camera3;
 var controls;
 
@@ -142,16 +142,24 @@ function onKeyDown(e) {
             scene.getSun().onOffSunLight();s
             break;
         */
+        case 82:
+            reset();
+            break;
+
         default:
-             break;
+            break;
 
     }
 }
 
 function render() {
     'use strict';
+    renderer.render(game.getScene(), game.getCamera());
+}
 
-    renderer.render(scene, camera);
+function reset() {
+    /* garbage colector will deal with the previous instance */
+    game = new Game(window.innerWidth, window.innerHeight);
 }
 
 function init() {
@@ -161,15 +169,9 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    scene = new Scene(window.innerWidth, window.innerHeight);
-
-    // adjust cameras
-    camera1 = new PerspectiveCamera(10, 10, 0, 0, 0, 0); // Upper camera #1
-    camera2 = new PerspectiveCamera(0, 10, 10, 0, 0, 0); // Allows to see the whole terrain #2
-    camera3 = new PerspectiveCamera(10, 0, 10, 0, 0, 0); // Same as #2 but mobile #3
-    switchCamera(camera1);
-
-    controls = new THREE.OrbitControls(camera);
+    /* instance of the game that will be renewed when 'reset' is pressed */
+    game = new Game(window.innerWidth, window.innerHeight);
+    controls = game.getControls();
     controls.update();
 
     render();
