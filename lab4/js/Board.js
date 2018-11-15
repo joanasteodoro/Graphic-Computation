@@ -8,7 +8,7 @@ class Board extends THREE.Object3D {
     }
 
     createTexture() {
-        this.texture = new THREE.TextureLoader().load('textures/chessBoardTexture.png');
+        this.texture = new THREE.TextureLoader().load('textures/woodboard.png');
         this.texture.wrapS = this.texture.wrapT = THREE.RepeatWrapping;
         this.texture.repeat.set( 4, 4);
         

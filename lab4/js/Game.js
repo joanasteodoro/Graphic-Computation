@@ -23,10 +23,13 @@ class Game {
         this.objects.push(this.magicCube);
         this.ball = new Ball(this.meshLightFlag);
         this.objects.push(this.ball);
+        this.pivotPoint = new THREE.Object3D();
+
+        this.magicCube.getMesh().add(this.pivotPoint);
+        this.pivotPoint.add(this.ball.getMesh());
 
         this.scene.add(this.chessBoard.getMesh());
         this.scene.add(this.magicCube.getMesh());
-        this.scene.add(this.ball.getMesh());
         this.scene.add(this.directionalLight);
         this.scene.add(this.pointLight);
         

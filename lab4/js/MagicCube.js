@@ -9,7 +9,7 @@ class MagicCube extends THREE.Object3D {
     }
 
     createTexture() {
-        this.texture = new THREE.TextureLoader().load('textures/cubeTexture.png');
+        this.texture = new THREE.TextureLoader().load('textures/cubeface.png');
         this.texture.wrapS = this.texture.wrapT = THREE.RepeatWrapping;
         this.texture.repeat.set( 1, 1);   
     }

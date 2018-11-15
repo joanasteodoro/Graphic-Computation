@@ -8,7 +8,7 @@ class Ball extends THREE.Object3D {
     }
 
     createTexture() {
-        this.texture = new THREE.TextureLoader().load('textures/ballTexture.png');
+        this.texture = new THREE.TextureLoader().load('textures/8ball.png');
         this.texture.wrapS = this.texture.wrapT = THREE.RepeatWrapping;
         this.texture.repeat.set(1, 1);   
     }
@@ -26,7 +26,7 @@ class Ball extends THREE.Object3D {
         this.mesh.receiveShadow = true;
         this.mesh.castShadow = true;
 
-        this.mesh.position.set(0, 0.25, 1);
+        this.mesh.position.set(0, 0, 1);
 
         this.mesh.name = "ball";
     }
@@ -39,7 +39,7 @@ class Ball extends THREE.Object3D {
         this.mesh.material = this.materials[index];
     }
 
-    /*rotateY() {
-        this.mesh.rotation.y
-    }*/
+    switchMovement() {
+        
+    }
 }

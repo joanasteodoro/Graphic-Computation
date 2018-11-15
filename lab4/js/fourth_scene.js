@@ -65,7 +65,7 @@ function onKeyDown(e) {
         break;
 
       case 66: //b
-        game.getBall().rotateBall();
+        game.getBall().switchMovement();
         break;
 
        /* r - reset
@@ -112,11 +112,11 @@ function init() {
 function animate() {
     'use strict';
 
-    delta = time.getDelta();
-    sinceBeginning = time.getElapsedTime();
-
     game.update();
+    game.pivotPoint.rotation.y += 0.01;
 
+    game.getBall().getMesh().rotateY(0.01);
+    //game.magicCube.getMesh().rotateY(0.1);
     controls.update();
     render();
     requestAnimationFrame(animate);
