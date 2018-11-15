@@ -4,6 +4,7 @@ class Game {
         this.camera = new PerspectiveCamera(10, 10, 0, 0, 0, 0);
         this.controls = new THREE.OrbitControls(this.camera);
         this.chessBoard = new Board(this);
+        this.scene.add(this.chessBoard);
     }
 
     getScene() {
