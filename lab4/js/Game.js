@@ -7,6 +7,8 @@ class Game {
         this.controls = new THREE.OrbitControls(this.currentCamera);
         this.chessBoard = new Board(this);
         this.scene.add(this.chessBoard);
+        this.ball = new Ball(1, 1, 1, 0.5, 0.5, 0, 0);
+        this.scene.add(this.ball.getBallMesh());
     }
 
     getScene() {
