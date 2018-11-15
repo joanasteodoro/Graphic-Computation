@@ -67,10 +67,10 @@ function onKeyDown(e) {
         game.switchCamera(game.getCamera2());
         break;
       case 68: //d
-        game.getScene().getDirectionalLight().onOffLight();
+        game.getDirectionalLight().onOffLight();
         break;
       case 80: //p
-        game.getScene().getPointLight().onOffLight();
+        game.getPointLight().onOffLight();
         break;
       case 87: //w
         game.getScene().traverse(function (node) {

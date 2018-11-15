@@ -3,8 +3,6 @@ class Scene extends THREE.Scene {
         super();
         this.background = new THREE.Color("rgb(255, 255, 255)");
         this.add(new THREE.AxisHelper(50));
-        this.directionalLight = new DirectionalLight(this, 0, 5, 0);
-        this.pointLight = new PointLight(this, 5, 5, 5);
         /*
         this.floor = new Floor(this, 0, -4, 0, 20, 20);
 
@@ -22,13 +20,6 @@ class Scene extends THREE.Scene {
             left: false,
             right: false
         }*/
-    }
-    getDirectionalLight(){
-      return this.directionalLight;
-    }
-
-    getPointLight(){
-      return this.pointLight;
     }
 
     getUpRotationFlag() {
