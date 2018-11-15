@@ -23,33 +23,12 @@ class Scene extends THREE.Scene {
             right: false
         }*/
     }
-
-    getFloor() {
-        return this.floor;
+    getDirectionalLight(){
+      return this.directionalLight;
     }
 
-    getPlane() {
-        return this.plane;
-    }
-
-    getSun() {
-        return this.sun;
-    }
-
-    getSpotlight1() {
-        return this.spotlight1;
-    }
-
-    getSpotlight2() {
-        return this.spotlight2;
-    }
-
-    getSpotlight3() {
-        return this.spotlight3;
-    }
-
-    getSpotlight4() {
-        return this.spotlight4;
+    getPointLight(){
+      return this.pointLight;
     }
 
     getUpRotationFlag() {

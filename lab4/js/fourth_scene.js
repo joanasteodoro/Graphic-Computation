@@ -66,6 +66,12 @@ function onKeyDown(e) {
       case 83: //s
         game.switchCamera(game.getCamera2());
         break;
+      case 68: //d
+        scene.getDirectionalLight().onOffLight();
+        break;
+      case 80: //p
+        scene.getPointLight().onOffLight();
+        break;
         /*
         case 49: // 1
             scene.getSpotlight1().onOffSpotlight();

@@ -7,8 +7,8 @@ class PointLight extends THREE.PointLight {
       	scene.add(this);
     }
 
-    /* n
-    onOffSunLight() {
+    // p
+    onOffLight() {
     	this.visible = !this.visible;
-    }*/
+    }
 }
