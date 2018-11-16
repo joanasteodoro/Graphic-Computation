@@ -95,7 +95,9 @@ class Game {
 
     rotateBall() {
         this.pivotPoint.rotation.y = this.ball.getAngle();
+        this.ball.getMesh().rotation.z = -this.ball.getAngle();
         console.log(this.ball.getAngVelocity());
+        console.log(this.ball.getMesh().position);
     }
 
 }
