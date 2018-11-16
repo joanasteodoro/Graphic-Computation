@@ -1,26 +1,36 @@
 class Board extends THREE.Object3D {
-    constructor(index) {
+    constructor(index, type) {
         super();
-        this.createTexture();
+        this.createTexture(type);
         this.materials = [];
-        this.createMaterials();
-        this.createMesh(index);
+        this.createMaterials(type);
+        this.createMesh(index, type);
     }
 
-    createTexture() {
-        this.texture = new THREE.TextureLoader().load('textures/woodboard.png');
-        this.texture.wrapS = this.texture.wrapT = THREE.RepeatWrapping;
-        this.texture.repeat.set( 4, 4);
+    createTexture(type) {
+        if(type) {
+            this.texture = new THREE.TextureLoader().load('textures/pause.png');
+            this.texture.wrapS = this.texture.wrapT = THREE.RepeatWrapping;
+            this.texture.repeat.set( 1, 1);
+        } 
+        else {
+            this.texture = new THREE.TextureLoader().load('textures/woodboard.png');
+            this.texture.wrapS = this.texture.wrapT = THREE.RepeatWrapping;
+            this.texture.repeat.set( 4, 4);
+        } 
+        
         
     }
 
-    createMaterials() {
-        this.materials.push(new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0x111111, shininess: 10, wireframe: false, map: this.texture}));
+    createMaterials(type) {
         this.materials.push(new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false, map: this.texture}));
+        if(!type) this.materials.push(new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0x111111, shininess: 10, wireframe: false, map: this.texture}));
     }
 
-    createMesh(index) {
-        let geometry = new THREE.PlaneBufferGeometry(5, 5, 8, 8);
+    createMesh(index, type) {
+        let geometry;
+        if (type) geometry = new THREE.PlaneBufferGeometry(16, 5, 8, 8);
+        else geometry = new THREE.PlaneBufferGeometry(5, 5, 8, 8);
 
         this.mesh = new THREE.Mesh(geometry, this.materials[index]);
 

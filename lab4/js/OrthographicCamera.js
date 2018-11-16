@@ -1,7 +1,7 @@
 class OrthographicCamera extends THREE.OrthographicCamera {
     constructor(x, y, z) {
-        super(window.innerWidth / -50, window.innerWidth / 50,
-            window.innerHeight / 50, window.innerHeight / -50);
+        super(window.innerWidth / -300, window.innerWidth / 300,
+            window.innerHeight / 300, window.innerHeight / -300);
 
         this.position.set(x, y, z);
 

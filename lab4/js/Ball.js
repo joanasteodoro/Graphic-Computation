@@ -23,8 +23,8 @@ class Ball extends THREE.Object3D {
     }
 
     createMaterials() {
-        this.materials.push(new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0x666666, shininess: 50, wireframe: false, map: this.texture}));
         this.materials.push(new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false, map: this.texture}));
+        this.materials.push(new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0x666666, shininess: 50, wireframe: false, map: this.texture}));
     }
 
     createMesh(index) {

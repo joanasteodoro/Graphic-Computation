@@ -2,6 +2,7 @@ var game, camera, renderer;
 var controls;
 var time = new THREE.Clock(); // timer used to determine the delta
 var delta = 0; // delta used to calc the velocity and position
+var id;
 
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const ANGLE = Math.PI / 32;
@@ -43,7 +44,8 @@ function onKeyDown(e) {
     
     switch(keyCode) {
       case 83: //s
-        game.switchCamera(game.getCamera2());
+        pauseTime();
+        game.pauseUnpauseGame(id);
         break;
 
       case 68: //d
@@ -91,6 +93,11 @@ function render() {
 function reset() {
     /* garbage colector will deal with the previous instance */
     game = new Game(window.innerWidth, window.innerHeight);
+    requestAnimationFrame(animate);
+}
+
+function pauseTime() {
+  time.stop();
 }
 
 function init() {
@@ -120,5 +127,5 @@ function animate() {
     //game.getBall().getMesh().rotateY(0.01);
     controls.update();
     render();
-    requestAnimationFrame(animate);
+    id = requestAnimationFrame(animate);
 }

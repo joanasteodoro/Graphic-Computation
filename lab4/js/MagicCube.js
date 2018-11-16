@@ -21,8 +21,8 @@ class MagicCube extends THREE.Object3D {
     }
 
     createMaterials() {
-        this.materials.push(new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0x111111, shininess: 10, wireframe: false, map: this.texture, bumpMap: this.bump, bumpScale: 1}));
         this.materials.push(new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: false, map: this.texture, bumpMap: this.bump, bumpScale: 1}));
+        this.materials.push(new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0x111111, shininess: 10, wireframe: false, map: this.texture, bumpMap: this.bump, bumpScale: 1}));
     }
 
     createMesh(index) {
@@ -44,6 +44,5 @@ class MagicCube extends THREE.Object3D {
 
     updateMaterial(index) {
         this.mesh.material = this.materials[index];
-        console.log("ola");
     }
 }
