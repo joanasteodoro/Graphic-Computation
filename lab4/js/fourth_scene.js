@@ -1,5 +1,7 @@
 var game, camera, renderer;
 var controls;
+var time = new THREE.Clock(); // timer used to determine the delta
+var delta = 0; // delta used to calc the velocity and position
 
 const ASPECT_RATIO = window.innerWidth / window.innerHeight;
 const ANGLE = Math.PI / 32;
@@ -65,7 +67,7 @@ function onKeyDown(e) {
         break;
 
       case 66: //b
-        game.getBall().switchMovement();
+        game.getBall().startStopMovement();
         break;
 
        /* r - reset
@@ -111,12 +113,11 @@ function init() {
 
 function animate() {
     'use strict';
+    delta = time.getDelta();
 
-    game.update();
-    game.pivotPoint.rotation.y += 0.01;
-
-    game.getBall().getMesh().rotateY(0.01);
-    //game.magicCube.getMesh().rotateY(0.1);
+    game.getBall().updateMovement(delta);
+    game.rotateBall();
+    //game.getBall().getMesh().rotateY(0.01);
     controls.update();
     render();
     requestAnimationFrame(animate);

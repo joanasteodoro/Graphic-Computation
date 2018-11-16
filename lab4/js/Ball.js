@@ -1,3 +1,6 @@
+const MAX_VEL = 10;
+const MIN_VEL = 0;
+
 class Ball extends THREE.Object3D {
     constructor(index) {
         super();
@@ -5,6 +8,12 @@ class Ball extends THREE.Object3D {
         this.materials = [];
         this.createMaterials();
         this.createMesh(index);
+
+        this.acceleration = Math.PI / 15;
+        this.angVelocity = 0;
+        this.angle = 0;
+
+        this.isMoving = false;
     }
 
     createTexture() {
@@ -35,11 +44,40 @@ class Ball extends THREE.Object3D {
         return this.mesh;
     }
 
+    getAngVelocity() {
+        return this.angVelocity;
+    }
+
+    getAngle() {
+        return this.angle;
+    }
+
     updateMaterial(index) {
         this.mesh.material = this.materials[index];
     }
 
-    switchMovement() {
+    startStopMovement() {
+        this.isMoving = !this.isMoving;
+    }
+
+    updateMovement(delta) {
+        let signal;
         
+        if(this.isMoving) signal = 1;
+        else signal = -1;
+
+        this.updateAngVelocity(signal * delta);
+        this.updateAngle(delta);
+        
+    }
+
+    updateAngVelocity(delta) {
+        this.angVelocity += this.acceleration * delta;
+        if(this.angVelocity > MAX_VEL) this.angVelocity = MAX_VEL;
+        if(this.angVelocity < MIN_VEL) this.angVelocity = MIN_VEL;
+    }
+
+    updateAngle(delta) {
+        this.angle += this.angVelocity * delta;
     }
 }

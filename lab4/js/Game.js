@@ -35,10 +35,6 @@ class Game {
         
     }
 
-    update() {
-        
-    }
-
     getScene() {
         return this.scene;
     }
@@ -47,16 +43,20 @@ class Game {
         return this.camera;
     }
 
-    getCamera2(){
-      return this.camera2;
+    getCamera2() {
+        return this.camera2;
     }
 
-    getCurrentCamera(){
-      return this.currentCamera;
+    getCurrentCamera() {
+        return this.currentCamera;
     }
 
-    getBall(){
-      return this.ball;
+    getBall() {
+        return this.ball;
+    }
+
+    getPivotPoint() {
+        return this.pivotPoint;
     }
 
     getControls() {
@@ -93,8 +93,9 @@ class Game {
         this.controls = new THREE.OrbitControls(this.currentCamera);
     }
 
-    switchMesh() {
-
+    rotateBall() {
+        this.pivotPoint.rotation.y = this.ball.getAngle();
+        console.log(this.ball.getAngVelocity());
     }
 
 }
