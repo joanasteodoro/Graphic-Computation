@@ -57,9 +57,7 @@ function onKeyDown(e) {
         break;
 
       case 87: //w
-        game.getScene().traverse(function (node) {
-          if (node instanceof THREE.Mesh) node.material.wireframe = !node.material.wireframe;
-        });
+        game.switchWireframe();
         break;
 
       // activate/deactivate illumination calculation
@@ -75,12 +73,12 @@ function onKeyDown(e) {
        /* r - reset
        probably will need to check if the game is on pause
        */
-        case 82:
-            reset();
-            break;
+      case 82:
+        reset();
+        break;
 
-        default:
-            break;
+      default:
+        break;
 
     }
 }

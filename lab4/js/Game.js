@@ -3,6 +3,7 @@ class Game {
         this.scene = new Scene(window.innerWidth, window.innerHeight);
         this.pauseScene = new Scene(window.innerWidth, window.innerHeight);
         this.objects = [];
+        this.wireframeFlag = false;
 
         //flags
         this.meshLightFlag = 1; //phong material
@@ -81,6 +82,29 @@ class Game {
 
     getIsRunnigFlag() {
         return this.isRunning;
+    }
+
+    switchWireframe() {
+        this.switchBallWireframe();
+        this.switchBoardWireframe();
+        this.switchMagicCubeWireframe();
+        this.wireframeFlag = !this.wireframeFlag;
+    }
+
+    switchMagicCubeWireframe() {
+        for(let i = 0; i < this.magicCube.materials.length; i++)
+            for(let j = 0; j < this.magicCube.materials[i].length; j++)
+                this.magicCube.materials[i][j].wireframe = !this.wireframeFlag;
+    }
+
+    switchBallWireframe() {
+        for(let i = 0; i < this.ball.materials.length; i++)
+            this.ball.materials[i].wireframe = !this.wireframeFlag;
+    }
+
+    switchBoardWireframe() {
+        for(let i = 0; i < this.chessBoard.materials.length; i++)
+            this.chessBoard.materials[i].wireframe = !this.wireframeFlag;
     }
 
     switchMeshLightFlag() {
