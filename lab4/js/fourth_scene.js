@@ -14,26 +14,10 @@ function onResize() {
 
     let ratio = window.innerWidth/window.innerHeight;
 
-
     if (window.innerHeight > 0 && window.innerWidth > 0) {
-        let val = 1400/window.innerWidth;
-        camera1.aspect = ratio;
-        var vet = new THREE.Vector3(10, 10, 0);
-        vet.multiplyScalar(val);
-        camera1.position.x = vet.x;
-        camera1.position.y = vet.y;
-        camera1.position.z = vet.z;
-        camera1.updateProjectionMatrix();
-
-        camera2.aspect = ratio;
-        var vet = new THREE.Vector3(0, 10, 10);
-        vet.multiplyScalar(val);
-        camera2.position.x = vet.x;
-        camera2.position.y = vet.y;
-        camera2.position.z = vet.z;
-        camera2.updateProjectionMatrix();
-
-      }
+      game.getCamera().aspect = ratio;
+      game.getCamera().updateProjectionMatrix();
+    }
 
 }
 
