@@ -16,7 +16,7 @@ class Game {
 
         //lights
         this.directionalLight = new DirectionalLight(3, 5, 3);
-        this.pointLight = new PointLight(0, 5, 0);
+        this.pointLight = new PointLight(0, 2, 0);
 
         //objects
         this.chessBoard = new Board(this.meshLightFlag, 0);
@@ -70,7 +70,7 @@ class Game {
     getDirectionalLight() {
         return this.directionalLight;
     }
-  
+
     getPointLight() {
         return this.pointLight;
     }
@@ -91,7 +91,7 @@ class Game {
     }
 
     updateMaterials() {
-        for(let i = 0; i < this.objects.length; i++) 
+        for(let i = 0; i < this.objects.length; i++)
             this.objects[i].updateMaterial(this.meshLightFlag);
     }
 
