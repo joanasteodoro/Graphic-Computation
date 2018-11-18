@@ -80,7 +80,7 @@ class Game {
         return this.meshLightFlag;
     }
 
-    getIsRunnigFlag() {
+    getIsRunningFlag() {
         return this.isRunning;
     }
 
