@@ -4,8 +4,8 @@ var time = new THREE.Clock(); // timer used to determine the delta
 var delta = 0; // delta used to calc the velocity and position
 var id;
 
-const ASPECT_RATIO = window.innerWidth / window.innerHeight;
-const PLANE_HEIGHT = 10;
+const ASPECT_RATIO = window.innerWidth / window.innerHeight; // original AR
+const PLANE_HEIGHT = 5; // board measure that will be used to calc camera borders on resize
 const ANGLE = Math.PI / 32;
 
 function calcCameraSize() {
@@ -33,15 +33,15 @@ function onResize() {
     if (window.innerHeight > 0 && window.innerWidth > 0) {
       game.getCamera().aspect = ratio;
 
-      game.getCamera2().left = newD[0] / -2;
-      game.getCamera2().right = newD[0] / 2;
-      game.getCamera2().top = newD[1] / 2;
-      game.getCamera2().bottom = newD[1] / -2;
+      game.getCamera2().left = -newD[0];
+      game.getCamera2().right = newD[0];
+      game.getCamera2().top = newD[1];
+      game.getCamera2().bottom = -newD[1];
 
       game.getCamera().updateProjectionMatrix();
       game.getCamera2().updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      
+
       if(!game.getIsRunningFlag())
         renderer.render(game.pauseScene, game.getCamera2());
     }

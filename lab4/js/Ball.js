@@ -9,7 +9,7 @@ class Ball extends THREE.Object3D {
         this.createMaterials();
         this.createMesh(index);
 
-        this.acceleration = Math.PI / 8;
+        this.acceleration = Math.PI / 4;
         this.angVelocity = 0;
         this.angle = 0;
 
