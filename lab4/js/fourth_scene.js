@@ -25,24 +25,20 @@ function calcCameraSize() {
   return [width, height];
 }
 
-function updateCamera2(){
-  'use strict';
-  var newD = calcCameraSize();
-  game.getCamera2().left = -newD[0];
-  game.getCamera2().right = newD[0];
-  game.getCamera2().top = newD[1];
-  game.getCamera2().bottom = -newD[1];
-}
-
 function onResize() {
   'use strict';
 
     let ratio = window.innerWidth/window.innerHeight;
+    var newD = calcCameraSize();
 
     if (window.innerHeight > 0 && window.innerWidth > 0) {
       game.getCamera().aspect = ratio;
 
-      game.updateCamera2(newD);
+      game.getCamera2().left = -newD[0];
+      game.getCamera2().right = newD[0];
+      game.getCamera2().top = newD[1];
+      game.getCamera2().bottom = -newD[1];
+
       game.getCamera().updateProjectionMatrix();
       game.getCamera2().updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -108,8 +104,8 @@ function reset() {
     /* garbage colector will deal with the previous instance */
     game = new Game(window.innerWidth, window.innerHeight);
     if(!runningFlag) {
-      game.setFlag(false);
-      game.pauseUnpauseGame(id);
+      renderer.render(game.getScene(), game.getCamera());
+      requestAnimationFrame(animate);
       runningFlag = !runningFlag;
     }
 }
@@ -141,7 +137,6 @@ function animate() {
 
     game.getBall().updateMovement(delta);
     game.rotateBall();
-    //game.getBall().getMesh().rotateY(0.01);
     controls.update();
     render();
     id = requestAnimationFrame(animate);

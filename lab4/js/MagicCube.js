@@ -45,7 +45,6 @@ class MagicCube extends THREE.Object3D {
 
     createMesh(index) {
         let geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5, 3, 3, 3);
-        //let geometry2 = new THREE.BoxGeometry(0.5, 0.5, 0.5, 3, 3, 3);
 
         this.faceMaterials = [
                 new THREE.MeshFaceMaterial(this.materials[0]),
