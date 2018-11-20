@@ -44,7 +44,8 @@ class MagicCube extends THREE.Object3D {
     }
 
     createMesh(index) {
-        let geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5, 3, 3);
+        let geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5, 3, 3, 3);
+        //let geometry2 = new THREE.BoxGeometry(0.5, 0.5, 0.5, 3, 3, 3);
 
         this.faceMaterials = [
                 new THREE.MeshFaceMaterial(this.materials[0]),
@@ -52,11 +53,15 @@ class MagicCube extends THREE.Object3D {
             ];
 
         this.mesh = new THREE.Mesh(geometry, this.faceMaterials[index]);
+        this.mesh2 = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0x000000, wireframe:true}));
+
+        this.mesh2.visible = false;
 
         this.mesh.receiveShadow = true;
         this.mesh.castShadow = true;
 
         this.mesh.position.set(0, 0.25, 0);
+        this.mesh2.position.set(0, 0.25, 0);
 
         this.mesh.name = "magicCube";
     }

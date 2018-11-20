@@ -35,6 +35,7 @@ class Game {
 
         this.scene.add(this.chessBoard.getMesh());
         this.scene.add(this.magicCube.getMesh());
+        this.scene.add(this.magicCube.mesh2);
         this.scene.add(this.directionalLight);
         this.scene.add(this.pointLight);
         this.pauseScene.add(this.pauseBoard.getMesh());
@@ -95,6 +96,9 @@ class Game {
         for(let i = 0; i < this.magicCube.materials.length; i++)
             for(let j = 0; j < this.magicCube.materials[i].length; j++)
                 this.magicCube.materials[i][j].wireframe = !this.wireframeFlag;
+
+        //this.magicCube.mesh.visible = this.wireframeFlag;  
+        this.magicCube.mesh2.visible = !this.wireframeFlag;
     }
 
     switchBallWireframe() {
