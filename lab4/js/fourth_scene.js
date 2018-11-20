@@ -118,7 +118,6 @@ function init() {
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-  //  camera2 = new OrthographicCamera(0, 100, 0); // Allows to see the whole terrain #2
     /* instance of the game that will be renewed when 'reset' is pressed */
     game = new Game(window.innerWidth, window.innerHeight);
     controls = game.getControls();
