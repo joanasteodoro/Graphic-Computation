@@ -3,6 +3,7 @@ var controls;
 var time = new THREE.Clock(); // timer used to determine the delta
 var delta = 0; // delta used to calc the velocity and position
 var id;
+var runningFlag = true;
 
 const ASPECT_RATIO = window.innerWidth / window.innerHeight; // original AR
 const PLANE_HEIGHT = 5; // board measure that will be used to calc camera borders on resize
@@ -60,6 +61,7 @@ function onKeyDown(e) {
       case 83: //s
         pauseTime();
         game.pauseUnpauseGame(id);
+        runningFlag = !runningFlag;
         break;
 
       case 68: //d
@@ -105,7 +107,11 @@ function render() {
 function reset() {
     /* garbage colector will deal with the previous instance */
     game = new Game(window.innerWidth, window.innerHeight);
-    requestAnimationFrame(animate);
+    if(!runningFlag) {
+      game.setFlag(false);
+      game.pauseUnpauseGame(id);
+      runningFlag = !runningFlag;
+    }
 }
 
 function pauseTime() {

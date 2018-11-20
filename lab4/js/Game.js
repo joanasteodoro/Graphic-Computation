@@ -39,10 +39,17 @@ class Game {
         this.scene.add(this.directionalLight);
         this.scene.add(this.pointLight);
         this.pauseScene.add(this.pauseBoard.getMesh());
+}
+    setFlag(b) {
+        this.isRunning = b;
     }
-
+    
     getScene() {
         return this.scene;
+    }
+
+    getPauseScene() {
+        return this.pauseScene;
     }
 
     getCamera() {
